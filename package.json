@@ -1,0 +1,25 @@
+{
+  "name": "chime-sdk-meeting-react",
+  "version": "0.1.0",
+  "bin": {
+    "chime-sdk-meeting-react": "bin/chime-sdk-meeting-react.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@types/node": "10.17.27",
+    "aws-cdk": "2.9.0",
+    "esbuild": "0",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.9.0",
+    "cdk-amazon-chime-resources": "^0.0.5",
+    "constructs": "^10.0.0",
+    "source-map-support": "^0.5.16"
+  }
+}
