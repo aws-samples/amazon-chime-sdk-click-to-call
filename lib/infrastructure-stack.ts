@@ -139,6 +139,10 @@ export class Infrastructure extends NestedStack {
 
     plan.addApiKey(clickToCallApiKey);
 
+    plan.addApiStage({
+      stage: api.deploymentStage,
+    });
+
     this.apiUrl = api.url;
   }
 }

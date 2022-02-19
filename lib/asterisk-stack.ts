@@ -161,7 +161,9 @@ export class Asterisk extends NestedStack {
             ),
             ec2.InitCommand.shellCommand('chmod +x /etc/install.sh'),
             ec2.InitCommand.shellCommand('cd /tmp'),
-            ec2.InitCommand.shellCommand('/etc/install.sh'),
+            ec2.InitCommand.shellCommand(
+              '/etc/install.sh 2>&1 | tee /var/log/asterisk_install.log',
+            ),
           ]),
           config: new ec2.InitConfig([
             ec2.InitFile.fromFileInline(
@@ -197,6 +199,7 @@ export class Asterisk extends NestedStack {
         timeout: Duration.minutes(15),
         includeUrl: true,
         includeRole: true,
+        printLog: true,
       },
       securityGroup: securityGroup,
       role: asteriskEc2Role,

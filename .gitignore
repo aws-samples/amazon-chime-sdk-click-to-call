@@ -12,3 +12,4 @@ cdk.out
 .DS_Store
 .yalc
 cdk-outputs.json
+cdk.context.json

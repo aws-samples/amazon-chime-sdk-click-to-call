@@ -59,13 +59,14 @@ const App = () => {
         } else {
             request.url = API_URL + 'dial';
             request.data.toNumber = phoneNumber;
+            console.info(`request: ${JSON.stringify(request)}`);
             try {
                 const dialOutResponse = await axios(request);
                 const joinInfo = {
                     meetingInfo: dialOutResponse.data.joinInfo.Meeting,
                     attendeeInfo: dialOutResponse.data.joinInfo.Attendee[0],
                 };
-                console.info(`joinInfo: ${joinInfo}`);
+                console.info(`joinInfo: ${JSON.stringify(joinInfo)}`);
                 await meetingManager.join(joinInfo);
                 await meetingManager.start();
                 console.log('Meeting started');
@@ -81,9 +82,10 @@ const App = () => {
         request.url = API_URL + 'update';
         request.data.update = 'end';
         request.data.meetingId = meetingId;
+        console.info(`request: ${JSON.stringify(request)}`);
         try {
             const updateResponse = await axios(request);
-            console.info(`updateResponse: ${updateResponse}`);
+            console.info(`updateResponse: ${JSON.stringfy(updateResponse)}`);
         } catch (err) {
             console.log(err);
         }
