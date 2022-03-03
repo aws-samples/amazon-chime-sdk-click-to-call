@@ -25,12 +25,19 @@ exports.handler = async (event, context, callback) => {
       break;
     case 'HANGUP':
       console.log('HANGUP ACTION');
+      var currentCall = await getCaller(event.CallDetails.TransactionId);
+      var deleteRequest = {
+        MeetingId: currentCall.meetingId,
+      };
+      console.info('Delete Info: ' + JSON.stringify(deleteRequest));
+
+      await chime.deleteMeeting(deleteRequest).promise();
+
       if (event.CallDetails.Participants[1]) {
         hangupAction.Parameters.CallId =
           event.CallDetails.Participants[1].CallId;
         actions = [hangupAction];
       }
-
       break;
     case 'CALL_ANSWERED':
       console.log('CALL ANSWERED');
