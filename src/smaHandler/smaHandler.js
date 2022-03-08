@@ -5,7 +5,7 @@ var chime = new AWS.Chime({
   endpoint: 'service.chime.aws.amazon.com',
 });
 var callInfoTable = process.env['MEETINGS_TABLE_NAME'];
-var voiceConnectorArn = process.env['VOICE_CONNECTOR_ARN'];
+
 var documentClient = new AWS.DynamoDB.DocumentClient();
 exports.handler = async (event, context, callback) => {
   console.log('Lambda is invoked with calldetails:' + JSON.stringify(event));

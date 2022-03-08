@@ -20,37 +20,65 @@ Basic understanding of:
 
 ### Amazon Chime SDK Meetings
 
-This demo uses a simple React based web client to create an Amazon Chime SDK meeting. This client can be found in the [site](site/) directory and will use an Amazon API Gateway to make AWS SDK API calls to create the meeting, create attendees, and create the SIP media application call.
+This demo uses a simple React based web client to create an Amazon Chime SDK meeting. This client can be found in the [site](site/) directory and will use an Amazon API Gateway with AWS Amplify to make AWS SDK API calls to create the meeting, create attendees, and create the SIP media application call.
 
 ### Amazon Chime PSTN Audio
 
 Once the meeting has been created, the AWS Lambda will create an outbound call from the SIP media application to the requested phone number. This SIP media action will control the outbound call and can be enhanced with additional [actions](https://docs.aws.amazon.com/chime/latest/dg/specify-actions.html). For the purpose of this demo, it is simply connecting the Amazon Chime SDK Meeting to a phone number.
 
-### Amazon Chime Voice Connector
+### Optional - Amazon Chime Voice Connector
 
-Included in this demo is a configured Amazon Chime Voice Connector and Asterisk PBX along with an associated phone number. If this phone number is dialed from the React client, a call will be made to the Asterisk PBX where it will be answered and audio echoed back. Alternatively, a phone can be registered to this PBX and used to answer the call.
+Optionally, you can include a configured Amazon Chime Voice Connector and Asterisk PBX along with an associated phone number. If this phone number is dialed from the React client, a call will be made to the Asterisk PBX where it will be answered and audio echoed back. Alternatively, a phone can be registered to this PBX and used to answer the call.
 
 ## How It Works
 
 ### Request from Client
 
 ```javascript
-const dialOutRequest = {
-    url: API_URL + 'dial',
-    method: 'POST',
-    headers: {
-        'Content-Type': 'applications/json',
-        'x-api-key': API_KEY,
-    },
-    data: {
-        toNumber: phoneNumber,
-    },
-};
-try {
-    const dialOutResponse = await axios(dialOutRequest);
+const dialOutResponse = await API.post('callControlAPI', 'dial', {
+  body: {
+    toNumber: phoneNumber,
+  },
+});
 ```
 
-When the Dial button is pressed, a request is made from the client towards the AWS API Gateway with the phone number to dial presented in the `toNumber` field.
+When the Dial button is pressed, a request is made from the client towards the AWS API Gateway with the phone number to dial presented in the `toNumber` field. This request is made using AWS Amplify and configured using the output from the CDK deployment.
+
+####App.js:
+
+```javascript
+import { AmplifyConfig } from './Config';
+import { Amplify, API } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+
+Amplify.configure(AmplifyConfig);
+API.configure(AmplifyConfig);
+Amplify.Logger.LOG_LEVEL = 'DEBUG';
+```
+
+####Config.js:
+
+```javascript
+    API: {
+        endpoints: [
+            {
+                name: 'callControlAPI',
+                endpoint: configData.APIURL,
+                custom_header: async () => {
+                    return { Authorization: `${(await Auth.currentSession()).getIdToken().getJwtToken()}` };
+                },
+            },
+            {
+                name: 'updateCallAPI',
+                endpoint: configData.APIURL,
+                custom_header: async () => {
+                    return { Authorization: `${(await Auth.currentSession()).getIdToken().getJwtToken()}` };
+                },
+            },
+        ],
+    },
+```
 
 ### Processing on CallControl Lambda
 
@@ -133,7 +161,7 @@ Additionally, the attendee information can be seen from the AWS CLI with:
 
 ### Completion of Outbound Call through Amazon Chime PSTN Audio
 
-In parrallel to the response being returned to the client, a call is made through Amazon Chime PSTN Audio. This will cause the SIP media application to invoke the Lambda associcated with the SIP media application with a `NEW_OUTBOUND_CALL`:
+In parallel to the response being returned to the client, a call is made through Amazon Chime PSTN Audio. This will cause the SIP media application to invoke the Lambda associcated with the SIP media application with a `NEW_OUTBOUND_CALL`:
 
 ```
 var params = {
@@ -164,13 +192,13 @@ case 'CALL_ANSWERED':
   break;
 ```
 
-### Connecting to a SIP PBX
+### Optional - Connecting to a SIP PBX
 
-If the number dialed from the client is on an Amazon Chime Voice Connector, this call can be delivered with additional information included. In this demo, an Asterisk PBX is deployed to EC2 and configured with an Amazon Chime Voice Connector and associated phone number.
+As part of the deployment, an Asterisk PBX can be created along with an Amazon Chime Voice Connector. If the number dialed from the client is on an Amazon Chime Voice Connector, this call can be delivered with additional information included. In this demo, an Asterisk PBX is optionally deployed to EC2 and configured with an Amazon Chime Voice Connector and associated phone number.
 
 When the call is made from the CallControl Lambda, the meetingId is included in the `User-to-User` SIP header. This header is delivered to the Asterisk PBX and can be seen here (output trimmed for clarity):
 
-```
+<pre>
 INVITE sip:+12245554385@XX.XX.XX.XX:5060;transport=UDP SIP/2.0
 Record-Route: <sip:3.80.16.122;lr;ftag=rvt4v2gjcp5ag;did=1e41.0531;nat=yes>
 Via: SIP/2.0/UDP 3.80.16.122:5060;branch=z9hG4bKfe89.113361e8ae54ec0a2e2aced87cc980ad.0
@@ -180,8 +208,8 @@ To: <sip:+12245554385@XX.XX.XX.XX:5060>;transport=UDP
 Call-ID: 0ca47221-1aa4-4e67-af5a-70ed3222a8fd
 Contact: <sip:10.0.160.204:5060;alias=10.0.160.204~5060~1>
 X-VoiceConnector-ID: dn0pcxvetmicgerjqmze5c
-User-to-User: f9ca6fe2-19cb-494b-9df7-d90a0c220706
-```
+<mark>User-to-User: f9ca6fe2-19cb-494b-9df7-d90a0c220706</mark>
+</pre>
 
 ## To Use
 
@@ -192,6 +220,14 @@ yarn
 ./deploy.sh
 ```
 
+This will run a bash script to determine optional context for the deployment.
+
+- If the Asterisk component will be deployed
+- The allowed domain name for Amazon Cognito signup.
+
+Alternatively, these can be entered via directly:
+`yarn cdk deploy --context AsteriskDeploy=[y|n] --context AllowedDomain=<DOMAIN_ALLOWED_TO_REGISTER> -O site/src/cdk-outputs.json`
+
 ##### To use the client:
 
 ```
@@ -200,7 +236,9 @@ yarn
 yarn run start
 ```
 
-This will launch a local client that can be used to place outbound calls
+![Cognito](images/Cognito.png)
+
+This will launch a local client that can be used to place outbound calls. This client uses Amazon Cognito for authentication and will present a Sign In and Create Account dialog box. When using this for the first time, you must create an account with a `Username` of an email address that is part of the domain allowed during the deployment. A confirmation email will be sent to that email address for verification. Once completed, you will be able to use that email address to log in to the client.
 
 ![Client](images/client.png)
 
@@ -217,13 +255,14 @@ aws ssm start-session --target INSTANCE_ID
 - smaHandler Lambda
 - Amazon API Gateway
 - DynamoDB Table
-- EC2 Instance
-  - Public Amazon Virtual Private Cloud (Amazon VPC)
-  - Elastic IP
-- Amazon Chime Voice Connector
-- 2x Amazon Chime Phone Number
 - Amazon Chime SIP media application
 - Amazon Chime SIP media application rule
+- Optional
+  - EC2 Instance
+    - Public Amazon Virtual Private Cloud (Amazon VPC)
+    - Elastic IP
+  - Amazon Chime Voice Connector
+  - Amazon Chime Phone Number
 
 ## To Clean Up
 

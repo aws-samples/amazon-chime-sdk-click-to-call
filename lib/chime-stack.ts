@@ -8,8 +8,6 @@ import * as chime from 'cdk-amazon-chime-resources';
 
 interface ChimeProps extends NestedStackProps {
   readonly meetingsTable: dynamodb.Table;
-  readonly voiceConnectorArn: string;
-  readonly voiceConnectorPhone: string;
 }
 
 export class Chime extends NestedStack {
@@ -49,7 +47,6 @@ export class Chime extends NestedStack {
       timeout: Duration.seconds(60),
       environment: {
         MEETINGS_TABLE_NAME: props.meetingsTable.tableName,
-        VOICE_CONNECTOR_ARN: props.voiceConnectorArn,
       },
     });
 
