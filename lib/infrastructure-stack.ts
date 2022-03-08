@@ -1,28 +1,24 @@
 import { Construct } from 'constructs';
-import {
-  CfnOutput,
-  Duration,
-  NestedStackProps,
-  NestedStack,
-} from 'aws-cdk-lib';
+import { Duration, NestedStackProps, NestedStack } from 'aws-cdk-lib';
 import {
   RestApi,
   LambdaIntegration,
   EndpointType,
   MethodLoggingLevel,
-  ApiKey,
+  CognitoUserPoolsAuthorizer,
+  AuthorizationType,
 } from 'aws-cdk-lib/aws-apigateway';
 import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
-import * as crypto from 'crypto';
+import * as cognito from 'aws-cdk-lib/aws-cognito';
 
 interface InfrastructureProps extends NestedStackProps {
   readonly fromPhoneNumber: string;
   readonly smaId: string;
   readonly meetingsTable: dynamodb.Table;
-  readonly voiceConnectorPhone: string;
+  readonly userPool: cognito.IUserPool;
 }
 
 export class Infrastructure extends NestedStack {
@@ -66,7 +62,6 @@ export class Infrastructure extends NestedStack {
         SMA_ID: props.smaId,
         FROM_NUMBER: props.fromPhoneNumber,
         MEETINGS_TABLE_NAME: props.meetingsTable.tableName,
-        VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone,
       },
     });
 
@@ -87,7 +82,6 @@ export class Infrastructure extends NestedStack {
         SMA_ID: props.smaId,
         FROM_NUMBER: props.fromPhoneNumber,
         MEETINGS_TABLE_NAME: props.meetingsTable.tableName,
-        VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone,
       },
     });
 
@@ -114,33 +108,23 @@ export class Infrastructure extends NestedStack {
       },
     });
 
+    const auth = new CognitoUserPoolsAuthorizer(this, 'auth', {
+      cognitoUserPools: [props.userPool],
+    });
+
     const dial = api.root.addResource('dial');
     const update = api.root.addResource('update');
 
     const callControlIntegration = new LambdaIntegration(callControlLambda);
     const updateCallIntegration = new LambdaIntegration(updateCallLambda);
 
-    dial.addMethod('POST', callControlIntegration, { apiKeyRequired: true });
-    update.addMethod('POST', updateCallIntegration, { apiKeyRequired: true });
-
-    const plan = api.addUsagePlan('UsagePlan', {
-      name: 'Unlimited',
-      throttle: {
-        rateLimit: 10,
-        burstLimit: 20,
-      },
+    dial.addMethod('POST', callControlIntegration, {
+      authorizer: auth,
+      authorizationType: AuthorizationType.COGNITO,
     });
-
-    this.clickToCallApiKeyValue = crypto.randomBytes(20).toString('hex');
-
-    const clickToCallApiKey = new ApiKey(this, 'apiKey', {
-      value: this.clickToCallApiKeyValue,
-    });
-
-    plan.addApiKey(clickToCallApiKey);
-
-    plan.addApiStage({
-      stage: api.deploymentStage,
+    update.addMethod('POST', updateCallIntegration, {
+      authorizer: auth,
+      authorizationType: AuthorizationType.COGNITO,
     });
 
     this.apiUrl = api.url;

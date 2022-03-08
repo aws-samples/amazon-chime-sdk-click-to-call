@@ -1,4 +1,5 @@
  #!/bin/bash
+DOMAIN="^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$"
 if ! [ -x "$(command -v node)" ]; then
   echo 'Error: node is not installed.' >&2
   exit 1
@@ -25,8 +26,18 @@ echo ""
 echo "Bootstrapping CDK"
 echo ""
 yarn cdk bootstrap
+while true; do
+    read -p "Deploy with Asterisk [Y/N]: " Asterisk
+    case $Asterisk in
+        [Yy]* ) AsteriskDeploy=y; break;;
+        [Nn]* ) AsteriskDeploy=n; break;;
+        * ) echo "Please answer Y or N.";;
+    esac
+done
+while [[ !($AllowedDomain =~ $DOMAIN) ]]; do
+  read -p "Allowed Domain: " AllowedDomain
+done
 echo ""
 echo "Deploying CDK"
 echo ""
-yarn cdk deploy -O site/src/cdk-outputs.json
-
+yarn cdk deploy --context AsteriskDeploy=$AsteriskDeploy --context AllowedDomain=$AllowedDomain -O site/src/cdk-outputs.json
