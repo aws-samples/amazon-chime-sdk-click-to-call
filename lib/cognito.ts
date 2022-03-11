@@ -3,7 +3,6 @@ import {
   NestedStackProps,
   RemovalPolicy,
   Duration,
-  Names,
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
@@ -20,7 +19,6 @@ export class Cognito extends NestedStack {
   public readonly identityPool: cognito.CfnIdentityPool;
   public readonly userPool: cognito.IUserPool;
   public readonly userPoolClient: cognito.IUserPoolClient;
-  public readonly userPoolDomain: cognito.CfnUserPoolDomain;
   public readonly userPoolRegion: string;
 
   constructor(scope: Construct, id: string, props: CognitoStackProps) {
@@ -85,15 +83,6 @@ export class Cognito extends NestedStack {
       },
       refreshTokenValidity: Duration.hours(1),
     });
-
-    const userPoolDomain = new cognito.CfnUserPoolDomain(
-      this,
-      'cognitoUserPoolDomain',
-      {
-        domain: 'click-to-call-' + Names.uniqueId(this).toLowerCase().slice(-8),
-        userPoolId: userPool.userPoolId,
-      },
-    );
 
     //create an Identity Pool
     const identityPool = new cognito.CfnIdentityPool(
@@ -187,7 +176,6 @@ export class Cognito extends NestedStack {
     this.identityPool = identityPool;
     this.userPool = userPool;
     this.userPoolClient = userPoolClient;
-    this.userPoolDomain = userPoolDomain;
     this.userPoolRegion = this.region;
   }
 }
