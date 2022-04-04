@@ -213,6 +213,22 @@ X-VoiceConnector-ID: dn0pcxvetmicgerjqmze5c
 
 ## To Use
 
+**Prerequisites**
+
+1. The AWS CLI configured to use an account with sufficient priviledges
+2. Node v16.14.2 or higher
+3. Yarn v1.22.18 or higher
+4. AWS CDK
+
+To install with `nvm`:
+
+```bash
+nvm install 16
+nvm use 16
+npm install -g npm nodejs typescript ts-node aws-sdk aws-cdk yarn
+```
+
+
 ##### To Deploy AWS CDK
 
 ```
