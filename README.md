@@ -223,7 +223,7 @@ yarn
 This will run a bash script to determine optional context for the deployment.
 
 - If the Asterisk component will be deployed
-- The allowed domain name for Amazon Cognito signup.
+- The allowed domain name for Amazon Cognito signup. If a domain is entered, only email addresses with the chosen domain will be allowed to register an account with Cognito. If no domain is entered, any email address can be used. Domain should be entered as `example.com`.
 
 Alternatively, these can be entered via directly:
 `yarn cdk deploy --context AsteriskDeploy=[y|n] --context AllowedDomain=<DOMAIN_ALLOWED_TO_REGISTER> -O site/src/cdk-outputs.json`

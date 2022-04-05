@@ -1,5 +1,4 @@
  #!/bin/bash
-DOMAIN="^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$"
 if ! [ -x "$(command -v node)" ]; then
   echo 'Error: node is not installed.' >&2
   exit 1
@@ -34,9 +33,7 @@ while true; do
         * ) echo "Please answer Y or N.";;
     esac
 done
-while [[ !($AllowedDomain =~ $DOMAIN) ]]; do
-  read -p "Allowed Domain: " AllowedDomain
-done
+read -p "Allowed Domain: " AllowedDomain
 echo ""
 echo "Deploying CDK"
 echo ""
