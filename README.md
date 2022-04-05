@@ -34,7 +34,7 @@ Optionally, you can include a configured Amazon Chime Voice Connector and Asteri
 
 ### Request from Client
 
-[App.js](site/src/App.js):
+[App.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/site/src/App.js#L64-L68)
 
 ```javascript
 const dialOutResponse = await API.post('callControlAPI', 'dial', {
@@ -46,7 +46,7 @@ const dialOutResponse = await API.post('callControlAPI', 'dial', {
 
 When the Dial button is pressed, a request is made from the client towards the AWS API Gateway with the phone number to dial presented in the `toNumber` field. This request is made using AWS Amplify and configured using the output from the CDK deployment.
 
-[App.js](site/src/App.js):
+[App.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/site/src/App.js#L19-L26):
 
 ```javascript
 import { AmplifyConfig } from './Config';
@@ -59,7 +59,7 @@ API.configure(AmplifyConfig);
 Amplify.Logger.LOG_LEVEL = 'DEBUG';
 ```
 
-[Config.js](site/src/Config.js):
+[Config.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/site/src/Config.js#L21-L38):
 
 ```javascript
     API: {
@@ -92,7 +92,7 @@ This request will be processed on the CallControl Lambda that is triggered by th
 - This information will be stored in an Amazon DynamoDB table
 - The meeting information will be returned to the client
 
-[callControl.js](src/callControl/callControl.js)
+[callControl.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/src/callControl/callControl.js#L54-L61)
 
 ```javascript
 const joinInfo = await createMeeting();
@@ -108,7 +108,7 @@ return response;
 
 Once the request has been processed by the CallControl Lambda, the meeting information will be returned to the client. This information will be used to join the client to the Amazon Chime SDK Meeting:
 
-[callControl.js](src/callControl/callControl.js)
+[App.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/site/src/App.js#L70-L77)
 
 ```javascript
 const joinInfo = {
@@ -169,7 +169,7 @@ Additionally, the attendee information can be seen from the AWS CLI with:
 
 In parallel to the response being returned to the client, a call is made through Amazon Chime PSTN Audio. This will cause the SIP media application to invoke the Lambda associcated with the SIP media application with a `NEW_OUTBOUND_CALL`:
 
-[smaHandler.js](src/smaHandler/smaHandler.js)
+[callControl.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/a4414ee7beed36a12fef005522e5372cab7f941e/src/callControl/callControl.js#L106-L126)
 
 ```
 var params = {
@@ -189,7 +189,7 @@ try {
 
 The call will be sent out from the Amazon Chime PSTN Audio SIP media application from a phone number in the Amazon Chime phone inventory to the configured `toNumber` and the `meetingId` populated in the SIP User-to-User header. See [here](https://docs.aws.amazon.com/chime/latest/dg/sip-headers.html) for more information on using SIP headers with Amazon Chime PSTN Audio. When the called number answers the call, the SIP media application will be invoked with the `CALL_ANSWERED` EventType. After looking up the meeting information in the meetings table in DynamoDB using the TransactionId, the call will be joined to the existing Amazon Chime SDK meeting as the second attendee.
 
-[smaHandler.js](src/smaHandler/smaHandler.js)
+[smaHandler.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/src/smaHandler/smaHandler.js#L42-L50)
 
 ```javascript
 case 'CALL_ANSWERED':
