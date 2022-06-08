@@ -27,14 +27,6 @@ Amplify.configure(AmplifyConfig);
 API.configure(AmplifyConfig);
 Amplify.Logger.LOG_LEVEL = 'DEBUG';
 
-const Wrapper = () => {
-    return (
-        <MeetingProvider>
-            <App />
-        </MeetingProvider>
-    );
-};
-
 const App = () => {
     // const meetingManager = new useMeetingManager();
     const meetingManager = useMeetingManager();
@@ -78,22 +70,17 @@ const App = () => {
                     },
                 });
                 console.log(dialOutResponse);
-                // const joinInfo = {
-                //     meetingInfo: dialOutResponse.joinInfo.Meeting,
-                //     attendeeInfo: dialOutResponse.joinInfo.Attendee[0],
-                // };
-                // console.info(`joinInfo: ${JSON.stringify(joinInfo)}`);
                 const meetingSessionConfiguration = new MeetingSessionConfiguration(
                     dialOutResponse.joinInfo.Meeting,
                     dialOutResponse.joinInfo.Attendee[0],
                 );
-                const options = {
-                    enableWebAudio: true,
-                };
-                // await meetingManager.join(joinInfo);
-                // await meetingManager.start();
+                // const options = {
+                //     enableWebAudio: true,
+                // };
 
-                await meetingManager.join(meetingSessionConfiguration, options);
+                // await meetingManager.join(meetingSessionConfiguration, options);
+                await meetingManager.join(meetingSessionConfiguration);
+                await meetingManager.start();
                 console.log('Meeting started');
                 setMeetingId(dialOutResponse.joinInfo.Meeting.MeetingId);
             } catch (err) {
@@ -118,66 +105,75 @@ const App = () => {
     };
 
     return (
-        <div className="controls-box">
-            <Grid
-                style={{ height: '30vh' }}
-                gridGap=".25rem"
-                css="padding: 0px"
-                gridAutoFlow=""
-                gridTemplateColumns="5fr 1fr 1fr 1fr 1fr"
-                gridTemplateRows="1fr 1fr"
-                gridTemplateAreas='
+        <div>
+            <MeetingProvider>
+                <div className="controls-box">
+                    <Grid
+                        style={{ height: '30vh' }}
+                        gridGap=".25rem"
+                        css="padding: 0px"
+                        gridAutoFlow=""
+                        gridTemplateColumns="5fr 1fr 1fr 1fr 1fr"
+                        gridTemplateRows="1fr 1fr"
+                        gridTemplateAreas='
               "blank blank blank blank header"
               "form button button button button"
           '
-            >
-                <Cell gridArea="header" css="height: 75px">
-                    <Flex layout="fill-space">
-                        <Navbar flexDirection="row" container height="100%">
-                            <Flex marginTop="auto">
-                                <NavbarItem
-                                    icon={<LeaveMeeting />}
-                                    onClick={signOut}
-                                    label="Sign Out"
-                                    showLabel="true"
-                                />
+                    >
+                        <Cell gridArea="header" css="height: 75px">
+                            <Flex layout="fill-space">
+                                <Navbar flexDirection="row" container height="100%">
+                                    <Flex marginTop="auto">
+                                        <NavbarItem
+                                            icon={<LeaveMeeting />}
+                                            onClick={signOut}
+                                            label="Sign Out"
+                                            showLabel="true"
+                                        />
+                                    </Flex>
+                                </Navbar>
                             </Flex>
-                        </Navbar>
-                    </Flex>
-                </Cell>
-                <ControlBar showLabels={true} responsive={true} layout="undocked-horizontal" css="margin: 100px">
-                    <Cell gridArea="form" css="width: 450px">
-                        <FormField
-                            field={Input}
-                            label="Phone Number"
-                            css="width: 400px; padding: 20px"
-                            value={phoneNumber}
-                            fieldProps={{
-                                phoneNumber: 'phoneNumber',
-                                placeholder: 'Enter Phone Number to Dial',
-                            }}
-                            onChange={handlePhoneChange}
-                            layout="horizontal"
-                            className="phone-form"
-                        />
-                    </Cell>
-                    <Cell gridArea="button">
-                        <ControlBarButton {...DialButtonProps} />
-                    </Cell>
-                    <Cell gridArea="button">
-                        <ControlBarButton {...EndButtonProps} />
-                    </Cell>
-                    <Cell gridArea="button">
-                        <AudioInputControl />
-                    </Cell>
-                    <Cell gridArea="button">
-                        <AudioOutputControl />
-                    </Cell>
-                </ControlBar>
-            </Grid>
-            <div id="video"></div>
+                        </Cell>
+                        <ControlBar
+                            showLabels={true}
+                            responsive={true}
+                            layout="undocked-horizontal"
+                            css="margin: 100px"
+                        >
+                            <Cell gridArea="form" css="width: 450px">
+                                <FormField
+                                    field={Input}
+                                    label="Phone Number"
+                                    css="width: 400px; padding: 20px"
+                                    value={phoneNumber}
+                                    fieldProps={{
+                                        phoneNumber: 'phoneNumber',
+                                        placeholder: 'Enter Phone Number to Dial',
+                                    }}
+                                    onChange={handlePhoneChange}
+                                    layout="horizontal"
+                                    className="phone-form"
+                                />
+                            </Cell>
+                            <Cell gridArea="button">
+                                <ControlBarButton {...DialButtonProps} />
+                            </Cell>
+                            <Cell gridArea="button">
+                                <ControlBarButton {...EndButtonProps} />
+                            </Cell>
+                            <Cell gridArea="button">
+                                <AudioInputControl />
+                            </Cell>
+                            <Cell gridArea="button">
+                                <AudioOutputControl />
+                            </Cell>
+                        </ControlBar>
+                    </Grid>
+                    <div id="video"></div>
+                </div>
+            </MeetingProvider>
         </div>
     );
 };
 
-export default withAuthenticator(Wrapper);
+export default withAuthenticator(App);
