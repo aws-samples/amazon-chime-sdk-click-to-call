@@ -293,7 +293,7 @@
     "@aws-sdk/types" "^3.1.0"
     tslib "^1.11.1"
 
-"@aws-crypto/sha256-js@^2.0.0":
+"@aws-crypto/sha256-js@^2.0.0", "@aws-crypto/sha256-js@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@aws-crypto/sha256-js/-/sha256-js-2.0.1.tgz#79e1e6cf61f652ef2089c08d471c722ecf1626a9"
   integrity sha512-mbHTBSPBvg6o/mN/c18Z/zifM05eJrapj5ggoOIeHIWckvkv5VgGi7r/wYpt+QAO2ySKXLNvH2d8L7bne4xrMQ==
@@ -1898,6 +1898,13 @@
   integrity sha512-pzsGOHtU2eGca4NJgFg94lLaeXDOg8pcS9sVt4f9LmtUGbrqRveeyBv0XlkHeZW2n0IZBssPHipVYQFlk7iaRA==
   dependencies:
     tslib "^1.8.0"
+
+"@aws-sdk/util-hex-encoding@^3.47.0":
+  version "3.58.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/util-hex-encoding/-/util-hex-encoding-3.58.0.tgz#d999eb19329933a94563881540a06d7ac7f515f5"
+  integrity sha512-Rl+jXUzk/FJkOLYfUVYPhKa2aUmTpeobRP31l8IatQltSzDgLyRHO35f6UEs7Ztn5s1jbu/POatLAZ2WjbgVyg==
+  dependencies:
+    tslib "^2.3.1"
 
 "@aws-sdk/util-locate-window@^3.0.0":
   version "3.52.0"
@@ -3885,10 +3892,10 @@ ajv@^8.0.0, ajv@^8.8.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-amazon-chime-sdk-component-library-react@^2.15.0:
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/amazon-chime-sdk-component-library-react/-/amazon-chime-sdk-component-library-react-2.15.0.tgz#09a1b04939c979b9c1aaac82802c706118bdc00b"
-  integrity sha512-l8korQta0eYVktnNlaILyMm2Slh/TvTvqLaDj6mBhn9dzOUUeZFXkUiCiy1lk30DgrMSwuh/vlAEFWDsm5NJFw==
+amazon-chime-sdk-component-library-react@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/amazon-chime-sdk-component-library-react/-/amazon-chime-sdk-component-library-react-3.2.0.tgz#47c6ba88bc512ad3aa9589b533e632cc5a2e57a9"
+  integrity sha512-8QBsROJgYE2ETqCEVCK5FFnFpWN06VlXWwPC6fPXP0EzEkAMDLfrs7J52OToOrkFBPprgbk76+0j1oF8A/3PRA==
   dependencies:
     "@popperjs/core" "^2.2.2"
     fast-memoize "^2.5.2"
@@ -3897,11 +3904,13 @@ amazon-chime-sdk-component-library-react@^2.15.0:
     throttle-debounce "^2.3.0"
     uuid "^8.0.0"
 
-amazon-chime-sdk-js@^2.27.0:
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/amazon-chime-sdk-js/-/amazon-chime-sdk-js-2.28.0.tgz#bcd9ef95de87e6a13197215d60b16087eac8a4c4"
-  integrity sha512-ON0wMClROp8aiuPovO+gFE5Hob/+/rJXH0dDznm/V1PNL87arbF4od9hUXdRPWAfpQ2+cQzsHaYxYU1PCwVe0Q==
+amazon-chime-sdk-js@3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/amazon-chime-sdk-js/-/amazon-chime-sdk-js-3.4.0.tgz#499215704f96794a21bcbda5f0614869927b6cf0"
+  integrity sha512-aFh9lauUOZpnZVA7Jtb8AGc6SiDoNxoz/jbeyRrbzLhdfzxq4s+oZUQbyH7q16XiJBAYqFp2/Ll1fs9rgleY3A==
   dependencies:
+    "@aws-crypto/sha256-js" "^2.0.1"
+    "@aws-sdk/util-hex-encoding" "^3.47.0"
     "@types/dom-mediacapture-record" "^1.0.7"
     "@types/ua-parser-js" "^0.7.35"
     detect-browser "^5.2.0"
@@ -6877,6 +6886,11 @@ tslib@^2.0.0, tslib@^2.0.3, tslib@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
+
+tslib@^2.3.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
+  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
 type-is@~1.6.18:
   version "1.6.18"

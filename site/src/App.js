@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
     useMeetingManager,
+    MeetingProvider,
     FormField,
     Input,
     Dialer,
@@ -16,6 +17,7 @@ import {
     AudioInputControl,
     AudioOutputControl,
 } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 import { AmplifyConfig } from './Config';
 import { Amplify, API } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
@@ -25,8 +27,17 @@ Amplify.configure(AmplifyConfig);
 API.configure(AmplifyConfig);
 Amplify.Logger.LOG_LEVEL = 'DEBUG';
 
+const Wrapper = () => {
+    return (
+        <MeetingProvider>
+            <App />
+        </MeetingProvider>
+    );
+};
+
 const App = () => {
-    const meetingManager = new useMeetingManager();
+    // const meetingManager = new useMeetingManager();
+    const meetingManager = useMeetingManager();
     const [phoneNumber, setPhone] = useState('');
     const [meetingId, setMeetingId] = useState('');
 
@@ -67,15 +78,24 @@ const App = () => {
                     },
                 });
                 console.log(dialOutResponse);
-                const joinInfo = {
-                    meetingInfo: dialOutResponse.joinInfo.Meeting,
-                    attendeeInfo: dialOutResponse.joinInfo.Attendee[0],
+                // const joinInfo = {
+                //     meetingInfo: dialOutResponse.joinInfo.Meeting,
+                //     attendeeInfo: dialOutResponse.joinInfo.Attendee[0],
+                // };
+                // console.info(`joinInfo: ${JSON.stringify(joinInfo)}`);
+                const meetingSessionConfiguration = new MeetingSessionConfiguration(
+                    dialOutResponse.joinInfo.Meeting,
+                    dialOutResponse.joinInfo.Attendee[0],
+                );
+                const options = {
+                    enableWebAudio: true,
                 };
-                console.info(`joinInfo: ${JSON.stringify(joinInfo)}`);
-                await meetingManager.join(joinInfo);
-                await meetingManager.start();
+                // await meetingManager.join(joinInfo);
+                // await meetingManager.start();
+
+                await meetingManager.join(meetingSessionConfiguration, options);
                 console.log('Meeting started');
-                setMeetingId(joinInfo.meetingInfo.MeetingId);
+                setMeetingId(dialOutResponse.joinInfo.Meeting.MeetingId);
             } catch (err) {
                 console.log(err);
             }
@@ -160,4 +180,4 @@ const App = () => {
     );
 };
 
-export default withAuthenticator(App);
+export default withAuthenticator(Wrapper);
