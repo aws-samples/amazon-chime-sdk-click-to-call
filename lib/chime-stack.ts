@@ -1,21 +1,21 @@
 import { Construct } from 'constructs';
-import { Duration, NestedStackProps, NestedStack } from 'aws-cdk-lib';
+import { Duration, Stack } from 'aws-cdk-lib';
 import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as chime from 'cdk-amazon-chime-resources';
 
-interface ChimeProps extends NestedStackProps {
+interface ChimeProps {
   readonly meetingsTable: dynamodb.Table;
 }
 
-export class Chime extends NestedStack {
+export class Chime extends Construct {
   public readonly fromNumber: string;
   public readonly smaId: string;
 
   constructor(scope: Construct, id: string, props: ChimeProps) {
-    super(scope, id, props);
+    super(scope, id);
 
     const smaHandlerRole = new iam.Role(this, 'smaHandlerRole', {
       assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
@@ -59,7 +59,7 @@ export class Chime extends NestedStack {
     });
 
     const sipMediaApp = new chime.ChimeSipMediaApp(this, 'sipMediaApp', {
-      region: this.region,
+      region: Stack.of(this).region,
       endpoint: smaHandlerLambda.functionArn,
     });
 
@@ -68,7 +68,7 @@ export class Chime extends NestedStack {
       triggerValue: phoneNumber.phoneNumber,
       targetApplications: [
         {
-          region: this.region,
+          region: Stack.of(this).region,
           priority: 1,
           sipMediaApplicationId: sipMediaApp.sipMediaAppId,
         },

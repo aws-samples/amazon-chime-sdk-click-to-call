@@ -1,14 +1,14 @@
 import { Construct } from 'constructs';
-import { RemovalPolicy, NestedStackProps, NestedStack } from 'aws-cdk-lib';
+import { RemovalPolicy, Stack } from 'aws-cdk-lib';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 
-interface DatabaseProps extends NestedStackProps {}
+interface DatabaseProps {}
 
-export class Database extends NestedStack {
+export class Database extends Construct {
   public readonly meetingsTable: dynamodb.Table;
 
-  constructor(scope: Construct, id: string, props: DatabaseProps) {
-    super(scope, id, props);
+  constructor(scope: Construct, id: string) {
+    super(scope, id);
 
     this.meetingsTable = new dynamodb.Table(this, 'meetings', {
       partitionKey: {

@@ -14,14 +14,14 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@types/node": "^17.0.18",
-    "aws-cdk": "2.27.0",
+    "aws-cdk": "2.33.0",
     "babel-loader": "^8.2.3",
     "esbuild": "0",
     "ts-node": "10",
     "typescript": "~3.9.7"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.27.0",
+    "aws-cdk-lib": "2.33.0",
     "cdk-amazon-chime-resources": "0.1.21",
     "constructs": "^10.0.0",
     "react": "^17.0.2",

@@ -1,18 +1,18 @@
 import { Construct } from 'constructs';
-import { NestedStackProps, NestedStack, Duration } from 'aws-cdk-lib';
+import { Duration, Stack } from 'aws-cdk-lib';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as chime from 'cdk-amazon-chime-resources';
 
-interface AsteriskProps extends NestedStackProps {}
+interface AsteriskProps {}
 
-export class Asterisk extends NestedStack {
+export class Asterisk extends Construct {
   public readonly voiceConnectorArn: string;
   public readonly voiceConnectorPhone: string;
   public readonly instanceId: string;
 
-  constructor(scope: Construct, id: string, props: AsteriskProps) {
-    super(scope, id, props);
+  constructor(scope: Construct, id: string) {
+    super(scope, id);
 
     const vpc = new ec2.Vpc(this, 'VPC', {
       natGateways: 0,
@@ -153,7 +153,7 @@ export class Asterisk extends NestedStack {
               PhoneNumber: phoneNumber.phoneNumber,
               OutboundHostName: `${voiceConnector.voiceConnectorId}.voiceconnector.chime.aws`,
               IP: asteriskEip.ref,
-              REGION: this.region,
+              REGION: Stack.of(this).region,
             }),
             ec2.InitFile.fromFileInline(
               '/etc/install.sh',
@@ -210,7 +210,9 @@ export class Asterisk extends NestedStack {
       instanceId: ec2Instance.instanceId,
     });
 
-    this.voiceConnectorArn = `arn:aws:chime:${this.region}:${this.account}:vc/${voiceConnector.voiceConnectorId}`;
+    this.voiceConnectorArn = `arn:aws:chime:${Stack.of(this).region}:${
+      Stack.of(this).account
+    }:vc/${voiceConnector.voiceConnectorId}`;
     this.voiceConnectorPhone = phoneNumber.phoneNumber;
     this.instanceId = ec2Instance.instanceId;
   }

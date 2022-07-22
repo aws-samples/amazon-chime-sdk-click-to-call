@@ -1,5 +1,5 @@
 import { Construct } from 'constructs';
-import { Duration, NestedStackProps, NestedStack } from 'aws-cdk-lib';
+import { Duration } from 'aws-cdk-lib';
 import {
   RestApi,
   LambdaIntegration,
@@ -14,19 +14,19 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 
-interface InfrastructureProps extends NestedStackProps {
+interface InfrastructureProps {
   readonly fromPhoneNumber: string;
   readonly smaId: string;
   readonly meetingsTable: dynamodb.Table;
   readonly userPool: cognito.IUserPool;
 }
 
-export class Infrastructure extends NestedStack {
+export class Infrastructure extends Construct {
   public readonly apiUrl: string;
   public readonly clickToCallApiKeyValue: string;
 
   constructor(scope: Construct, id: string, props: InfrastructureProps) {
-    super(scope, id, props);
+    super(scope, id);
 
     const infrastructureRole = new iam.Role(this, 'infrastructureRole', {
       assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),

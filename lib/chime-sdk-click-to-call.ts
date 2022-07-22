@@ -12,7 +12,7 @@ export class ClickToCall extends Stack {
 
     const asteriskDeploy = this.node.tryGetContext('AsteriskDeploy');
     if (asteriskDeploy == 'y') {
-      const asterisk = new Asterisk(this, 'Asterisk', {});
+      const asterisk = new Asterisk(this, 'Asterisk');
       new CfnOutput(this, 'instanceId', { value: asterisk.instanceId });
       new CfnOutput(this, 'ssmCommand', {
         value: `aws ssm start-session --target ${asterisk.instanceId}`,
@@ -22,7 +22,7 @@ export class ClickToCall extends Stack {
       });
     }
 
-    const database = new Database(this, 'Database', {});
+    const database = new Database(this, 'Database');
 
     const allowedDomain = this.node.tryGetContext('AllowedDomain');
     const cognito = new Cognito(this, 'Cognito', {
