@@ -19,7 +19,7 @@ import {
 } from 'amazon-chime-sdk-component-library-react';
 import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 import { AmplifyConfig } from './Config';
-import { Amplify, API } from 'aws-amplify';
+import { Amplify, API, Auth } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
@@ -28,7 +28,6 @@ API.configure(AmplifyConfig);
 Amplify.Logger.LOG_LEVEL = 'DEBUG';
 
 const App = () => {
-    // const meetingManager = new useMeetingManager();
     const meetingManager = useMeetingManager();
     const [phoneNumber, setPhone] = useState('');
     const [meetingId, setMeetingId] = useState('');
@@ -74,11 +73,6 @@ const App = () => {
                     dialOutResponse.joinInfo.Meeting,
                     dialOutResponse.joinInfo.Attendee[0],
                 );
-                // const options = {
-                //     enableWebAudio: true,
-                // };
-
-                // await meetingManager.join(meetingSessionConfiguration, options);
                 await meetingManager.join(meetingSessionConfiguration);
                 await meetingManager.start();
                 console.log('Meeting started');

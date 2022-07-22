@@ -1,20 +1,16 @@
-import {
-  NestedStack,
-  NestedStackProps,
-  RemovalPolicy,
-  Duration,
-} from 'aws-cdk-lib';
+import { RemovalPolicy, Duration, Stack } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Runtime, Architecture } from 'aws-cdk-lib/aws-lambda';
+import { AccountRecovery, Mfa } from 'aws-cdk-lib/aws-cognito';
 
-export interface CognitoStackProps extends NestedStackProps {
+export interface CognitoStackProps {
   readonly allowedDomain: string;
 }
 
-export class Cognito extends NestedStack {
+export class Cognito extends Construct {
   public readonly authenticatedRole: iam.IRole;
   public readonly identityPool: cognito.CfnIdentityPool;
   public readonly userPool: cognito.IUserPool;
@@ -22,7 +18,7 @@ export class Cognito extends NestedStack {
   public readonly userPoolRegion: string;
 
   constructor(scope: Construct, id: string, props: CognitoStackProps) {
-    super(scope, id, props);
+    super(scope, id);
 
     const domainValidator = new NodejsFunction(this, 'domainValidator', {
       entry: 'src/cognitoDomain/domainValidator.js',
@@ -49,11 +45,17 @@ export class Cognito extends NestedStack {
         phone: false,
         email: true,
       },
+      accountRecovery: AccountRecovery.EMAIL_ONLY,
       standardAttributes: {
         email: {
           required: true, //Cognito bug with federation - If you make a user pool with required email field then the second google login attempt fails (https://github.com/aws-amplify/amplify-js/issues/3526)
           mutable: true,
         },
+      },
+      mfa: Mfa.REQUIRED,
+      mfaSecondFactor: {
+        sms: true,
+        otp: true,
       },
       userInvitation: {
         emailSubject: 'Your Click-To-Call web app temporary password',
@@ -176,6 +178,6 @@ export class Cognito extends NestedStack {
     this.identityPool = identityPool;
     this.userPool = userPool;
     this.userPoolClient = userPoolClient;
-    this.userPoolRegion = this.region;
+    this.userPoolRegion = Stack.of(this).region;
   }
 }
