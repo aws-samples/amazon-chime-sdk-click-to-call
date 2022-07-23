@@ -1,10 +1,6 @@
-import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
+import { App, CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Asterisk } from './asterisk-stack';
-import { Chime } from './chime-stack';
-import { Infrastructure } from './infrastructure-stack';
-import { Database } from './database-stack';
-import { Cognito } from './cognito';
+import { Asterisk, Chime, Database, Infrastructure, Cognito } from './';
 
 export class ClickToCall extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -12,7 +8,7 @@ export class ClickToCall extends Stack {
 
     const asteriskDeploy = this.node.tryGetContext('AsteriskDeploy');
     if (asteriskDeploy == 'y') {
-      const asterisk = new Asterisk(this, 'Asterisk', {});
+      const asterisk = new Asterisk(this, 'Asterisk');
       new CfnOutput(this, 'instanceId', { value: asterisk.instanceId });
       new CfnOutput(this, 'ssmCommand', {
         value: `aws ssm start-session --target ${asterisk.instanceId}`,
@@ -22,7 +18,7 @@ export class ClickToCall extends Stack {
       });
     }
 
-    const database = new Database(this, 'Database', {});
+    const database = new Database(this, 'Database');
 
     const allowedDomain = this.node.tryGetContext('AllowedDomain');
     const cognito = new Cognito(this, 'Cognito', {
@@ -48,3 +44,14 @@ export class ClickToCall extends Stack {
     });
   }
 }
+
+const devEnv = {
+  account: process.env.CDK_DEFAULT_ACCOUNT,
+  region: process.env.CDK_DEFAULT_REGION,
+};
+
+const app = new App();
+
+new ClickToCall(app, 'ClickToCall', { env: devEnv });
+
+app.synth();

@@ -1,21 +1,21 @@
-import { Construct } from 'constructs';
-import { Duration, NestedStackProps, NestedStack } from 'aws-cdk-lib';
+import { Duration, Stack } from 'aws-cdk-lib';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as chime from 'cdk-amazon-chime-resources';
+import { Construct } from 'constructs';
 
-interface ChimeProps extends NestedStackProps {
+interface ChimeProps {
   readonly meetingsTable: dynamodb.Table;
 }
 
-export class Chime extends NestedStack {
+export class Chime extends Construct {
   public readonly fromNumber: string;
   public readonly smaId: string;
 
   constructor(scope: Construct, id: string, props: ChimeProps) {
-    super(scope, id, props);
+    super(scope, id);
 
     const smaHandlerRole = new iam.Role(this, 'smaHandlerRole', {
       assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
@@ -37,7 +37,7 @@ export class Chime extends NestedStack {
     });
 
     const smaHandlerLambda = new NodejsFunction(this, 'smaHandlerLambda', {
-      entry: 'src/smaHandler/smaHandler.js',
+      entry: 'resources/smaHandler/smaHandler.js',
       bundling: {
         externalModules: ['aws-sdk'],
       },
@@ -59,16 +59,16 @@ export class Chime extends NestedStack {
     });
 
     const sipMediaApp = new chime.ChimeSipMediaApp(this, 'sipMediaApp', {
-      region: this.region,
+      region: Stack.of(this).region,
       endpoint: smaHandlerLambda.functionArn,
     });
 
-    const sipRule = new chime.ChimeSipRule(this, 'sipRule', {
+    new chime.ChimeSipRule(this, 'sipRule', {
       triggerType: chime.TriggerType.TO_PHONE_NUMBER,
       triggerValue: phoneNumber.phoneNumber,
       targetApplications: [
         {
-          region: this.region,
+          region: Stack.of(this).region,
           priority: 1,
           sipMediaApplicationId: sipMediaApp.sipMediaAppId,
         },

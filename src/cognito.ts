@@ -1,20 +1,16 @@
-import {
-  NestedStack,
-  NestedStackProps,
-  RemovalPolicy,
-  Duration,
-} from 'aws-cdk-lib';
-import { Construct } from 'constructs';
+import { RemovalPolicy, Duration, Stack } from 'aws-cdk-lib';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
+import { AccountRecovery, Mfa } from 'aws-cdk-lib/aws-cognito';
 import * as iam from 'aws-cdk-lib/aws-iam';
-import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Runtime, Architecture } from 'aws-cdk-lib/aws-lambda';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Construct } from 'constructs';
 
-export interface CognitoStackProps extends NestedStackProps {
+export interface CognitoStackProps {
   readonly allowedDomain: string;
 }
 
-export class Cognito extends NestedStack {
+export class Cognito extends Construct {
   public readonly authenticatedRole: iam.IRole;
   public readonly identityPool: cognito.CfnIdentityPool;
   public readonly userPool: cognito.IUserPool;
@@ -22,10 +18,10 @@ export class Cognito extends NestedStack {
   public readonly userPoolRegion: string;
 
   constructor(scope: Construct, id: string, props: CognitoStackProps) {
-    super(scope, id, props);
+    super(scope, id);
 
     const domainValidator = new NodejsFunction(this, 'domainValidator', {
-      entry: 'src/cognitoDomain/domainValidator.js',
+      entry: 'resources/cognitoDomain/domainValidator.js',
       bundling: {
         externalModules: ['aws-sdk'],
       },
@@ -37,7 +33,6 @@ export class Cognito extends NestedStack {
       },
     });
 
-    //create a User Pool
     const userPool = new cognito.UserPool(this, 'UserPool', {
       removalPolicy: RemovalPolicy.DESTROY,
       selfSignUpEnabled: true,
@@ -49,11 +44,21 @@ export class Cognito extends NestedStack {
         phone: false,
         email: true,
       },
+      accountRecovery: AccountRecovery.EMAIL_ONLY,
       standardAttributes: {
         email: {
-          required: true, //Cognito bug with federation - If you make a user pool with required email field then the second google login attempt fails (https://github.com/aws-amplify/amplify-js/issues/3526)
+          required: true,
           mutable: true,
         },
+      },
+<<<<<<< HEAD:src/cognito.ts
+      mfa: Mfa.OPTIONAL,
+=======
+      mfa: Mfa.REQUIRED,
+>>>>>>> d65f95d52ed1a87d3acbb56ee0d4ca44ba8977f5:lib/cognito.ts
+      mfaSecondFactor: {
+        sms: true,
+        otp: true,
       },
       userInvitation: {
         emailSubject: 'Your Click-To-Call web app temporary password',
@@ -67,10 +72,6 @@ export class Cognito extends NestedStack {
       },
     });
 
-    //SAML Federation
-    const urlDefs = ['https://localhost:8080', 'https://localhost:3000'];
-
-    //create a User Pool Client
     const userPoolClient = new cognito.UserPoolClient(this, 'UserPoolClient', {
       userPool: userPool,
       generateSecret: false,
@@ -84,12 +85,11 @@ export class Cognito extends NestedStack {
       refreshTokenValidity: Duration.hours(1),
     });
 
-    //create an Identity Pool
     const identityPool = new cognito.CfnIdentityPool(
       this,
       'cognitoIdentityPool',
       {
-        identityPoolName: `cognitoIdentityPool`,
+        identityPoolName: 'cognitoIdentityPool',
         allowUnauthenticatedIdentities: false,
         cognitoIdentityProviders: [
           {
@@ -100,7 +100,6 @@ export class Cognito extends NestedStack {
       },
     );
 
-    //Cognito Identity Pool Roles
     const unauthenticatedRole = new iam.Role(
       this,
       'CognitoDefaultUnauthenticatedRole',
@@ -108,6 +107,7 @@ export class Cognito extends NestedStack {
         assumedBy: new iam.FederatedPrincipal(
           'cognito-identity.amazonaws.com',
           {
+            // eslint-disable-next-line quote-props
             StringEquals: {
               'cognito-identity.amazonaws.com:aud': identityPool.ref,
             },
@@ -135,6 +135,7 @@ export class Cognito extends NestedStack {
         assumedBy: new iam.FederatedPrincipal(
           'cognito-identity.amazonaws.com',
           {
+            // eslint-disable-next-line quote-props
             StringEquals: {
               'cognito-identity.amazonaws.com:aud': identityPool.ref,
             },
@@ -168,14 +169,9 @@ export class Cognito extends NestedStack {
     });
 
     this.authenticatedRole = authenticatedRole;
-
-    /**************************************************************************************************************
-     * Stack Outputs *
-     **************************************************************************************************************/
-
     this.identityPool = identityPool;
     this.userPool = userPool;
     this.userPoolClient = userPoolClient;
-    this.userPoolRegion = this.region;
+    this.userPoolRegion = Stack.of(this).region;
   }
 }

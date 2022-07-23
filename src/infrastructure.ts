@@ -1,5 +1,4 @@
-import { Construct } from 'constructs';
-import { Duration, NestedStackProps, NestedStack } from 'aws-cdk-lib';
+import { Duration } from 'aws-cdk-lib';
 import {
   RestApi,
   LambdaIntegration,
@@ -8,25 +7,25 @@ import {
   CognitoUserPoolsAuthorizer,
   AuthorizationType,
 } from 'aws-cdk-lib/aws-apigateway';
+import * as cognito from 'aws-cdk-lib/aws-cognito';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
-import * as cognito from 'aws-cdk-lib/aws-cognito';
+import { Construct } from 'constructs';
 
-interface InfrastructureProps extends NestedStackProps {
+interface InfrastructureProps {
   readonly fromPhoneNumber: string;
   readonly smaId: string;
   readonly meetingsTable: dynamodb.Table;
   readonly userPool: cognito.IUserPool;
 }
 
-export class Infrastructure extends NestedStack {
+export class Infrastructure extends Construct {
   public readonly apiUrl: string;
-  public readonly clickToCallApiKeyValue: string;
 
   constructor(scope: Construct, id: string, props: InfrastructureProps) {
-    super(scope, id, props);
+    super(scope, id);
 
     const infrastructureRole = new iam.Role(this, 'infrastructureRole', {
       assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
@@ -48,8 +47,8 @@ export class Infrastructure extends NestedStack {
     });
 
     const callControlLambda = new NodejsFunction(this, 'callControlLambda', {
-      entry: 'src/callControl/callControl.js',
-      depsLockFilePath: 'src/callControl/package-lock.json',
+      entry: 'resources/callControl/callControl.js',
+      depsLockFilePath: 'resources/callControl/package-lock.json',
       bundling: {
         externalModules: ['aws-sdk'],
         nodeModules: ['uuid'],
@@ -68,8 +67,8 @@ export class Infrastructure extends NestedStack {
     props.meetingsTable.grantReadWriteData(callControlLambda);
 
     const updateCallLambda = new NodejsFunction(this, 'updateCallLambda', {
-      entry: 'src/updateCall/updateCall.js',
-      depsLockFilePath: 'src/updateCall/package-lock.json',
+      entry: 'resources/updateCall/updateCall.js',
+      depsLockFilePath: 'resources/updateCall/package-lock.json',
       bundling: {
         externalModules: ['aws-sdk'],
         nodeModules: ['uuid'],
