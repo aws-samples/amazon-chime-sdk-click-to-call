@@ -1,10 +1,10 @@
 import { RemovalPolicy, Duration, Stack } from 'aws-cdk-lib';
-import { Construct } from 'constructs';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-import { Runtime, Architecture } from 'aws-cdk-lib/aws-lambda';
 import { AccountRecovery, Mfa } from 'aws-cdk-lib/aws-cognito';
+import * as iam from 'aws-cdk-lib/aws-iam';
+import { Runtime, Architecture } from 'aws-cdk-lib/aws-lambda';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Construct } from 'constructs';
 
 export interface CognitoStackProps {
   readonly allowedDomain: string;
@@ -21,7 +21,7 @@ export class Cognito extends Construct {
     super(scope, id);
 
     const domainValidator = new NodejsFunction(this, 'domainValidator', {
-      entry: 'src/cognitoDomain/domainValidator.js',
+      entry: 'resources/cognitoDomain/domainValidator.js',
       bundling: {
         externalModules: ['aws-sdk'],
       },
@@ -33,7 +33,6 @@ export class Cognito extends Construct {
       },
     });
 
-    //create a User Pool
     const userPool = new cognito.UserPool(this, 'UserPool', {
       removalPolicy: RemovalPolicy.DESTROY,
       selfSignUpEnabled: true,
@@ -48,11 +47,11 @@ export class Cognito extends Construct {
       accountRecovery: AccountRecovery.EMAIL_ONLY,
       standardAttributes: {
         email: {
-          required: true, //Cognito bug with federation - If you make a user pool with required email field then the second google login attempt fails (https://github.com/aws-amplify/amplify-js/issues/3526)
+          required: true,
           mutable: true,
         },
       },
-      mfa: Mfa.REQUIRED,
+      mfa: Mfa.OPTIONAL,
       mfaSecondFactor: {
         sms: true,
         otp: true,
@@ -69,10 +68,6 @@ export class Cognito extends Construct {
       },
     });
 
-    //SAML Federation
-    const urlDefs = ['https://localhost:8080', 'https://localhost:3000'];
-
-    //create a User Pool Client
     const userPoolClient = new cognito.UserPoolClient(this, 'UserPoolClient', {
       userPool: userPool,
       generateSecret: false,
@@ -86,12 +81,11 @@ export class Cognito extends Construct {
       refreshTokenValidity: Duration.hours(1),
     });
 
-    //create an Identity Pool
     const identityPool = new cognito.CfnIdentityPool(
       this,
       'cognitoIdentityPool',
       {
-        identityPoolName: `cognitoIdentityPool`,
+        identityPoolName: 'cognitoIdentityPool',
         allowUnauthenticatedIdentities: false,
         cognitoIdentityProviders: [
           {
@@ -102,7 +96,6 @@ export class Cognito extends Construct {
       },
     );
 
-    //Cognito Identity Pool Roles
     const unauthenticatedRole = new iam.Role(
       this,
       'CognitoDefaultUnauthenticatedRole',
@@ -110,6 +103,7 @@ export class Cognito extends Construct {
         assumedBy: new iam.FederatedPrincipal(
           'cognito-identity.amazonaws.com',
           {
+            // eslint-disable-next-line quote-props
             StringEquals: {
               'cognito-identity.amazonaws.com:aud': identityPool.ref,
             },
@@ -137,6 +131,7 @@ export class Cognito extends Construct {
         assumedBy: new iam.FederatedPrincipal(
           'cognito-identity.amazonaws.com',
           {
+            // eslint-disable-next-line quote-props
             StringEquals: {
               'cognito-identity.amazonaws.com:aud': identityPool.ref,
             },
@@ -170,11 +165,6 @@ export class Cognito extends Construct {
     });
 
     this.authenticatedRole = authenticatedRole;
-
-    /**************************************************************************************************************
-     * Stack Outputs *
-     **************************************************************************************************************/
-
     this.identityPool = identityPool;
     this.userPool = userPool;
     this.userPoolClient = userPoolClient;
