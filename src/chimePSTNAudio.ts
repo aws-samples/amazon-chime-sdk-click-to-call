@@ -1,10 +1,10 @@
-import { Construct } from 'constructs';
 import { Duration, Stack } from 'aws-cdk-lib';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as chime from 'cdk-amazon-chime-resources';
+import { Construct } from 'constructs';
 
 interface ChimeProps {
   readonly meetingsTable: dynamodb.Table;
@@ -37,7 +37,7 @@ export class Chime extends Construct {
     });
 
     const smaHandlerLambda = new NodejsFunction(this, 'smaHandlerLambda', {
-      entry: 'src/smaHandler/smaHandler.js',
+      entry: 'resources/smaHandler/smaHandler.js',
       bundling: {
         externalModules: ['aws-sdk'],
       },
@@ -63,7 +63,7 @@ export class Chime extends Construct {
       endpoint: smaHandlerLambda.functionArn,
     });
 
-    const sipRule = new chime.ChimeSipRule(this, 'sipRule', {
+    new chime.ChimeSipRule(this, 'sipRule', {
       triggerType: chime.TriggerType.TO_PHONE_NUMBER,
       triggerValue: phoneNumber.phoneNumber,
       targetApplications: [

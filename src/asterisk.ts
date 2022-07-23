@@ -1,10 +1,8 @@
-import { Construct } from 'constructs';
 import { Duration, Stack } from 'aws-cdk-lib';
-import * as iam from 'aws-cdk-lib/aws-iam';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import * as chime from 'cdk-amazon-chime-resources';
-
-interface AsteriskProps {}
+import { Construct } from 'constructs';
 
 export class Asterisk extends Construct {
   public readonly voiceConnectorArn: string;
@@ -101,7 +99,7 @@ export class Asterisk extends Construct {
       this,
       'voiceConnectorPhoneNumber',
       {
-        phoneState: 'IL',
+        phoneState: 'CA',
         phoneCountry: chime.PhoneCountry.US,
         phoneProductType: chime.PhoneProductType.VC,
         phoneNumberType: chime.PhoneNumberType.LOCAL,
@@ -139,8 +137,8 @@ export class Asterisk extends Construct {
     const ec2Instance = new ec2.Instance(this, 'Instance', {
       vpc,
       instanceType: ec2.InstanceType.of(
-        ec2.InstanceClass.T4G,
-        ec2.InstanceSize.MICRO,
+        ec2.InstanceClass.C6G,
+        ec2.InstanceSize.MEDIUM,
       ),
       machineImage: ami,
       init: ec2.CloudFormationInit.fromConfigSets({
@@ -157,7 +155,7 @@ export class Asterisk extends Construct {
             }),
             ec2.InitFile.fromFileInline(
               '/etc/install.sh',
-              './src/asteriskConfig/install.sh',
+              './resources/asteriskConfig/install.sh',
             ),
             ec2.InitCommand.shellCommand('chmod +x /etc/install.sh'),
             ec2.InitCommand.shellCommand('cd /tmp'),
@@ -168,27 +166,27 @@ export class Asterisk extends Construct {
           config: new ec2.InitConfig([
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/pjsip.conf',
-              './src/asteriskConfig/pjsip.conf',
+              './resources/asteriskConfig/pjsip.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/asterisk.conf',
-              './src/asteriskConfig/asterisk.conf',
+              './resources/asteriskConfig/asterisk.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/logger.conf',
-              './src/asteriskConfig/logger.conf',
+              './resources/asteriskConfig/logger.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/extensions.conf',
-              './src/asteriskConfig/extensions.conf',
+              './resources/asteriskConfig/extensions.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/modules.conf',
-              './src/asteriskConfig/modules.conf',
+              './resources/asteriskConfig/modules.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/config_asterisk.sh',
-              './src/asteriskConfig/config_asterisk.sh',
+              './resources/asteriskConfig/config_asterisk.sh',
             ),
             ec2.InitCommand.shellCommand('chmod +x /etc/config_asterisk.sh'),
             ec2.InitCommand.shellCommand('/etc/config_asterisk.sh'),

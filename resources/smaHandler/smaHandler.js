@@ -1,4 +1,3 @@
-// src/smaHandler/smaHandler.js
 var AWS = require('aws-sdk');
 var chime = new AWS.Chime({
   region: 'us-east-1',

@@ -171,7 +171,7 @@ In parallel to the response being returned to the client, a call is made through
 
 [callControl.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/a4414ee7beed36a12fef005522e5372cab7f941e/src/callControl/callControl.js#L106-L126)
 
-```
+```javascript
 var params = {
   FromPhoneNumber: fromNumber,
   SipMediaApplicationId: smaId,
@@ -223,24 +223,28 @@ X-VoiceConnector-ID: dn0pcxvetmicgerjqmze5c
 
 ## To Use
 
-##### To Deploy AWS CDK
+### Configure Deployment
 
-```
-yarn
-./deploy.sh
+```bash
+./configure.sh
 ```
 
-This will run a bash script to determine optional context for the deployment.
+This will configure the options for deployment.
 
 - If the Asterisk component will be deployed
 - The allowed domain name for Amazon Cognito signup. If a domain is entered, only email addresses with the chosen domain will be allowed to register an account with Cognito. If no domain is entered, any email address can be used. Domain should be entered as `example.com`.
 
-Alternatively, these can be entered via directly:
-`yarn cdk deploy --context AsteriskDeploy=[y|n] --context AllowedDomain=<DOMAIN_ALLOWED_TO_REGISTER> -O site/src/cdk-outputs.json`
+> **_NOTE:_** If the deployment is not configured, it will deploy with no Asterisk and no restriction on allowed domains for Amazon Cognito accounts.
 
-##### To use the client:
+### Deploy CDK
 
+```bash
+yarn launch
 ```
+
+### Use Client
+
+```bash
 cd site
 yarn
 yarn run start
@@ -252,13 +256,13 @@ This will launch a local client that can be used to place outbound calls. This c
 
 ![Client](images/client.png)
 
-##### To connect to the Asterisk server:
+#### Connect to Asterisk
 
-```
+```bash
 aws ssm start-session --target INSTANCE_ID
 ```
 
-### Components Created
+## Components Created
 
 - callControl Lambda
 - updateCall Lambda
@@ -274,7 +278,7 @@ aws ssm start-session --target INSTANCE_ID
   - Amazon Chime Voice Connector
   - Amazon Chime Phone Number
 
-## To Clean Up
+## Clean Up
 
 `yarn cdk destroy`
 
