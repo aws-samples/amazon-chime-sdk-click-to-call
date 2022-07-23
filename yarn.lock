@@ -1216,7 +1216,11 @@ at-least-node@^1.0.0:
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 aws-cdk-lib@^2.30.0:
+=======
+aws-cdk-lib@2.33.0:
+>>>>>>> d65f95d52ed1a87d3acbb56ee0d4ca44ba8977f5
 =======
 aws-cdk-lib@2.33.0:
 >>>>>>> d65f95d52ed1a87d3acbb56ee0d4ca44ba8977f5
@@ -1235,7 +1239,11 @@ aws-cdk-lib@2.33.0:
     yaml "1.10.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 aws-cdk@^2.30.0:
+=======
+aws-cdk@2.33.0:
+>>>>>>> d65f95d52ed1a87d3acbb56ee0d4ca44ba8977f5
 =======
 aws-cdk@2.33.0:
 >>>>>>> d65f95d52ed1a87d3acbb56ee0d4ca44ba8977f5
@@ -3496,15 +3504,21 @@ jsonfile@^6.0.1:
     graceful-fs "^4.1.6"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 jsonlines@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsonlines/-/jsonlines-0.1.1.tgz#4fcd246dc5d0e38691907c44ab002f782d1d94cc"
   integrity sha512-ekDrAGso79Cvf+dtm+mL8OBI2bmAOt3gssYs833De/C9NmIpWDWyUO4zPgB5x2/OhY366dkhgfPMYfwZF7yOZA==
 =======
+=======
+>>>>>>> d65f95d52ed1a87d3acbb56ee0d4ca44ba8977f5
 jsonschema@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jsonschema/-/jsonschema-1.4.1.tgz#cc4c3f0077fb4542982973d8a083b6b34f482dab"
   integrity sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==
+<<<<<<< HEAD
+>>>>>>> d65f95d52ed1a87d3acbb56ee0d4ca44ba8977f5
+=======
 >>>>>>> d65f95d52ed1a87d3acbb56ee0d4ca44ba8977f5
 
 jsonparse@^1.3.1:
