@@ -51,11 +51,7 @@ export class Cognito extends Construct {
           mutable: true,
         },
       },
-<<<<<<< HEAD:src/cognito.ts
       mfa: Mfa.OPTIONAL,
-=======
-      mfa: Mfa.REQUIRED,
->>>>>>> d65f95d52ed1a87d3acbb56ee0d4ca44ba8977f5:lib/cognito.ts
       mfaSecondFactor: {
         sms: true,
         otp: true,
