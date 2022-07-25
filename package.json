@@ -41,14 +41,14 @@
     "jest-junit": "^13",
     "json-schema": "^0.4.0",
     "npm-check-updates": "^15",
-    "projen": "^0.59.7",
+    "projen": "^0.60.0",
     "ts-jest": "^28.0.7",
     "ts-node": "10.9.1",
     "typescript": "^4.7.4"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.30.0",
-    "cdk-amazon-chime-resources": "^0.1.56",
+    "cdk-amazon-chime-resources": "^0.1.58",
     "constructs": "^10.0.5"
   },
   "license": "MIT-0",
