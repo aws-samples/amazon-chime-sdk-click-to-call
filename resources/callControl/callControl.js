@@ -120,8 +120,8 @@ async function executeDial(event, joinInfo, toNumber) {
     SipMediaApplicationId: smaId,
     ToPhoneNumber: toNumber,
     SipHeaders: {
-      // "User-to-User": joinInfo.Meeting.MeetingId
-      'User-to-User': event.requestContext.authorizer.claims.email,
+      'User-to-User': joinInfo.Meeting.MeetingId,
+      // 'User-to-User': event.requestContext.authorizer.claims.email,
     },
   };
   console.info('Dial Params: ' + JSON.stringify(params));
