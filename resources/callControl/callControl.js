@@ -1,3 +1,5 @@
+'use strict';
+
 // callControl.js
 var { v4: uuidv4 } = require('uuid');
 var AWS = require('aws-sdk');
@@ -9,9 +11,9 @@ var docClient = new AWS.DynamoDB.DocumentClient();
 var fromNumber = process.env['FROM_NUMBER'];
 var smaId = process.env['SMA_ID'];
 var callInfoTable = process.env['MEETINGS_TABLE_NAME'];
+var numberToCall = process.env['NUMBER_TO_CALL'];
 var region = 'us-east-1';
-
-const response = {
+var response = {
   statusCode: 200,
   body: '',
   headers: {
@@ -21,17 +23,26 @@ const response = {
     'Content-Type': 'application/json',
   },
 };
-
-const EXCLUDE_DIAL_TO =
+var EXCLUDE_DIAL_TO =
   /^\+((1900)|(1976)|(1268)|(1284)|(1473)|(1649)|(1664)|(1767)|(1809)|(1829)|(1849)|(1876))(\d{7})$/;
-
-const INCLUDE_DIAL_TO = /^\+1[2-9]\d{2}[2-9]\d{6}$/;
-
+var INCLUDE_DIAL_TO = /^\+1[2-9]\d{2}[2-9]\d{6}$/;
 exports.handler = async (event, context) => {
+  console.info(`Event: ${JSON.stringify(event)}`);
+  console.info(`Context: ${JSON.stringify(context)}`);
   const body = JSON.parse(event.body);
   console.info('Body: ' + JSON.stringify(body));
-  let toNumber = body.toNumber;
-
+  let toNumber = '';
+  if (body.toNumber) {
+    toNumber = body.toNumber;
+  } else {
+    if (process.env.hasOwnProperty('NUMBER_TO_CALL')) {
+      toNumber = numberToCall;
+    } else {
+      response.statusCode = 503;
+      response.body = 'Missing Number';
+      return response;
+    }
+  }
   toNumber = toNumber.replace(/\s+/g, '');
   toNumber = toNumber.replace('(', '');
   toNumber = toNumber.replace(')', '');
@@ -43,22 +54,25 @@ exports.handler = async (event, context) => {
       toNumber = '+' + toNumber;
     }
   }
-
-  if (EXCLUDE_DIAL_TO.test(toNumber) || !INCLUDE_DIAL_TO.test(toNumber)) {
+  if (
+    !EXCLUDE_DIAL_TO.test(toNumber) ||
+    INCLUDE_DIAL_TO.test(toNumber) ||
+    toNumber == ''
+  ) {
+    const joinInfo = await createMeeting();
+    const dialInfo = await executeDial(event, joinInfo, toNumber);
+    await putInfo(joinInfo, dialInfo);
+    const responseInfo = JSON.stringify({ joinInfo, dialInfo });
+    console.info('Repsonse to Client: ' + responseInfo);
+    response.statusCode = 200;
+    response.body = responseInfo;
+    return response;
+  } else {
     console.log('Bad Area Code');
     response.statusCode = 503;
     response.body = 'Invalid Called Number';
     return response;
   }
-
-  const joinInfo = await createMeeting();
-  const dialInfo = await executeDial(joinInfo, toNumber);
-  await putInfo(joinInfo, dialInfo);
-  const responseInfo = JSON.stringify({ joinInfo, dialInfo });
-  console.info('Repsonse to Client: ' + responseInfo);
-  response.statusCode = 200;
-  response.body = responseInfo;
-  return response;
 };
 async function createMeeting() {
   const meetingRequest = {
@@ -71,7 +85,6 @@ async function createMeeting() {
   );
   const meetingInfo = await chime.createMeeting(meetingRequest).promise();
   console.info('Meeting Info: ' + JSON.stringify(meetingInfo));
-
   const clientAttendeeRequest = {
     MeetingId: meetingInfo.Meeting.MeetingId,
     ExternalUserId: 'Client-User',
@@ -83,7 +96,6 @@ async function createMeeting() {
     .createAttendee(clientAttendeeRequest)
     .promise();
   console.info('Client Attendee Info: ' + JSON.stringify(clientAttendeeInfo));
-
   const phoneAttendeeRequest = {
     MeetingId: meetingInfo.Meeting.MeetingId,
     ExternalUserId: 'Phone-User',
@@ -95,7 +107,6 @@ async function createMeeting() {
     .createAttendee(phoneAttendeeRequest)
     .promise();
   console.info('Client Attendee Info: ' + JSON.stringify(phoneAttendeeInfo));
-
   const joinInfo = {
     Meeting: meetingInfo.Meeting,
     Attendee: [clientAttendeeInfo.Attendee, phoneAttendeeInfo.Attendee],
@@ -103,13 +114,14 @@ async function createMeeting() {
   console.info('joinInfo: ' + JSON.stringify(joinInfo));
   return joinInfo;
 }
-async function executeDial(joinInfo, toNumber) {
+async function executeDial(event, joinInfo, toNumber) {
   var params = {
     FromPhoneNumber: fromNumber,
     SipMediaApplicationId: smaId,
     ToPhoneNumber: toNumber,
     SipHeaders: {
-      'User-to-User': joinInfo.Meeting.MeetingId,
+      // "User-to-User": joinInfo.Meeting.MeetingId
+      'User-to-User': event.requestContext.authorizer.claims.email,
     },
   };
   console.info('Dial Params: ' + JSON.stringify(params));

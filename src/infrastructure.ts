@@ -45,7 +45,6 @@ export class Infrastructure extends Construct {
         ),
       ],
     });
-
     const callControlLambda = new NodejsFunction(this, 'callControlLambda', {
       entry: 'resources/callControl/callControl.js',
       depsLockFilePath: 'resources/callControl/package-lock.json',

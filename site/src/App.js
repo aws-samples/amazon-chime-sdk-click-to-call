@@ -59,9 +59,7 @@ const App = () => {
 
     const handleDialOut = async (event) => {
         event.preventDefault();
-        if (!VALID_PHONE_NUMBER.test(phoneNumber)) {
-            console.log('Bad Phone Number');
-        } else {
+        if (VALID_PHONE_NUMBER.test(phoneNumber) || phoneNumber == '') {
             try {
                 const dialOutResponse = await API.post('callControlAPI', 'dial', {
                     body: {
@@ -80,6 +78,8 @@ const App = () => {
             } catch (err) {
                 console.log(err);
             }
+        } else {
+            console.log('Bad Phone Number');
         }
     };
 

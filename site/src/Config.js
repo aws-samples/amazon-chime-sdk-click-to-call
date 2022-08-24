@@ -1,12 +1,11 @@
-import cdkExports from './cdk-outputs.json';
-const configData = cdkExports.ClickToCall;
+const config = await fetch('./config.json').then((response) => response.json());
 import { Auth } from 'aws-amplify';
 
 export const AmplifyConfig = {
     Auth: {
-        region: configData.USERPOOLREGION,
-        userPoolId: configData.USERPOOLID,
-        userPoolWebClientId: configData.USERPOOLCLIENT,
+        region: config.userPoolRegion,
+        userPoolId: config.userPoolId,
+        userPoolWebClientId: config.userPoolClientId,
         mandatorySignIn: true,
         cookieStorage: {
             domain: `${window.location.hostname}`,
@@ -22,14 +21,14 @@ export const AmplifyConfig = {
         endpoints: [
             {
                 name: 'callControlAPI',
-                endpoint: configData.APIURL,
+                endpoint: config.apiUrl,
                 custom_header: async () => {
                     return { Authorization: `${(await Auth.currentSession()).getIdToken().getJwtToken()}` };
                 },
             },
             {
                 name: 'updateCallAPI',
-                endpoint: configData.APIURL,
+                endpoint: config.apiUrl,
                 custom_header: async () => {
                     return { Authorization: `${(await Auth.currentSession()).getIdToken().getJwtToken()}` };
                 },

@@ -1,6 +1,6 @@
 const { awscdk } = require('projen');
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: '2.30.0',
+  cdkVersion: '2.38.1',
   license: 'MIT-0',
   author: 'Court Schuett',
   copyrightOwner: 'Amazon.com, Inc.',
@@ -20,13 +20,9 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   },
   autoApproveUpgrades: true,
   devDeps: ['@types/prettier@2.6.0'],
-  deps: ['cdk-amazon-chime-resources'],
+  deps: ['cdk-amazon-chime-resources', 'fs-extra', '@types/fs-extra'],
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   defaultReleaseBranch: 'main',
-  scripts: {
-    launch:
-      'yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy -O site/src/cdk-outputs.json --no-rollback',
-  },
 });
 
 const common_exclude = [
@@ -36,6 +32,17 @@ const common_exclude = [
   'dependabot.yml',
   '.DS_Store',
 ];
+
+project.addTask('launch', {
+  exec: 'yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy --hotswap && yarn configLocal',
+});
+project.addTask('getBucket', {
+  exec: "aws cloudformation describe-stacks --stack-name ClickToCall --query 'Stacks[0].Outputs[?OutputKey==`siteBucket`].OutputValue' --output text",
+});
+
+project.addTask('configLocal', {
+  exec: 'aws s3 cp s3://$(yarn run --silent getBucket)/config.json site/public/',
+});
 
 project.gitignore.exclude(...common_exclude);
 project.synth();
