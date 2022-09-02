@@ -16,6 +16,7 @@ import {
     Flex,
     AudioInputControl,
     AudioOutputControl,
+    Button,
 } from 'amazon-chime-sdk-component-library-react';
 import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 import { AmplifyConfig } from './Config';
@@ -31,6 +32,7 @@ const App = () => {
     const meetingManager = useMeetingManager();
     const [phoneNumber, setPhone] = useState('');
     const [meetingId, setMeetingId] = useState('');
+    const [transactionId, setTransactionId] = useState('');
 
     const DialButtonProps = {
         icon: <Dialer />,
@@ -40,7 +42,7 @@ const App = () => {
 
     const EndButtonProps = {
         icon: <Phone />,
-        onClick: (event) => handleUpdate(event),
+        onClick: (event) => handleEnd(event),
         label: 'End',
     };
 
@@ -74,7 +76,9 @@ const App = () => {
                 await meetingManager.join(meetingSessionConfiguration);
                 await meetingManager.start();
                 console.log('Meeting started');
+                console.log(dialOutResponse);
                 setMeetingId(dialOutResponse.joinInfo.Meeting.MeetingId);
+                setTransactionId(dialOutResponse.dialInfo.SipMediaApplicationCall.TransactionId);
             } catch (err) {
                 console.log(err);
             }
@@ -83,13 +87,29 @@ const App = () => {
         }
     };
 
-    const handleUpdate = async (event) => {
+    const handleEnd = async (event) => {
         event.preventDefault();
         try {
             const updateResponse = await API.post('updateCallAPI', 'update', {
                 body: {
                     update: 'end',
                     meetingId: meetingId,
+                },
+            });
+            console.info(`updateResponse: ${JSON.stringify(updateResponse)}`);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const handleSendDigit = async (digit) => {
+        event.preventDefault();
+        try {
+            const updateResponse = await API.post('updateCallAPI', 'update', {
+                body: {
+                    update: 'digit',
+                    digit: digit,
+                    transactionId: transactionId,
                 },
             });
             console.info(`updateResponse: ${JSON.stringify(updateResponse)}`);
@@ -162,6 +182,26 @@ const App = () => {
                                 <AudioOutputControl />
                             </Cell>
                         </ControlBar>
+                        <Grid
+                            gridTemplateColumns="1fr 1fr 1fr"
+                            gridTemplateRows="1fr 1fr 1fr 1fr"
+                            style={{ height: '10vh' }}
+                            gridGap=".25rem"
+                            css="padding: 0px"
+                        >
+                            <Button label="1" onClick={() => handleSendDigit('1')}></Button>
+                            <Button label="2" onClick={() => handleSendDigit('2')}></Button>
+                            <Button label="3" onClick={() => handleSendDigit('3')}></Button>
+                            <Button label="4" onClick={() => handleSendDigit('4')}></Button>
+                            <Button label="5" onClick={() => handleSendDigit('5')}></Button>
+                            <Button label="6" onClick={() => handleSendDigit('6')}></Button>
+                            <Button label="7" onClick={() => handleSendDigit('7')}></Button>
+                            <Button label="8" onClick={() => handleSendDigit('8')}></Button>
+                            <Button label="9" onClick={() => handleSendDigit('9')}></Button>
+                            <Button label="*" onClick={() => handleSendDigit('*')}></Button>
+                            <Button label="0" onClick={() => handleSendDigit('0')}></Button>
+                            <Button label="#" onClick={() => handleSendDigit('#')}></Button>
+                        </Grid>
                     </Grid>
                     <div id="video"></div>
                 </div>

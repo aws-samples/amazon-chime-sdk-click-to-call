@@ -13,6 +13,7 @@ import {
   SchemaVersion,
   SipMediaApplicationEvent,
   SipMediaApplicationResponse,
+  SendDigitsAction,
 } from './sip-media-application';
 
 const chimeSDKMeetingClient = new ChimeSDKMeetingsClient({
@@ -54,6 +55,14 @@ export const lambdaHandler = async (
     case InvocationEventType.ACTION_SUCCESSFUL:
       console.log('ACTION SUCCESSFUL');
       actions = [];
+      break;
+    case InvocationEventType.CALL_UPDATE_REQUESTED:
+      console.log('CALL_UPDATE_REQUESTED');
+      sendDigitsAction.Parameters.CallId =
+        event.CallDetails.Participants[0].CallId;
+      sendDigitsAction.Parameters.Digits =
+        event.ActionData?.Parameters.Arguments.digit!;
+      actions = [sendDigitsAction];
       break;
     case InvocationEventType.HANGUP:
       console.log('HANGUP ACTION');
@@ -113,6 +122,14 @@ var joinChimeMeeting: JoinChimeMeetingAction = {
   },
 };
 
+var sendDigitsAction: SendDigitsAction = {
+  Type: ActionTypes.SEND_DIGITS,
+  Parameters: {
+    CallId: '',
+    Digits: '',
+    ToneDurationInMilliseconds: 100,
+  },
+};
 async function getCaller(transactionId: string) {
   try {
     const results = await ddbDocClient.send(

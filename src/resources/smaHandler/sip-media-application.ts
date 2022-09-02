@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/indent */
 import { Callback, Handler } from 'aws-lambda';
 
 export type SipMediaApplicationHandler = Handler<
-SipMediaApplicationEvent,
-SipMediaApplicationResponse
+  SipMediaApplicationEvent,
+  SipMediaApplicationResponse
 >;
 export type SipMediaApplicationCallback = Callback<SipMediaApplicationResponse>;
 
@@ -15,7 +16,7 @@ export interface SipMediaApplicationEvent {
   SchemaVersion: string;
   Sequence: number;
   InvocationEventType: InvocationEventType;
-  ActionData?: Actions;
+  ActionData?: ActionData;
   CallDetails: CallDetails;
 }
 
@@ -30,6 +31,7 @@ export enum InvocationEventType {
   HANGUP = 'HANGUP',
   CALL_ANSWERED = 'CALL_ANSWERED',
   NEW_OUTBOUND_CALL = 'NEW_OUTBOUND_CALL',
+  CALL_UPDATE_REQUESTED = 'CALL_UPDATE_REQUESTED',
 }
 
 export enum ActionTypes {
@@ -133,7 +135,7 @@ export interface RecordAudioActionParameters {
 
 export interface SendDigitsActionParameters {
   Digits: string;
-  TonDurationInMilliseconds: number;
+  ToneDurationInMilliseconds: number;
 }
 
 export interface SpeakActionParameters {
@@ -369,22 +371,50 @@ export interface HangupAction {
   Parameters: CommonActionParameters & HangupActionParameters;
 }
 
+export interface SendDigitsAction {
+  Type: ActionTypes.SEND_DIGITS;
+  Parameters: CommonActionParameters & SendDigitsActionParameters;
+}
+
+export interface CallUpdateRequestedActionData {
+  Arguments: { [key: string]: string };
+}
+
 export interface Actions {
   Type: ActionTypes;
   Parameters: CommonActionParameters &
-  (
-    | CallAndBridgeActionParameters
-    | HangupActionParameters
-    | JoinChimeMeetingActionParameters
-    | ModifyChimeMeetingAttendeesActionParameters
-    | PauseActionParameters
-    | PlayAudioActionParameters
-    | PlayAudioAndGetDigitsActionParameters
-    | ReceiveDigitsActionParameters
-    | RecordAudioActionParameters
-    | SendDigitsActionParameters
-    | SpeakActionParameters
-    | SpeakAndGetDigitsActionParameters
-    | StartBotConversaionActionParameters
-  );
+    (
+      | CallAndBridgeActionParameters
+      | HangupActionParameters
+      | JoinChimeMeetingActionParameters
+      | ModifyChimeMeetingAttendeesActionParameters
+      | PauseActionParameters
+      | PlayAudioActionParameters
+      | PlayAudioAndGetDigitsActionParameters
+      | ReceiveDigitsActionParameters
+      | RecordAudioActionParameters
+      | SendDigitsActionParameters
+      | SpeakActionParameters
+      | SpeakAndGetDigitsActionParameters
+      | StartBotConversaionActionParameters
+    );
+}
+
+export interface ActionData {
+  Type: ActionTypes;
+  Parameters: CommonActionParameters &
+    // | CallAndBridgeActionParameters
+    // | HangupActionParameters
+    // | JoinChimeMeetingActionParameters
+    // | ModifyChimeMeetingAttendeesActionParameters
+    // | PauseActionParameters
+    // | PlayAudioActionParameters
+    // | PlayAudioAndGetDigitsActionParameters
+    // | ReceiveDigitsActionParameters
+    // | RecordAudioActionParameters
+    // | SendDigitsActionParameters
+    // | SpeakActionParameters
+    // | SpeakAndGetDigitsActionParameters
+    // | StartBotConversaionActionParameters
+    CallUpdateRequestedActionData;
 }
