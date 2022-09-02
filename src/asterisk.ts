@@ -155,7 +155,7 @@ export class Asterisk extends Construct {
             }),
             ec2.InitFile.fromFileInline(
               '/etc/install.sh',
-              './resources/asteriskConfig/install.sh',
+              './src/resources/asteriskConfig/install.sh',
             ),
             ec2.InitCommand.shellCommand('chmod +x /etc/install.sh'),
             ec2.InitCommand.shellCommand('cd /tmp'),
@@ -166,27 +166,27 @@ export class Asterisk extends Construct {
           config: new ec2.InitConfig([
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/pjsip.conf',
-              './resources/asteriskConfig/pjsip.conf',
+              './src/resources/asteriskConfig/pjsip.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/asterisk.conf',
-              './resources/asteriskConfig/asterisk.conf',
+              './src/resources/asteriskConfig/asterisk.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/logger.conf',
-              './resources/asteriskConfig/logger.conf',
+              './src/resources/asteriskConfig/logger.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/extensions.conf',
-              './resources/asteriskConfig/extensions.conf',
+              './src/resources/asteriskConfig/extensions.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/asterisk/modules.conf',
-              './resources/asteriskConfig/modules.conf',
+              './src/resources/asteriskConfig/modules.conf',
             ),
             ec2.InitFile.fromFileInline(
               '/etc/config_asterisk.sh',
-              './resources/asteriskConfig/config_asterisk.sh',
+              './src/resources/asteriskConfig/config_asterisk.sh',
             ),
             ec2.InitCommand.shellCommand('chmod +x /etc/config_asterisk.sh'),
             ec2.InitCommand.shellCommand('/etc/config_asterisk.sh'),
