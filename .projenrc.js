@@ -1,6 +1,6 @@
 const { awscdk } = require('projen');
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: '2.39.0',
+  cdkVersion: '2.43.0',
   license: 'MIT-0',
   author: 'Court Schuett',
   copyrightOwner: 'Amazon.com, Inc.',
@@ -20,7 +20,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   },
   autoApproveUpgrades: true,
   devDeps: ['@types/prettier@2.6.0'],
-  deps: ['cdk-amazon-chime-resources', 'fs-extra', '@types/fs-extra'],
+  deps: ['cdk-amazon-chime-resources@latest', 'fs-extra', '@types/fs-extra'],
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   defaultReleaseBranch: 'main',
 });

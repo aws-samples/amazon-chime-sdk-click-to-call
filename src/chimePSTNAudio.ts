@@ -39,7 +39,11 @@ export class Chime extends Construct {
     const smaHandlerLambda = new NodejsFunction(this, 'smaHandlerLambda', {
       entry: 'src/resources/smaHandler/smaHandler.ts',
       bundling: {
-        sourcesContent: true,
+        nodeModules: [
+          '@aws-sdk/client-chime-sdk-meetings',
+          '@aws-sdk/client-dynamodb',
+          '@aws-sdk/lib-dynamodb',
+        ],
       },
       handler: 'lambdaHandler',
       runtime: Runtime.NODEJS_16_X,

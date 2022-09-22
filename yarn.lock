@@ -1193,10 +1193,10 @@ at-least-node@^1.0.0:
   resolved "https://registry.yarnpkg.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-aws-cdk-lib@^2.39.0:
-  version "2.39.0"
-  resolved "https://registry.yarnpkg.com/aws-cdk-lib/-/aws-cdk-lib-2.39.0.tgz#4461deb7f3daac603dc2684d6be4280c38f00489"
-  integrity sha512-YhXSE6bGS8hQxYygftp3VbaFEz19wl4B1tUAjKjW1rNs3ZpNGnW6o1AVA3Yuc5DlaELrIjXxF0/f+5SvSpYkTA==
+aws-cdk-lib@^2.43.0:
+  version "2.43.0"
+  resolved "https://registry.yarnpkg.com/aws-cdk-lib/-/aws-cdk-lib-2.43.0.tgz#df4340f7285be62fd9f09f7e9137368da63290df"
+  integrity sha512-r7wJXOFskOz4ksFE1oILLlQRATkhMeju4aSUafp8JcGh+mSVacXmA2h5oA2py1UbsSSJkLR8gU4CGSaGfDpjaA==
   dependencies:
     "@balena/dockerignore" "^1.0.2"
     case "1.6.3"
@@ -1208,10 +1208,10 @@ aws-cdk-lib@^2.39.0:
     semver "^7.3.7"
     yaml "1.10.2"
 
-aws-cdk@^2.39.0:
-  version "2.39.0"
-  resolved "https://registry.yarnpkg.com/aws-cdk/-/aws-cdk-2.39.0.tgz#9ba44544d97f7d114fc7a358fb17e0e414283ed0"
-  integrity sha512-qoezvJBLSLuUWioxVbxJU8n2BmZH05D9n/b9dgA6pcldchGK+xxvRzWNI2G/nmrT+l5AyPWxq7u0WbmOge6zrw==
+aws-cdk@^2.43.0:
+  version "2.43.0"
+  resolved "https://registry.yarnpkg.com/aws-cdk/-/aws-cdk-2.43.0.tgz#46957c284602254ab31f95c75a27c3e5edcdcdf6"
+  integrity sha512-9qDHl5/EXK6rUsrjm4tz9/8tb3F/QgYuohdFaaOojVbBXjilVdwKVPXTpB4V4Oqkn2yivIUR/26zfm60k4y4hw==
   optionalDependencies:
     fsevents "2.3.2"
 
@@ -1432,10 +1432,10 @@ case@1.6.3, case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk-amazon-chime-resources@^0.1.59:
-  version "0.1.59"
-  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-0.1.59.tgz#76183053f351e3111e4f71b12283ba15f4d56e13"
-  integrity sha512-o3TPYliGq2Y0dZg93DIngHFrjEV25KSKRS7agnqHnIsB9uTSe3azty+NeCzOhR66hF05VBProZt0gBdRSDFVDA==
+cdk-amazon-chime-resources@latest:
+  version "0.1.112"
+  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-0.1.112.tgz#1a8900ee122ff3701cb57a2b66235bcbad74cc14"
+  integrity sha512-JDfTYnr0Au0rnGStGinhhzvehO1BCqOCCv33pCnTpoaAIUJWoeYfjkhK0BbRVPRCkW6QesaEdZQV+zdEWEUk/g==
 
 chalk@^2.0.0:
   version "2.4.2"
