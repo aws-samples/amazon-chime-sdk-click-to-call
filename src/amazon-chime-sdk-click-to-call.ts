@@ -2,7 +2,7 @@ import { App, CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { Asterisk, Chime, Database, Infrastructure, Cognito, Site } from './';
 
-export class ClickToCall extends Stack {
+export class AmazonChimeSDKClickToCall extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
@@ -62,6 +62,8 @@ const devEnv = {
 
 const app = new App();
 
-new ClickToCall(app, 'ClickToCall', { env: devEnv });
+new AmazonChimeSDKClickToCall(app, 'AmazonChimeSDKClickToCall', {
+  env: devEnv,
+});
 
 app.synth();

@@ -46,13 +46,13 @@ export class Infrastructure extends Construct {
       ],
     });
     const callControlLambda = new NodejsFunction(this, 'callControlLambda', {
-      entry: 'resources/callControl/callControl.js',
-      depsLockFilePath: 'resources/callControl/package-lock.json',
+      entry: 'src/resources/callControl/callControl.js',
+      depsLockFilePath: 'src/resources/callControl/package-lock.json',
       bundling: {
         externalModules: ['aws-sdk'],
         nodeModules: ['uuid'],
       },
-      runtime: Runtime.NODEJS_14_X,
+      runtime: Runtime.NODEJS_16_X,
       architecture: Architecture.ARM_64,
       role: infrastructureRole,
       timeout: Duration.seconds(60),
@@ -66,13 +66,13 @@ export class Infrastructure extends Construct {
     props.meetingsTable.grantReadWriteData(callControlLambda);
 
     const updateCallLambda = new NodejsFunction(this, 'updateCallLambda', {
-      entry: 'resources/updateCall/updateCall.js',
-      depsLockFilePath: 'resources/updateCall/package-lock.json',
+      entry: 'src/resources/updateCall/updateCall.js',
+      depsLockFilePath: 'src/resources/updateCall/package-lock.json',
       bundling: {
         externalModules: ['aws-sdk'],
         nodeModules: ['uuid'],
       },
-      runtime: Runtime.NODEJS_14_X,
+      runtime: Runtime.NODEJS_16_X,
       architecture: Architecture.ARM_64,
       role: infrastructureRole,
       timeout: Duration.seconds(60),
