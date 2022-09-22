@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
+/*eslint import/no-unresolved: 0 */
+
 import { Callback, Handler } from 'aws-lambda';
 
 export type SipMediaApplicationHandler = Handler<

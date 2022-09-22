@@ -8,6 +8,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   defaultReleaseBranch: 'main',
   name: 'amazon-chime-sdk-click-to-call',
   appEntrypoint: 'amazon-chime-sdk-click-to-call.ts',
+
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {
