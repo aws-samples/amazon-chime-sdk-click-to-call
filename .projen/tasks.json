@@ -133,7 +133,7 @@
       "name": "getBucket",
       "steps": [
         {
-          "exec": "aws cloudformation describe-stacks --stack-name ClickToCall --query 'Stacks[0].Outputs[?OutputKey==`siteBucket`].OutputValue' --output text"
+          "exec": "aws cloudformation describe-stacks --stack-name AmazonChimeSDKClickToCall --query 'Stacks[0].Outputs[?OutputKey==`siteBucket`].OutputValue' --output text"
         }
       ]
     },

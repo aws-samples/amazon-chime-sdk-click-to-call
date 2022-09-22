@@ -37,7 +37,7 @@ project.addTask('launch', {
   exec: 'yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy --hotswap && yarn configLocal',
 });
 project.addTask('getBucket', {
-  exec: "aws cloudformation describe-stacks --stack-name ClickToCall --query 'Stacks[0].Outputs[?OutputKey==`siteBucket`].OutputValue' --output text",
+  exec: "aws cloudformation describe-stacks --stack-name AmazonChimeSDKClickToCall --query 'Stacks[0].Outputs[?OutputKey==`siteBucket`].OutputValue' --output text",
 });
 
 project.addTask('configLocal', {
