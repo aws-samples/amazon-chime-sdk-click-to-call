@@ -156,11 +156,11 @@ export interface SpeakAndGetDigitsActionParameters {
   MaxNumberOfDigits: number;
   TerminatorDigits: Array<string>;
   InBetweenDigitsDurationInMilliseconds: number;
-  Reapt: number;
+  Repeat: number;
   RepeatDurationInMilliseconds: number;
 }
 
-export interface StartBotConversaionActionParameters {
+export interface StartBotConversationActionParameters {
   BotAliasArn: string;
   LocalId: string;
   Configuration: StartBotConversationConfiguration;
@@ -354,7 +354,7 @@ export interface CallDetails {
   AwsAccountId: string;
   AwsRegion: CallDetailAwsRegion;
   SipRuleId: string;
-  SipMediaApplicatonId: string;
+  SipMediaApplicationId: string;
   Participants: CallDetailParticipants[];
 }
 
@@ -398,7 +398,7 @@ export interface Actions {
       | SendDigitsActionParameters
       | SpeakActionParameters
       | SpeakAndGetDigitsActionParameters
-      | StartBotConversaionActionParameters
+      | StartBotConversationActionParameters
     );
 }
 
@@ -417,6 +417,6 @@ export interface ActionData {
     // | SendDigitsActionParameters
     // | SpeakActionParameters
     // | SpeakAndGetDigitsActionParameters
-    // | StartBotConversaionActionParameters
+    // | StartBotConversationActionParameters
     CallUpdateRequestedActionData;
 }
