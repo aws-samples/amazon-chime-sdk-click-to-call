@@ -1,14 +1,29 @@
 import { App, CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Asterisk, Chime, Database, Infrastructure, Cognito, Site } from './';
+import { Asterisk, Chime, Infrastructure, Cognito, Site } from './';
 
 export class AmazonChimeSDKClickToCall extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
+    const allowedDomain = this.node.tryGetContext('AllowedDomain');
+    const cognito = new Cognito(this, 'Cognito', {
+      allowedDomain: allowedDomain,
+    });
+
+    const chime = new Chime(this, 'Chime');
+
+    let infrastructure;
     const asteriskDeploy = this.node.tryGetContext('AsteriskDeploy');
     if (asteriskDeploy == 'y') {
       const asterisk = new Asterisk(this, 'Asterisk');
+      infrastructure = new Infrastructure(this, 'Infrastructure', {
+        fromPhoneNumber: chime.fromNumber,
+        smaId: chime.smaId,
+        userPool: cognito.userPool,
+        voiceConnectorPhone: asterisk.voiceConnectorPhone,
+        voiceConnectorArn: asterisk.voiceConnectorArn,
+      });
       new CfnOutput(this, 'instanceId', { value: asterisk.instanceId });
       new CfnOutput(this, 'ssmCommand', {
         value: `aws ssm start-session --target ${asterisk.instanceId}`,
@@ -16,25 +31,13 @@ export class AmazonChimeSDKClickToCall extends Stack {
       new CfnOutput(this, 'voiceConnectorPhone', {
         value: asterisk.voiceConnectorPhone,
       });
+    } else {
+      infrastructure = new Infrastructure(this, 'Infrastructure', {
+        fromPhoneNumber: chime.fromNumber,
+        smaId: chime.smaId,
+        userPool: cognito.userPool,
+      });
     }
-
-    const database = new Database(this, 'Database');
-
-    const allowedDomain = this.node.tryGetContext('AllowedDomain');
-    const cognito = new Cognito(this, 'Cognito', {
-      allowedDomain: allowedDomain,
-    });
-
-    const chime = new Chime(this, 'Chime', {
-      meetingsTable: database.meetingsTable,
-    });
-
-    const infrastructure = new Infrastructure(this, 'Infrastructure', {
-      fromPhoneNumber: chime.fromNumber,
-      smaId: chime.smaId,
-      meetingsTable: database.meetingsTable,
-      userPool: cognito.userPool,
-    });
 
     const site = new Site(this, 'Site', {
       apiUrl: infrastructure.apiUrl,

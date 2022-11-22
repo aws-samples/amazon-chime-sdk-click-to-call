@@ -12,6 +12,7 @@ export type SipMediaApplicationCallback = Callback<SipMediaApplicationResponse>;
 export interface SipMediaApplicationResponse {
   SchemaVersion: SchemaVersion;
   Actions: Actions[] | undefined;
+  TransactionAttributes?: { [key: string]: string };
 }
 
 export interface SipMediaApplicationEvent {
@@ -356,6 +357,7 @@ export interface CallDetails {
   SipRuleId: string;
   SipMediaApplicationId: string;
   Participants: CallDetailParticipants[];
+  TransactionAttributes?: { [key: string]: string };
 }
 
 export interface JoinChimeMeetingAction {

@@ -1,18 +1,19 @@
-'use strict';
-
-// callControl.js
-var { v4: uuidv4 } = require('uuid');
-var AWS = require('aws-sdk');
-var chime = new AWS.Chime({ region: 'us-east-1' });
-chime.endpoint = new AWS.Endpoint(
-  'https://service.chime.aws.amazon.com/console',
+var import_crypto = require('crypto');
+var import_client_chime_sdk_meetings = require('@aws-sdk/client-chime-sdk-meetings');
+var import_client_chime_sdk_voice = require('@aws-sdk/client-chime-sdk-voice');
+var config = {
+  region: 'us-east-1',
+};
+var chimeSdkVoiceClient = new import_client_chime_sdk_voice.ChimeSDKVoiceClient(
+  config,
 );
-var docClient = new AWS.DynamoDB.DocumentClient();
+var chimeSdkMeetingsClient =
+  new import_client_chime_sdk_meetings.ChimeSDKMeetingsClient(config);
 var fromNumber = process.env['FROM_NUMBER'];
+var voiceConnectorPhone = process.env['VOICE_CONNECTOR_PHONE'];
+var voiceConnectorArn = process.env['VOICE_CONNECTOR_ARN'];
 var smaId = process.env['SMA_ID'];
-var callInfoTable = process.env['MEETINGS_TABLE_NAME'];
 var numberToCall = process.env['NUMBER_TO_CALL'];
-var region = 'us-east-1';
 var response = {
   statusCode: 200,
   body: '',
@@ -59,108 +60,108 @@ exports.handler = async (event, context) => {
     INCLUDE_DIAL_TO.test(toNumber) ||
     toNumber == ''
   ) {
-    const joinInfo = await createMeeting();
-    const dialInfo = await executeDial(event, joinInfo, toNumber);
-    await putInfo(joinInfo, dialInfo);
-    const responseInfo = JSON.stringify({ joinInfo, dialInfo });
-    console.info('Repsonse to Client: ' + responseInfo);
-    response.statusCode = 200;
-    response.body = responseInfo;
-    return response;
-  } else {
-    console.log('Bad Area Code');
-    response.statusCode = 503;
-    response.body = 'Invalid Called Number';
-    return response;
+    const meetingInfo = await createMeeting((0, import_crypto.randomUUID)());
+    if (meetingInfo) {
+      const clientAttendeeInfo = await createAttendee(
+        meetingInfo.Meeting.MeetingId,
+        'client-user',
+      );
+      if (clientAttendeeInfo) {
+        const responseInfo = {
+          Meeting: meetingInfo.Meeting,
+          Attendee: clientAttendeeInfo.Attendee,
+        };
+        const phoneAttendeeInfo = await createAttendee(
+          meetingInfo.Meeting.MeetingId,
+          'phone-user',
+        );
+        const dialInfo = await executeDial(
+          event,
+          meetingInfo,
+          phoneAttendeeInfo,
+          toNumber,
+        );
+        console.info('joinInfo: ' + JSON.stringify({ responseInfo, dialInfo }));
+        response.body = JSON.stringify({ responseInfo, dialInfo });
+        response.statusCode = 200;
+        return response;
+      } else {
+        response.body = JSON.stringify('Error creating attendee');
+        response.statusCode = 503;
+        return response;
+      }
+    } else {
+      response.body = JSON.stringify('Error creating meeting');
+      response.statusCode = 503;
+      return response;
+    }
   }
 };
-async function createMeeting() {
-  const meetingRequest = {
-    ClientRequestToken: uuidv4(),
-    MediaRegion: region,
-    ExternalMeetingId: uuidv4(),
-  };
-  console.info(
-    'Creating new meeting before joining: ' + JSON.stringify(meetingRequest),
-  );
-  const meetingInfo = await chime.createMeeting(meetingRequest).promise();
-  console.info('Meeting Info: ' + JSON.stringify(meetingInfo));
-  const clientAttendeeRequest = {
-    MeetingId: meetingInfo.Meeting.MeetingId,
-    ExternalUserId: 'Client-User',
-  };
-  console.info(
-    'Creating new attendee: ' + JSON.stringify(clientAttendeeRequest),
-  );
-  const clientAttendeeInfo = await chime
-    .createAttendee(clientAttendeeRequest)
-    .promise();
-  console.info('Client Attendee Info: ' + JSON.stringify(clientAttendeeInfo));
-  const phoneAttendeeRequest = {
-    MeetingId: meetingInfo.Meeting.MeetingId,
-    ExternalUserId: 'Phone-User',
-  };
-  console.info(
-    'Creating new attendee: ' + JSON.stringify(phoneAttendeeRequest),
-  );
-  const phoneAttendeeInfo = await chime
-    .createAttendee(phoneAttendeeRequest)
-    .promise();
-  console.info('Client Attendee Info: ' + JSON.stringify(phoneAttendeeInfo));
-  const joinInfo = {
-    Meeting: meetingInfo.Meeting,
-    Attendee: [clientAttendeeInfo.Attendee, phoneAttendeeInfo.Attendee],
-  };
-  console.info('joinInfo: ' + JSON.stringify(joinInfo));
-  return joinInfo;
-}
-async function executeDial(event, joinInfo, toNumber) {
+
+async function executeDial(event, meetingInfo, phoneAttendeeInfo, toNumber) {
+  let dialVC;
+  if (toNumber == voiceConnectorPhone) {
+    dialVC = 'true';
+  } else {
+    dialVC = 'false';
+  }
   var params = {
     FromPhoneNumber: fromNumber,
     SipMediaApplicationId: smaId,
-    ToPhoneNumber: toNumber,
+    ToPhoneNumber: '+17035550122',
     SipHeaders: {
-      'User-to-User': joinInfo.Meeting.MeetingId,
-      // 'User-to-User': event.requestContext.authorizer.claims.email,
+      'X-chime-join-token': phoneAttendeeInfo.Attendee.JoinToken,
+      'X-chime-meeting-id': meetingInfo.Meeting.MeetingId,
+    },
+    ArgumentsMap: {
+      MeetingId: meetingInfo.Meeting.MeetingId,
+      RequestedDialNumber: toNumber,
+      RequestedVCArn: voiceConnectorArn,
+      RequestorEmail: event.requestContext.authorizer.claims.email,
+      DialVC: dialVC,
     },
   };
   console.info('Dial Params: ' + JSON.stringify(params));
   try {
-    const dialInfo = await chime
-      .createSipMediaApplicationCall(params)
-      .promise();
-    console.info('Dial Info: ' + JSON.stringify(dialInfo));
+    const dialInfo = await chimeSdkVoiceClient.send(
+      new import_client_chime_sdk_voice.CreateSipMediaApplicationCallCommand(
+        params,
+      ),
+    );
     return dialInfo;
   } catch (err) {
-    console.log(err);
-    return err;
+    console.info(`Error: ${err}`);
+    return false;
   }
 }
-async function putInfo(joinInfo, dialInfo) {
-  var params = {
-    TableName: callInfoTable,
-    Key: {
-      transactionId: dialInfo.SipMediaApplicationCall.TransactionId,
-    },
-    UpdateExpression:
-      'SET #mi = :mi, #mId = :mId, #ai = list_append(if_not_exists(#ai, :empty), :ai)',
-    ExpressionAttributeNames: {
-      '#mi': 'MeetingInfo',
-      '#mId': 'meetingId',
-      '#ai': 'AttendeeInfo',
-    },
-    ExpressionAttributeValues: {
-      ':mi': joinInfo.Meeting,
-      ':mId': joinInfo.Meeting.MeetingId,
-      ':ai': joinInfo.Attendee,
-      ':empty': [],
-    },
-  };
-  console.log(params);
+async function createMeeting(requestId) {
+  console.log(`Creating Meeting for Request ID: ${requestId}`);
   try {
-    await docClient.update(params).promise();
+    const meetingInfo = await chimeSdkMeetingsClient.send(
+      new import_client_chime_sdk_meetings.CreateMeetingCommand({
+        ClientRequestToken: requestId,
+        MediaRegion: 'us-east-1',
+        ExternalMeetingId: (0, import_crypto.randomUUID)(),
+      }),
+    );
+    return meetingInfo;
   } catch (err) {
-    console.log(err);
-    return err;
+    console.info(`Error: ${err}`);
+    return false;
+  }
+}
+async function createAttendee(meetingId, externalUserId) {
+  console.log(`Creating Attendee for Meeting: ${meetingId}`);
+  try {
+    const attendeeInfo2 = await chimeSdkMeetingsClient.send(
+      new import_client_chime_sdk_meetings.CreateAttendeeCommand({
+        MeetingId: meetingId,
+        ExternalUserId: externalUserId,
+      }),
+    );
+    return attendeeInfo2;
+  } catch (err) {
+    console.info(`${err}`);
+    return false;
   }
 }

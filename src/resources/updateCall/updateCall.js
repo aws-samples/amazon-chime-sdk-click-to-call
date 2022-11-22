@@ -1,15 +1,21 @@
-// callControl.js
-var { v4: uuidv4 } = require('uuid');
-var AWS = require('aws-sdk');
-var chime = new AWS.Chime({ region: 'us-east-1' });
-chime.endpoint = new AWS.Endpoint(
-  'https://service.chime.aws.amazon.com/console',
-);
-var docClient = new AWS.DynamoDB.DocumentClient();
-var fromNumber = process.env['FROM_NUMBER'];
+import {
+  ChimeSDKMeetingsClient,
+  DeleteMeetingCommand,
+} from '@aws-sdk/client-chime-sdk-meetings';
+
+import {
+  ChimeSDKVoiceClient,
+  UpdateSipMediaApplicationCallCommand,
+} from '@aws-sdk/client-chime-sdk-voice';
+
+const config = {
+  region: 'us-east-1',
+};
+
+const chimeSdkMeetingsClient = new ChimeSDKMeetingsClient(config);
+const chimeSdkVoiceClient = new ChimeSDKVoiceClient(config);
+
 var smaId = process.env['SMA_ID'];
-var callInfoTable = process.env['MEETINGS_TABLE_NAME'];
-var region = 'us-east-1';
 
 const response = {
   statusCode: 200,
@@ -37,17 +43,16 @@ async function endRequest(body) {
   console.info('Body: ' + JSON.stringify(body));
   const meetingId = body.meetingId;
 
-  const deleteRequest = {
-    MeetingId: meetingId,
-  };
-  try {
-    const deleteResponse = await chime.deleteMeeting(deleteRequest).promise();
-    console.log(deleteResponse);
-  } catch (error) {
-    console.log(error);
+  if (await deleteMeeting(meetingId)) {
+    console.info('Meeting Deleted');
+    response.body = JSON.stringify('Meeting deleted');
+    response.statusCode = 200;
+    return response;
+  } else {
+    response.body = JSON.stringify('Error deleting meeting');
+    response.statusCode = 503;
+    return response;
   }
-  console.log(response);
-  return response;
 }
 
 async function digitRequest(body) {
@@ -62,14 +67,39 @@ async function digitRequest(body) {
     TransactionId: transactionId,
   };
   console.log(updateRequest);
-  try {
-    const updateResponse = await chime
-      .updateSipMediaApplicationCall(updateRequest)
-      .promise();
-    console.log(updateResponse);
-    console.log(response);
+  if (await updateMeeting(updateRequest)) {
+    response.body = JSON.stringify('Meeting updated');
+    response.statusCode = 200;
     return response;
-  } catch (error) {
-    console.log(error);
+  } else {
+    response.body = JSON.stringify('Error updating meeting');
+    response.statusCode = 503;
+    return response;
+  }
+}
+
+async function deleteMeeting(meetingId) {
+  try {
+    await chimeSdkMeetingsClient.send(
+      new DeleteMeetingCommand({
+        MeetingId: meetingId,
+      }),
+    );
+    return true;
+  } catch (err) {
+    console.info(`${err}`);
+    return false;
+  }
+}
+
+async function updateMeeting(updateRequest) {
+  try {
+    await chimeSdkVoiceClient.send(
+      new UpdateSipMediaApplicationCallCommand(updateRequest),
+    );
+    return true;
+  } catch (err) {
+    console.info(`${err}`);
+    return false;
   }
 }

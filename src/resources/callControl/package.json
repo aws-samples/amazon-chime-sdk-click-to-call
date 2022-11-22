@@ -1,5 +1,5 @@
 {
-  "name": "callControl",
+  "name": "call-control",
   "version": "1.0.0",
   "description": "",
   "main": "callControl.js",
@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.1024.0",
-    "uuid": "^8.3.2"
+    "@aws-sdk/client-chime-sdk-meetings": "^3.213.0",
+    "@aws-sdk/client-chime-sdk-voice": "^3.214.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.15.14"
   }
 }

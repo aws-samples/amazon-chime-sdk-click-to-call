@@ -7,9 +7,14 @@ import {
   CognitoUserPoolsAuthorizer,
   AuthorizationType,
 } from 'aws-cdk-lib/aws-apigateway';
-import * as cognito from 'aws-cdk-lib/aws-cognito';
-import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
-import * as iam from 'aws-cdk-lib/aws-iam';
+import { IUserPool } from 'aws-cdk-lib/aws-cognito';
+import {
+  ManagedPolicy,
+  Role,
+  PolicyStatement,
+  PolicyDocument,
+  ServicePrincipal,
+} from 'aws-cdk-lib/aws-iam';
 import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
@@ -17,8 +22,9 @@ import { Construct } from 'constructs';
 interface InfrastructureProps {
   readonly fromPhoneNumber: string;
   readonly smaId: string;
-  readonly meetingsTable: dynamodb.Table;
-  readonly userPool: cognito.IUserPool;
+  readonly userPool: IUserPool;
+  readonly voiceConnectorPhone?: string;
+  readonly voiceConnectorArn?: string;
 }
 
 export class Infrastructure extends Construct {
@@ -27,12 +33,12 @@ export class Infrastructure extends Construct {
   constructor(scope: Construct, id: string, props: InfrastructureProps) {
     super(scope, id);
 
-    const infrastructureRole = new iam.Role(this, 'infrastructureRole', {
-      assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+    const infrastructureRole = new Role(this, 'infrastructureRole', {
+      assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
       inlinePolicies: {
-        ['chimePolicy']: new iam.PolicyDocument({
+        ['chimePolicy']: new PolicyDocument({
           statements: [
-            new iam.PolicyStatement({
+            new PolicyStatement({
               resources: ['*'],
               actions: ['chime:*'],
             }),
@@ -40,17 +46,18 @@ export class Infrastructure extends Construct {
         }),
       },
       managedPolicies: [
-        iam.ManagedPolicy.fromAwsManagedPolicyName(
+        ManagedPolicy.fromAwsManagedPolicyName(
           'service-role/AWSLambdaBasicExecutionRole',
         ),
       ],
     });
     const callControlLambda = new NodejsFunction(this, 'callControlLambda', {
       entry: 'src/resources/callControl/callControl.js',
-      depsLockFilePath: 'src/resources/callControl/package-lock.json',
       bundling: {
-        externalModules: ['aws-sdk'],
-        nodeModules: ['uuid'],
+        nodeModules: [
+          '@aws-sdk/client-chime-sdk-voice',
+          '@aws-sdk/client-chime-sdk-meetings',
+        ],
       },
       runtime: Runtime.NODEJS_16_X,
       architecture: Architecture.ARM_64,
@@ -59,18 +66,19 @@ export class Infrastructure extends Construct {
       environment: {
         SMA_ID: props.smaId,
         FROM_NUMBER: props.fromPhoneNumber,
-        MEETINGS_TABLE_NAME: props.meetingsTable.tableName,
+        VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone || '',
+        VOICE_CONNECTOR_ARN: props.voiceConnectorArn || '',
       },
     });
-
-    props.meetingsTable.grantReadWriteData(callControlLambda);
 
     const updateCallLambda = new NodejsFunction(this, 'updateCallLambda', {
       entry: 'src/resources/updateCall/updateCall.js',
-      depsLockFilePath: 'src/resources/updateCall/package-lock.json',
+      depsLockFilePath: 'src/resources/updateCall/yarn.lock',
       bundling: {
-        externalModules: ['aws-sdk'],
-        nodeModules: ['uuid'],
+        nodeModules: [
+          '@aws-sdk/client-chime-sdk-voice',
+          '@aws-sdk/client-chime-sdk-meetings',
+        ],
       },
       runtime: Runtime.NODEJS_16_X,
       architecture: Architecture.ARM_64,
@@ -79,11 +87,10 @@ export class Infrastructure extends Construct {
       environment: {
         SMA_ID: props.smaId,
         FROM_NUMBER: props.fromPhoneNumber,
-        MEETINGS_TABLE_NAME: props.meetingsTable.tableName,
+        VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone || '',
+        VOICE_CONNECTOR_ARN: props.voiceConnectorArn || '',
       },
     });
-
-    props.meetingsTable.grantReadWriteData(updateCallLambda);
 
     const api = new RestApi(this, 'clickToCallApi', {
       defaultCorsPreflightOptions: {

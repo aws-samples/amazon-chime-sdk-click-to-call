@@ -1,7 +1,22 @@
 import { RemovalPolicy, Duration, Stack } from 'aws-cdk-lib';
-import * as cognito from 'aws-cdk-lib/aws-cognito';
-import { AccountRecovery, Mfa } from 'aws-cdk-lib/aws-cognito';
-import * as iam from 'aws-cdk-lib/aws-iam';
+import {
+  CfnIdentityPool,
+  IUserPool,
+  IUserPoolClient,
+  UserPool,
+  UserPoolClient,
+  UserPoolClientIdentityProvider,
+  CfnIdentityPoolRoleAttachment,
+  AccountRecovery,
+  Mfa,
+} from 'aws-cdk-lib/aws-cognito';
+import {
+  IRole,
+  Role,
+  PolicyStatement,
+  FederatedPrincipal,
+  Effect,
+} from 'aws-cdk-lib/aws-iam';
 import { Runtime, Architecture } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
@@ -11,10 +26,10 @@ export interface CognitoStackProps {
 }
 
 export class Cognito extends Construct {
-  public readonly authenticatedRole: iam.IRole;
-  public readonly identityPool: cognito.CfnIdentityPool;
-  public readonly userPool: cognito.IUserPool;
-  public readonly userPoolClient: cognito.IUserPoolClient;
+  public readonly authenticatedRole: IRole;
+  public readonly identityPool: CfnIdentityPool;
+  public readonly userPool: IUserPool;
+  public readonly userPoolClient: IUserPoolClient;
   public readonly userPoolRegion: string;
 
   constructor(scope: Construct, id: string, props: CognitoStackProps) {
@@ -33,7 +48,7 @@ export class Cognito extends Construct {
       },
     });
 
-    const userPool = new cognito.UserPool(this, 'UserPool', {
+    const userPool = new UserPool(this, 'UserPool', {
       removalPolicy: RemovalPolicy.DESTROY,
       selfSignUpEnabled: true,
       lambdaTriggers: {
@@ -68,12 +83,10 @@ export class Cognito extends Construct {
       },
     });
 
-    const userPoolClient = new cognito.UserPoolClient(this, 'UserPoolClient', {
+    const userPoolClient = new UserPoolClient(this, 'UserPoolClient', {
       userPool: userPool,
       generateSecret: false,
-      supportedIdentityProviders: [
-        cognito.UserPoolClientIdentityProvider.COGNITO,
-      ],
+      supportedIdentityProviders: [UserPoolClientIdentityProvider.COGNITO],
       authFlows: {
         userSrp: true,
         custom: true,
@@ -81,26 +94,22 @@ export class Cognito extends Construct {
       refreshTokenValidity: Duration.hours(1),
     });
 
-    const identityPool = new cognito.CfnIdentityPool(
-      this,
-      'cognitoIdentityPool',
-      {
-        identityPoolName: 'cognitoIdentityPool',
-        allowUnauthenticatedIdentities: false,
-        cognitoIdentityProviders: [
-          {
-            clientId: userPoolClient.userPoolClientId,
-            providerName: userPool.userPoolProviderName,
-          },
-        ],
-      },
-    );
+    const identityPool = new CfnIdentityPool(this, 'cognitoIdentityPool', {
+      identityPoolName: 'cognitoIdentityPool',
+      allowUnauthenticatedIdentities: false,
+      cognitoIdentityProviders: [
+        {
+          clientId: userPoolClient.userPoolClientId,
+          providerName: userPool.userPoolProviderName,
+        },
+      ],
+    });
 
-    const unauthenticatedRole = new iam.Role(
+    const unauthenticatedRole = new Role(
       this,
       'CognitoDefaultUnauthenticatedRole',
       {
-        assumedBy: new iam.FederatedPrincipal(
+        assumedBy: new FederatedPrincipal(
           'cognito-identity.amazonaws.com',
           {
             // eslint-disable-next-line quote-props
@@ -117,18 +126,18 @@ export class Cognito extends Construct {
     );
 
     unauthenticatedRole.addToPolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
+      new PolicyStatement({
+        effect: Effect.ALLOW,
         actions: ['mobileanalytics:PutEvents', 'cognito-sync:*'],
         resources: ['*'],
       }),
     );
 
-    const authenticatedRole = new iam.Role(
+    const authenticatedRole = new Role(
       this,
       'CognitoDefaultAuthenticatedRole',
       {
-        assumedBy: new iam.FederatedPrincipal(
+        assumedBy: new FederatedPrincipal(
           'cognito-identity.amazonaws.com',
           {
             // eslint-disable-next-line quote-props
@@ -145,8 +154,8 @@ export class Cognito extends Construct {
     );
 
     authenticatedRole.addToPolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
+      new PolicyStatement({
+        effect: Effect.ALLOW,
         actions: [
           'mobileanalytics:PutEvents',
           'cognito-sync:*',
@@ -156,7 +165,7 @@ export class Cognito extends Construct {
       }),
     );
 
-    new cognito.CfnIdentityPoolRoleAttachment(this, 'DefaultValid', {
+    new CfnIdentityPoolRoleAttachment(this, 'DefaultValid', {
       identityPoolId: identityPool.ref,
       roles: {
         unauthenticated: unauthenticatedRole.roleArn,

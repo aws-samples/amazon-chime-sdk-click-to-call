@@ -91,14 +91,14 @@ const App = () => {
                 });
                 console.log(dialOutResponse);
                 const meetingSessionConfiguration = new MeetingSessionConfiguration(
-                    dialOutResponse.joinInfo.Meeting,
-                    dialOutResponse.joinInfo.Attendee[0],
+                    dialOutResponse.responseInfo.Meeting,
+                    dialOutResponse.responseInfo.Attendee,
                 );
                 await meetingManager.join(meetingSessionConfiguration);
                 await meetingManager.start();
                 console.log('Meeting started');
                 console.log(dialOutResponse);
-                setMeetingId(dialOutResponse.joinInfo.Meeting.MeetingId);
+                setMeetingId(dialOutResponse.responseInfo.Meeting.MeetingId);
                 setTransactionId(dialOutResponse.dialInfo.SipMediaApplicationCall.TransactionId);
             } catch (err) {
                 console.log(err);
