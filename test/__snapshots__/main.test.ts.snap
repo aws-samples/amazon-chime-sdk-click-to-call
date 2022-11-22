@@ -451,6 +451,153 @@ Object {
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
+    "ChimesipRulesipRuleRequestPSTNResourceProviderframeworkonEventFA9C5F34": Object {
+      "DependsOn": Array [
+        "ChimesipRulesipRuleRequestPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicyCAE89E84",
+        "ChimesipRulesipRuleRequestPSTNResourceProviderframeworkonEventServiceRole3D85CEF9",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (test/Chime/sipRule/sipRuleRequest/PSTNResourceProvider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "PSTNResources1DB9F314",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ChimesipRulesipRuleRequestPSTNResourceProviderframeworkonEventServiceRole3D85CEF9",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ChimesipRulesipRuleRequestPSTNResourceProviderframeworkonEventServiceRole3D85CEF9": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ChimesipRulesipRuleRequestPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicyCAE89E84": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "PSTNResources1DB9F314",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "PSTNResources1DB9F314",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ChimesipRulesipRuleRequestPSTNResourceProviderframeworkonEventServiceRoleDefaultPolicyCAE89E84",
+        "Roles": Array [
+          Object {
+            "Ref": "ChimesipRulesipRuleRequestPSTNResourceProviderframeworkonEventServiceRole3D85CEF9",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ChimesipRulesipRuleRequestpstnCustomResource7C7C6F28": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "ChimesipRulesipRuleRequestPSTNResourceProviderframeworkonEventFA9C5F34",
+            "Arn",
+          ],
+        },
+        "properties": Object {
+          "name": "testChimesipRuleA371F021",
+          "targetApplications": Array [
+            Object {
+              "priority": 1,
+              "region": Object {
+                "Ref": "AWS::Region",
+              },
+              "sipMediaApplicationId": Object {
+                "Fn::GetAtt": Array [
+                  "ChimesipMediaAppsipMediaAppRequestpstnCustomResource505FA3C9",
+                  "sipMediaAppId",
+                ],
+              },
+            },
+          ],
+          "triggerType": "ToPhoneNumber",
+          "triggerValue": Object {
+            "Fn::GetAtt": Array [
+              "ChimephoneNumberChimePhoneNumberpstnCustomResourceDFB46FB1",
+              "phoneNumber",
+            ],
+          },
+        },
+        "resourceType": "SMARule",
+        "uid": "testChimesipRuleA371F021",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
     "ChimesmaHandlerLambda51FE45BB": Object {
       "DependsOn": Array [
         "ChimesmaHandlerRoleAB855B74",
