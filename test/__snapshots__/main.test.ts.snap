@@ -611,7 +611,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6bb596136d7633c84ee4ac703cc82e51487067339a69fcef35588114cc92d6a9.zip",
+          "S3Key": "a2b09aea8599605e871b285cc6a88e0b153b7e558b35f73bc756be1abc8d47ae.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1109,7 +1109,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6ddcf10002539818a9256eff3fb2b22aa09298d8f946e26ba121c175a600c44e.zip",
+          "S3Key": "2bc265c5e0569aeb24a6349c15bd54e76e845892376515e036627ab0cc70bb64.zip",
         },
         "Handler": "index.handler",
         "Layers": Array [
@@ -2179,7 +2179,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c409e6c5845f1f349df8cd84e160bf6f1c35d2b060b63e1f032f9bd39d4542cc.zip",
+          "S3Key": "5d8d1d0aacea23824c62f362e1e3c14b7dd14a31c71b53bfae4d14a6373c5510.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -2239,7 +2239,7 @@ Object {
           },
         ],
         "SourceObjectKeys": Array [
-          "144ba20b2c129dd44c911960f0ea6aaaa4b7ae108069281d0ac3edb4392807f9.zip",
+          "6cb9fa1b1d9200a8287cb66d2c31bff5d702016334bb2c16cd85dcb660f1228c.zip",
           "49aa1da69438c6967606bc17f36a99bb9eb94983c166b3602e2c37113e353659.zip",
         ],
       },
@@ -3319,17 +3319,7 @@ ldconfig
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
               "Principal": Object {
-                "Service": Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "ec2.",
-                      Object {
-                        "Ref": "AWS::URLSuffix",
-                      },
-                    ],
-                  ],
-                },
+                "Service": "ec2.amazonaws.com",
               },
             },
           ],
@@ -4275,7 +4265,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6bb596136d7633c84ee4ac703cc82e51487067339a69fcef35588114cc92d6a9.zip",
+          "S3Key": "a2b09aea8599605e871b285cc6a88e0b153b7e558b35f73bc756be1abc8d47ae.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -4774,7 +4764,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6ddcf10002539818a9256eff3fb2b22aa09298d8f946e26ba121c175a600c44e.zip",
+          "S3Key": "2bc265c5e0569aeb24a6349c15bd54e76e845892376515e036627ab0cc70bb64.zip",
         },
         "Handler": "index.handler",
         "Layers": Array [
@@ -5844,7 +5834,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c409e6c5845f1f349df8cd84e160bf6f1c35d2b060b63e1f032f9bd39d4542cc.zip",
+          "S3Key": "5d8d1d0aacea23824c62f362e1e3c14b7dd14a31c71b53bfae4d14a6373c5510.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -5904,7 +5894,7 @@ ldconfig
           },
         ],
         "SourceObjectKeys": Array [
-          "144ba20b2c129dd44c911960f0ea6aaaa4b7ae108069281d0ac3edb4392807f9.zip",
+          "6cb9fa1b1d9200a8287cb66d2c31bff5d702016334bb2c16cd85dcb660f1228c.zip",
           "49aa1da69438c6967606bc17f36a99bb9eb94983c166b3602e2c37113e353659.zip",
         ],
       },
