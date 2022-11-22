@@ -6,6 +6,10 @@
 
 This starter project combines three Amazon Chime SDK components to create a demo to connect a customer using Amazon Chime SDK Meetings with an agent using a standard SIP based PBX. Everything required to use this demo is included in the AWS Cloud Development Kit (AWS CDK) deployment.
 
+## Updates
+
+Several pieces of this have been updated to use a new technique of connecting the WebRTC client to the telephony client. These changes are primarily in the `callControl.js` and `smaHandler.ts` files.
+
 ## Prerequisites
 
 Basic understanding of:
@@ -34,7 +38,7 @@ Optionally, you can include a configured Amazon Chime Voice Connector and Asteri
 
 ### Request from Client
 
-[App.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/site/src/App.js#L64-L68)
+####[App.js](site/src/App.js)
 
 ```javascript
 const dialOutResponse = await API.post('callControlAPI', 'dial', {
@@ -46,7 +50,7 @@ const dialOutResponse = await API.post('callControlAPI', 'dial', {
 
 When the Dial button is pressed, a request is made from the client towards the AWS API Gateway with the phone number to dial presented in the `toNumber` field. This request is made using AWS Amplify and configured using the output from the CDK deployment.
 
-[App.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/site/src/App.js#L19-L26):
+####[App.js](site/src/App.js):
 
 ```javascript
 import { AmplifyConfig } from './Config';
@@ -59,7 +63,7 @@ API.configure(AmplifyConfig);
 Amplify.Logger.LOG_LEVEL = 'DEBUG';
 ```
 
-[Config.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/site/src/Config.js#L21-L38):
+####[Config.js](site/src/Config.js):
 
 ```javascript
     API: {
@@ -88,125 +92,265 @@ This request will be processed on the CallControl Lambda that is triggered by th
 
 - An Amazon Chime SDK Meeting will be created
 - Two Attendees will be created in the created meeting
-- An outbound call from the meeting using a created `fromNumber` towards the `toNumber` will be started
-- This information will be stored in an Amazon DynamoDB table
-- The meeting information will be returned to the client
+- An outbound call is made to a special [SIP integration number](https://docs.aws.amazon.com/chime-sdk/latest/dg/mtgs-sdk-cvc.html)
+- The meetingInfo and attendeeInfo is returned to the client
+- Once this call is answered, the SIP media application is connected to the meeting
+- A new [CallAndBridge](https://docs.aws.amazon.com/chime-sdk/latest/dg/call-and-bridge.html) action is started to join that meeting to the called number
 
-[callControl.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/src/callControl/callControl.js#L54-L61)
+####[callControl.js](src/resources/callControl/callControl.js)
 
 ```javascript
-const joinInfo = await createMeeting();
-const dialInfo = await executeDial(joinInfo, toNumber);
-await putInfo(joinInfo, dialInfo);
-const responseInfo = JSON.stringify({ joinInfo, dialInfo });
-response.statusCode = 200;
-response.body = responseInfo;
-return response;
+    const meetingInfo = await createMeeting((0, import_crypto.randomUUID)());
+    if (meetingInfo) {
+      const clientAttendeeInfo = await createAttendee(
+        meetingInfo.Meeting.MeetingId,
+        'client-user',
+      );
+      if (clientAttendeeInfo) {
+        const responseInfo = {
+          Meeting: meetingInfo.Meeting,
+          Attendee: clientAttendeeInfo.Attendee,
+        };
+        const phoneAttendeeInfo = await createAttendee(
+          meetingInfo.Meeting.MeetingId,
+          'phone-user',
+        );
+        const dialInfo = await executeDial(
+          event,
+          meetingInfo,
+          phoneAttendeeInfo,
+          toNumber,
+        );
+        console.info('joinInfo: ' + JSON.stringify({ responseInfo, dialInfo }));
+        response.body = JSON.stringify({ responseInfo, dialInfo });
+        response.statusCode = 200;
+        return response;
+      } else {
+        response.body = JSON.stringify('Error creating attendee');
+        response.statusCode = 503;
+        return response;
+      }
+    } else {
+      response.body = JSON.stringify('Error creating meeting');
+      response.statusCode = 503;
+      return response;
+    }
+  }
 ```
 
 ### Response from CallControl Lambda
 
 Once the request has been processed by the CallControl Lambda, the meeting information will be returned to the client. This information will be used to join the client to the Amazon Chime SDK Meeting:
 
-[App.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/site/src/App.js#L70-L77)
+[App.js](/site/src/App.js)
 
 ```javascript
-const joinInfo = {
-  meetingInfo: dialOutResponse.data.joinInfo.Meeting,
-  attendeeInfo: dialOutResponse.data.joinInfo.Attendee[0],
-};
-await meetingManager.join(joinInfo);
+const dialOutResponse = await API.post('callControlAPI', 'dial', {
+  body: {
+    toNumber: phoneNumber,
+  },
+});
+const meetingSessionConfiguration = new MeetingSessionConfiguration(
+  dialOutResponse.responseInfo.Meeting,
+  dialOutResponse.responseInfo.Attendee,
+);
+await meetingManager.join(meetingSessionConfiguration);
 await meetingManager.start();
 ```
 
 There is now audio being delivered to and from the client and the Amazon Chime SDK Media services.
 
-This meeting information can be observed from the AWS Command Line Interface (AWS CLI) with:
-`aws chime list-meetings`:
-
-```json
-{
-  "Meetings": [
-    {
-      "MeetingId": "7e87ac0a-26cd-45a8-aec4-b310b9d50706",
-      "ExternalMeetingId": "d3d8f185-d900-411b-9bb7-b5c78c26c6f1",
-      "MediaPlacement": {
-        "AudioHostUrl": "55f295f786be5af9e69177e8ba3835e0.k.m3.ue1.app.chime.aws:3478",
-        "AudioFallbackUrl": "wss://haxrp.m3.ue1.app.chime.aws:443/calls/7e87ac0a-26cd-45a8-aec4-b310b9d50706",
-        "ScreenDataUrl": "wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/7e87ac0a-26cd-45a8-aec4-b310b9d50706",
-        "ScreenSharingUrl": "wss://bitpw.m3.ue1.app.chime.aws:443/v2/screen/7e87ac0a-26cd-45a8-aec4-b310b9d50706",
-        "ScreenViewingUrl": "wss://bitpw.m3.ue1.app.chime.aws:443/ws/connect?passcode=null&viewer_uuid=null&X-BitHub-Call-Id=7e87ac0a-26cd-45a8-aec4-b310b9d50706",
-        "SignalingUrl": "wss://signal.m3.ue1.app.chime.aws/control/7e87ac0a-26cd-45a8-aec4-b310b9d50706",
-        "TurnControlUrl": "https://ccp.cp.ue1.app.chime.aws/v2/turn_sessions"
-      },
-      "MediaRegion": "us-east-1"
-    }
-  ]
-}
-```
-
-Additionally, the attendee information can be seen from the AWS CLI with:
-`aws chime list-attendees --meeting-id 7e87ac0a-26cd-45a8-aec4-b310b9d50706`
-
-```json
-{
-  "Attendees": [
-    {
-      "ExternalUserId": "Phone-User",
-      "AttendeeId": "3e8fd1bd-9678-08ba-ae48-ece423260b63",
-      "JoinToken": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    },
-    {
-      "ExternalUserId": "Client-User",
-      "AttendeeId": "53628c4b-305b-c3a8-6cf2-fd07b03c2ca8",
-      "JoinToken": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    }
-  ]
-}
-```
-
 ### Completion of Outbound Call through Amazon Chime PSTN Audio
 
-In parallel to the response being returned to the client, a call is made through Amazon Chime PSTN Audio. This will cause the SIP media application to invoke the Lambda associcated with the SIP media application with a `NEW_OUTBOUND_CALL`:
+In parallel to the response being returned to the client, a call is made through Amazon Chime PSTN Audio. This will cause the SIP media application to invoke the Lambda associated with the SIP media application with a `NEW_OUTBOUND_CALL`:
 
-[callControl.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/a4414ee7beed36a12fef005522e5372cab7f941e/src/callControl/callControl.js#L106-L126)
+[callControl.js](/src/resources/callControl/callControl.js)
 
 ```javascript
 var params = {
   FromPhoneNumber: fromNumber,
   SipMediaApplicationId: smaId,
-  ToPhoneNumber: toNumber,
+  ToPhoneNumber: '+17035550122',
   SipHeaders: {
-    'User-to-User': joinInfo.Meeting.MeetingId,
+    'X-chime-join-token': phoneAttendeeInfo.Attendee.JoinToken,
+    'X-chime-meeting-id': meetingInfo.Meeting.MeetingId,
+  },
+  ArgumentsMap: {
+    MeetingId: meetingInfo.Meeting.MeetingId,
+    RequestedDialNumber: toNumber,
+    RequestedVCArn: voiceConnectorArn,
+    RequestorEmail: event.requestContext.authorizer.claims.email,
+    DialVC: dialVC,
   },
 };
 console.info('Dial Params: ' + JSON.stringify(params));
 try {
-  const dialInfo = await chime
-    .createSipMediaApplicationCall(params)
-    .promise();
+  const dialInfo = await chimeSdkVoiceClient.send(
+    new import_client_chime_sdk_voice.CreateSipMediaApplicationCallCommand(
+      params,
+    ),
+  );
+  return dialInfo;
+} catch (err) {
+  console.info(`Error: ${err}`);
+  return false;
+}
 ```
 
-The call will be sent out from the Amazon Chime PSTN Audio SIP media application from a phone number in the Amazon Chime phone inventory to the configured `toNumber` and the `meetingId` populated in the SIP User-to-User header. See [here](https://docs.aws.amazon.com/chime/latest/dg/sip-headers.html) for more information on using SIP headers with Amazon Chime PSTN Audio. When the called number answers the call, the SIP media application will be invoked with the `CALL_ANSWERED` EventType. After looking up the meeting information in the meetings table in DynamoDB using the TransactionId, the call will be joined to the existing Amazon Chime SDK meeting as the second attendee.
+This call will be sent out to the specific number that is used to integrate an Amazon Chime SDK meeting with Amazon Chime PSTN Audio - `+17035550122`. To join this call to the meeting, the `X-chime-join-token` and `X-chime-meeting-id` SIP headers must be included. However, these headers will not be passed to the SIP media application itself. In order to pass information from the `callControl.js` AWS Lambda function to the SIP media application, we will use the `ArgumentsMap` parameter in [`CreateSipMediaApplicationCallCommand`](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-chime-sdk-voice/classes/createsipmediaapplicationcommand.html).
 
-[smaHandler.js](https://github.com/aws-samples/amazon-chime-sdk-click-to-call/blob/b2de4d3910594391dd00d30596421e4e468e65f2/src/smaHandler/smaHandler.js#L42-L50)
+When the `NEW_OUTBOUND_CALL` invocations is received on the SMA, it will include the `Arguments` that were sent in the `CreateSipMediaApplicationCallCommand`.
 
-```javascript
-case 'CALL_ANSWERED':
-  console.log('CALL ANSWERED');
-  var currentCall = await getCaller(event.CallDetails.TransactionId);
-  joinChimeMeeting.Parameters.CallId = event.CallDetails.Participants[0].CallId;
-  joinChimeMeeting.Parameters.MeetingId = currentCall.meetingId;
-  joinChimeMeeting.Parameters.JoinToken = currentCall.AttendeeInfo[1].JoinToken;
-  actions = [joinChimeMeeting];
-  break;
+```json
+{
+  "SchemaVersion": "1.0",
+  "Sequence": 1,
+  "InvocationEventType": "NEW_OUTBOUND_CALL",
+  "ActionData": {
+    "Type": "CallCreateRequest",
+    "Parameters": {
+      "Arguments": {
+        "DialVC": "true",
+        "RequestedVCArn": "arn:aws:chime:us-east-1:112233445566:vc/b3tedvkmr4jwayvmwxxq6z",
+        "MeetingId": "fedc8fa0-364b-4fbf-b6b7-3be410492713",
+        "RequestorEmail": "email@example.com",
+        "RequestedDialNumber": "+16265551212"
+      }
+    }
+  }
+}
+```
+
+### Transaction Attributes
+
+In order to use these arguments in future SIP media application actions, we must store them as [`TransactionAttributes`](https://docs.aws.amazon.com/chime-sdk/latest/dg/transaction-attributes.html). We will do that here:
+
+```typescript
+    case InvocationEventType.NEW_OUTBOUND_CALL:
+      console.log('OUTBOUND CALL');
+      transactionAttributes.RequestedVCArn =
+        event.ActionData?.Parameters.Arguments.RequestedVCArn || '';
+
+      transactionAttributes.RequestedDialNumber =
+        event.ActionData?.Parameters.Arguments.RequestedDialNumber || '';
+
+      transactionAttributes.RequestorEmail =
+        event.ActionData?.Parameters.Arguments.RequestorEmail || '';
+
+      transactionAttributes.DialVC =
+        event.ActionData?.Parameters.Arguments.DialVC || '';
+
+      transactionAttributes.MeetingId =
+        event.ActionData?.Parameters.Arguments.MeetingId || '';
+
+      actions = [];
+      break;
+
+  const response: SipMediaApplicationResponse = {
+    SchemaVersion: SchemaVersion.VERSION_1_0,
+    Actions: actions,
+    TransactionAttributes: transactionAttributes,
+  };
+
+  return response;
+```
+
+Now, when the call is answered by the Amazon Chime SDK Meeting and the SIP media application is invoked with a `CALL_ANSWERED` Event Type, it will include the previously stored Transaction Attributes in the `CallDetails`:
+
+```json
+{
+  "SchemaVersion": "1.0",
+  "Sequence": 3,
+  "InvocationEventType": "CALL_ANSWERED",
+  "CallDetails": {
+    "TransactionId": "8c9372d0-e766-4890-823a-32ca8403201a",
+    "TransactionAttributes": {
+      "RequestedVCArn": "arn:aws:chime:us-east-1:112233445566:vc/b3tedvkmr4jwayvmwxxq6z",
+      "DialVC": "true",
+      "MeetingId": "fedc8fa0-364b-4fbf-b6b7-3be410492713",
+      "RequestorEmail": "email@example.com",
+      "RequestedDialNumber": "+16265551212"
+    }
+  }
+}
+```
+
+Additionally, we will store this information so that every future invocation includes this.
+
+```typescript
+if (event.CallDetails.TransactionAttributes) {
+  transactionAttributes = event.CallDetails.TransactionAttributes;
+}
+```
+
+### Call and Bridge
+
+We will use this information when returning a `CallAndBridge` action to the SIP media application.
+
+```typescript
+    case InvocationEventType.CALL_ANSWERED:
+      console.log('CALL ANSWERED');
+      if (transactionAttributes.DialVC == 'true') {
+        console.log('Bridging to VC');
+        callAndBridgeVC.Parameters.Endpoints[0].Arn =
+          transactionAttributes.RequestedVCArn;
+        callAndBridgeVC.Parameters.Endpoints[0].Uri =
+          transactionAttributes.RequestedDialNumber;
+        callAndBridgeVC.Parameters.SipHeaders!['X-RequestorEmail'] =
+          transactionAttributes.RequestorEmail;
+        actions = [callAndBridgeVC];
+      } else {
+        console.log('Bridging to PSTN');
+        callAndBridgePSTN.Parameters.Endpoints[0].Uri =
+          transactionAttributes.RequestedDialNumber;
+        actions = [callAndBridgePSTN];
+      }
+      break;
+```
+
+Here we will use `DialVC` to determine if the call should be placed to an Amazon Chime Voice Connector or to the PSTN. If the call is going to an Amazon Chime Voice Connector, we can add additional fields as SIP headers to the INVITE being sent to the Amazon Chime Voice Connector.
+
+### Sending DTMF
+
+Additionally, this demo allows you to send dual tone multi-frequency (DTMF) tones to the telephony side of the call. When a button is pressed in the client, a request is made to `updateCall.js` AWS Lambda function that will use [`UpdateSipMediaApplicationCallCommand`](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-chime-sdk-voice/classes/updatesipmediaapplicationcallcommand.html) to pass this request to the SIP media application. This will invoke the SIP media application handler with an EventType of `CALL_UPDATE_REQUESTED`.
+
+```json
+{
+  "SchemaVersion": "1.0",
+  "Sequence": 7,
+  "InvocationEventType": "CALL_UPDATE_REQUESTED",
+  "ActionData": {
+    "Type": "CallUpdateRequest",
+    "Parameters": {
+      "Arguments": {
+        "digit": "3"
+      }
+    }
+  }
+}
+```
+
+We will then return an action to SIP media application to `SendDigits` towards the PSTN/SIP leg of the call.
+
+```json
+{
+  "SchemaVersion": "1.0",
+  "Actions": [
+    {
+      "Type": "SendDigits",
+      "Parameters": {
+        "CallId": "3c85496f-1ef3-4534-a906-cb4730cab5e7",
+        "Digits": "3",
+        "ToneDurationInMilliseconds": 100
+      }
+    }
+  ]
+}
 ```
 
 ### Optional - Connecting to a SIP PBX
 
 As part of the deployment, an Asterisk PBX can be created along with an Amazon Chime Voice Connector. If the number dialed from the client is on an Amazon Chime Voice Connector, this call can be delivered with additional information included. In this demo, an Asterisk PBX is optionally deployed to EC2 and configured with an Amazon Chime Voice Connector and associated phone number.
-
-When the call is made from the CallControl Lambda, the meetingId is included in the `User-to-User` SIP header. This header is delivered to the Asterisk PBX and can be seen here (output trimmed for clarity):
 
 <pre>
 INVITE sip:+12245554385@XX.XX.XX.XX:5060;transport=UDP SIP/2.0
@@ -218,7 +362,7 @@ To: <sip:+12245554385@XX.XX.XX.XX:5060>;transport=UDP
 Call-ID: 0ca47221-1aa4-4e67-af5a-70ed3222a8fd
 Contact: <sip:10.0.160.204:5060;alias=10.0.160.204~5060~1>
 X-VoiceConnector-ID: dn0pcxvetmicgerjqmze5c
-<mark>User-to-User: f9ca6fe2-19cb-494b-9df7-d90a0c220706</mark>
+<mark>X-RequestorEmail: "email@example.com"</mark>
 </pre>
 
 ## To Use
@@ -268,7 +412,6 @@ aws ssm start-session --target INSTANCE_ID
 - updateCall Lambda
 - smaHandler Lambda
 - Amazon API Gateway
-- DynamoDB Table
 - Amazon Chime SIP media application
 - Amazon Chime SIP media application rule
 - Optional

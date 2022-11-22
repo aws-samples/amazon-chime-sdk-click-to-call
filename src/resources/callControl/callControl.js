@@ -1,6 +1,3 @@
-'use strict';
-
-// src/resources/callControl/callControl.js
 var import_crypto = require('crypto');
 var import_client_chime_sdk_meetings = require('@aws-sdk/client-chime-sdk-meetings');
 var import_client_chime_sdk_voice = require('@aws-sdk/client-chime-sdk-voice');
@@ -100,6 +97,7 @@ exports.handler = async (event, context) => {
     }
   }
 };
+
 async function executeDial(event, meetingInfo, phoneAttendeeInfo, toNumber) {
   let dialVC;
   if (toNumber == voiceConnectorPhone) {

@@ -6,8 +6,6 @@ export class AmazonChimeSDKClickToCall extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // const database = new Database(this, 'Database');
-
     const allowedDomain = this.node.tryGetContext('AllowedDomain');
     const cognito = new Cognito(this, 'Cognito', {
       allowedDomain: allowedDomain,
@@ -37,7 +35,6 @@ export class AmazonChimeSDKClickToCall extends Stack {
       infrastructure = new Infrastructure(this, 'Infrastructure', {
         fromPhoneNumber: chime.fromNumber,
         smaId: chime.smaId,
-        // meetingsTable: database.meetingsTable,
         userPool: cognito.userPool,
       });
     }

@@ -14,7 +14,6 @@ import {
   SendDigitsAction,
   CallAndBridgeAction,
   BridgeEndpointType,
-  Actions,
 } from './sip-media-application';
 
 const chimeSDKMeetingClient = new ChimeSDKMeetingsClient({
