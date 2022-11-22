@@ -38,7 +38,7 @@ Optionally, you can include a configured Amazon Chime Voice Connector and Asteri
 
 ### Request from Client
 
-####[App.js](site/src/App.js)
+#### [App.js](site/src/App.js)
 
 ```javascript
 const dialOutResponse = await API.post('callControlAPI', 'dial', {
@@ -50,7 +50,7 @@ const dialOutResponse = await API.post('callControlAPI', 'dial', {
 
 When the Dial button is pressed, a request is made from the client towards the AWS API Gateway with the phone number to dial presented in the `toNumber` field. This request is made using AWS Amplify and configured using the output from the CDK deployment.
 
-####[App.js](site/src/App.js):
+#### [App.js](site/src/App.js):
 
 ```javascript
 import { AmplifyConfig } from './Config';
@@ -63,7 +63,7 @@ API.configure(AmplifyConfig);
 Amplify.Logger.LOG_LEVEL = 'DEBUG';
 ```
 
-####[Config.js](site/src/Config.js):
+#### [Config.js](site/src/Config.js):
 
 ```javascript
     API: {
@@ -97,7 +97,7 @@ This request will be processed on the CallControl Lambda that is triggered by th
 - Once this call is answered, the SIP media application is connected to the meeting
 - A new [CallAndBridge](https://docs.aws.amazon.com/chime-sdk/latest/dg/call-and-bridge.html) action is started to join that meeting to the called number
 
-####[callControl.js](src/resources/callControl/callControl.js)
+#### [callControl.js](src/resources/callControl/callControl.js)
 
 ```javascript
     const meetingInfo = await createMeeting((0, import_crypto.randomUUID)());
