@@ -12,6 +12,7 @@ export type SipMediaApplicationCallback = Callback<SipMediaApplicationResponse>;
 export interface SipMediaApplicationResponse {
   SchemaVersion: SchemaVersion;
   Actions: Actions[] | undefined;
+  TransactionAttributes?: { [key: string]: string };
 }
 
 export interface SipMediaApplicationEvent {
@@ -156,7 +157,7 @@ export interface SpeakAndGetDigitsActionParameters {
   MaxNumberOfDigits: number;
   TerminatorDigits: Array<string>;
   InBetweenDigitsDurationInMilliseconds: number;
-  Reapt: number;
+  Repeat: number;
   RepeatDurationInMilliseconds: number;
 }
 
@@ -356,6 +357,7 @@ export interface CallDetails {
   SipRuleId: string;
   SipMediaApplicatonId: string;
   Participants: CallDetailParticipants[];
+  TransactionAttributes?: { [key: string]: string };
 }
 
 export interface JoinChimeMeetingAction {

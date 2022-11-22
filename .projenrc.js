@@ -1,6 +1,6 @@
 const { awscdk } = require('projen');
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: '2.43.0',
+  cdkVersion: '2.51.1',
   license: 'MIT-0',
   author: 'Court Schuett',
   copyrightOwner: 'Amazon.com, Inc.',
@@ -8,7 +8,6 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   defaultReleaseBranch: 'main',
   name: 'amazon-chime-sdk-click-to-call',
   appEntrypoint: 'amazon-chime-sdk-click-to-call.ts',
-
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {
@@ -20,7 +19,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
     allowedUsernames: ['schuettc'],
   },
   autoApproveUpgrades: true,
-  devDeps: ['@types/prettier@2.6.0'],
+  devDeps: ['esbuild'],
   deps: ['cdk-amazon-chime-resources@latest', 'fs-extra', '@types/fs-extra'],
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   defaultReleaseBranch: 'main',

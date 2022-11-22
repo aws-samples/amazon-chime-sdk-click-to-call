@@ -10,11 +10,6 @@
       "type": "build"
     },
     {
-      "name": "@types/prettier",
-      "version": "2.6.0",
-      "type": "build"
-    },
-    {
       "name": "@typescript-eslint/eslint-plugin",
       "version": "^5",
       "type": "build"
@@ -26,7 +21,7 @@
     },
     {
       "name": "aws-cdk",
-      "version": "^2.43.0",
+      "version": "^2.51.1",
       "type": "build"
     },
     {
@@ -85,12 +80,22 @@
       "type": "build"
     },
     {
+      "name": "@types/responselike",
+      "version": "1.0.0",
+      "type": "override"
+    },
+    {
+      "name": "got",
+      "version": "12.3.1",
+      "type": "override"
+    },
+    {
       "name": "@types/fs-extra",
       "type": "runtime"
     },
     {
       "name": "aws-cdk-lib",
-      "version": "^2.43.0",
+      "version": "^2.51.1",
       "type": "runtime"
     },
     {
