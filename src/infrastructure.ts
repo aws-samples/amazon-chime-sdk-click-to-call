@@ -73,7 +73,6 @@ export class Infrastructure extends Construct {
 
     const updateCallLambda = new NodejsFunction(this, 'updateCallLambda', {
       entry: 'src/resources/updateCall/updateCall.js',
-      depsLockFilePath: 'src/resources/updateCall/yarn.lock',
       bundling: {
         nodeModules: [
           '@aws-sdk/client-chime-sdk-voice',
