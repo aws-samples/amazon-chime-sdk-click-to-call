@@ -9,6 +9,11 @@
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
 	},
+	"hostRequirements": {
+		"cpus": 8,
+		"memory": "8gb",
+		"storage": "32gb"
+	},
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:1": {
 			"installZsh": "true",
