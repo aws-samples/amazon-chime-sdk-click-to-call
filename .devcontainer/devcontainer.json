@@ -24,7 +24,9 @@
 			"moby": "true"
 		},
 		"ghcr.io/devcontainers/features/aws-cli:1": {},
-		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "16"
+		},
 		"ghcr.io/devcontainers-contrib/features/jest:1": {},
 		"ghcr.io/eitsupi/devcontainer-features/jq-likes:1": {}
 	},
