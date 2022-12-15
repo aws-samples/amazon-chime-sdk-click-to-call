@@ -102,7 +102,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
+          "S3Key": "2157f4ab8972014e220d70707296b292b3b7301f163f7cd641ccda0ee663530f.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/phoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
@@ -326,7 +326,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
+          "S3Key": "2157f4ab8972014e220d70707296b292b3b7301f163f7cd641ccda0ee663530f.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/sipMediaApp/sipMediaAppRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -463,7 +463,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "e5873857a2c3e1f2b9e93e158d54abafe4d5706e1d3d884e19080dc9729ee7b9.zip",
+          "S3Key": "71e2b4a4e328196d47a858ce85891613d2e491ca6063d9d95dc37a4830c0ec64.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1150,7 +1150,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8cc0741bda447e416475433b128d0c211b0281a72d91281dc50070cf77d20646.zip",
+          "S3Key": "0c40c8b76a9af64892e56d564b02ce94a7b887df41ef21c845b2d41642a2ed27.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1740,7 +1740,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "3175c153da786e8feda1097b2a284489aa3229b64c4bf255d0c387c96a65b1cd.zip",
+          "S3Key": "a8370c450779d7413151b75c4d398caad03d4c7fb82fa6b335de3958dae797e9.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1912,7 +1912,6 @@ Object {
           },
         ],
         "SourceMarkers": Array [
-          Object {},
           Object {
             "<<marker:0xbaba:0>>": Object {
               "Ref": "InfrastructureclickToCallApiEFC07FEC",
@@ -3082,7 +3081,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
+          "S3Key": "2157f4ab8972014e220d70707296b292b3b7301f163f7cd641ccda0ee663530f.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Asterisk/voiceConnectorPhoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
@@ -3298,7 +3297,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
+          "S3Key": "2157f4ab8972014e220d70707296b292b3b7301f163f7cd641ccda0ee663530f.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Asterisk/voiceConnector/voiceConnectorRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -3457,7 +3456,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
+          "S3Key": "2157f4ab8972014e220d70707296b292b3b7301f163f7cd641ccda0ee663530f.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/phoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
@@ -3681,7 +3680,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
+          "S3Key": "2157f4ab8972014e220d70707296b292b3b7301f163f7cd641ccda0ee663530f.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/sipMediaApp/sipMediaAppRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -3818,7 +3817,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "e5873857a2c3e1f2b9e93e158d54abafe4d5706e1d3d884e19080dc9729ee7b9.zip",
+          "S3Key": "71e2b4a4e328196d47a858ce85891613d2e491ca6063d9d95dc37a4830c0ec64.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -4506,7 +4505,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8cc0741bda447e416475433b128d0c211b0281a72d91281dc50070cf77d20646.zip",
+          "S3Key": "0c40c8b76a9af64892e56d564b02ce94a7b887df41ef21c845b2d41642a2ed27.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5122,7 +5121,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "3175c153da786e8feda1097b2a284489aa3229b64c4bf255d0c387c96a65b1cd.zip",
+          "S3Key": "a8370c450779d7413151b75c4d398caad03d4c7fb82fa6b335de3958dae797e9.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5320,7 +5319,6 @@ ldconfig
           },
         ],
         "SourceMarkers": Array [
-          Object {},
           Object {
             "<<marker:0xbaba:0>>": Object {
               "Ref": "InfrastructureclickToCallApiEFC07FEC",
