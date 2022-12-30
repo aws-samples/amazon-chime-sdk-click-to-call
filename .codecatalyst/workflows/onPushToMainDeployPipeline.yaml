@@ -35,26 +35,10 @@ Actions:
         - Role: CodeCatalystPreviewDevelopmentAdministrator-qfc7vn
           Name: "104621577074"
       Name: development
-  CDKBootstrapAction:
-    Identifier: aws/cdk-bootstrap@v1
-    Configuration:
-      Region: us-west-2
-    Compute:
-      Type: Lambda
-    Environment:
-      Connections:
-        - Role: CodeCatalystPreviewDevelopmentAdministrator-qfc7vn
-          Name: "104621577074"
-      Name: development
-    Inputs:
-      Sources:
-        - WorkflowSource
   CDKDeploy:
     Compute:
       Type: Lambda
     Identifier: aws/cdk-deploy@v1
-    DependsOn:
-      - CDKBootstrapAction
     Inputs:
       Artifacts:
         - build
@@ -65,5 +49,5 @@ Actions:
     Environment:
       Name: development
       Connections:
-        - Name: '104621577074'
+        - Name: "104621577074"
           Role: CodeCatalystPreviewDevelopmentAdministrator-sq118s
