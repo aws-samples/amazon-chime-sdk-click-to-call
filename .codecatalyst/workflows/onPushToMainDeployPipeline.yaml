@@ -36,18 +36,19 @@ Actions:
           Name: "104621577074"
       Name: development
   CDKDeploy:
+    Identifier: aws/cdk-deploy@v1
+    Configuration:
+      Context: '{"stack_name":"AmazonChimeSDKClickToCall"}'
+      Region: us-west-2
+      StackName: AmazonChimeSDKClickToCall
     Compute:
       Type: Lambda
-    Identifier: aws/cdk-deploy@v1
+    Environment:
+      Connections:
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-qfc7vn
+          Name: "104621577074"
+      Name: development
     Inputs:
       Artifacts:
         - build
-    Configuration:
-      StackName: AmazonChimeSDKClickToCall
-      Region: us-west-2
-      Context: '{"stack_name": "AmazonChimeSDKClickToCall"}'
-    Environment:
-      Name: development
-      Connections:
-        - Name: "104621577074"
-          Role: CodeCatalystPreviewDevelopmentAdministrator-sq118s
+      Sources: []
