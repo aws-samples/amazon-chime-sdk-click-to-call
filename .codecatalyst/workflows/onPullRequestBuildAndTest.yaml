@@ -1,0 +1,27 @@
+Name: onPullRequestBuildAndTest
+SchemaVersion: '1.0'
+Triggers:
+  - Type: PULLREQUEST
+    Branches:
+      - main
+      - develop
+    Events:
+      - OPEN
+      - REVISION
+Actions:
+  Build:
+    Identifier: aws/build@v1
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Outputs:
+      Artifacts:
+        - Name: build
+          Files:
+            - build/**/*
+    Configuration:
+      Steps:
+        - Run: npm install -g yarn
+        - Run: yarn
+        - Run: yarn projen
+        - Run: yarn run build
