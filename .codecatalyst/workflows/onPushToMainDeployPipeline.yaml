@@ -29,16 +29,16 @@ Actions:
         - Run: yarn projen
         - Run: yarn run build
   CDKBootstrapAction:
-    Compute:
-      Type: Lambda
     Identifier: aws/cdk-bootstrap@v1
     Configuration:
       Region: us-west-2
+    Compute:
+      Type: Lambda
     Environment:
-      Name: development
       Connections:
-        - Name: '104621577074'
-          Role: CodeCatalystPreviewDevelopmentAdministrator-sq118s
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-sq118s
+          Name: "104621577074"
+      Name: development
     Inputs:
       Sources:
         - WorkflowSource
