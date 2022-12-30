@@ -1,0 +1,62 @@
+Name: onPushToMainDeployPipeline
+SchemaVersion: '1.0'
+Triggers:
+  - Type: PUSH
+    Branches:
+      - main
+Actions:
+  BuildAndTest:
+    Compute:
+      Type: Lambda
+    Identifier: aws/build@v1
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Outputs:
+      Artifacts:
+        - Name: build
+          Files:
+            - '**/*'
+      AutoDiscoverReports:
+        ReportNamePrefix: Test
+        IncludePaths:
+          - coverage/**
+          - reports/**
+    Configuration:
+      Steps:
+        - Run: npm install -g yarn
+        - Run: yarn
+        - Run: yarn projen
+        - Run: yarn run build
+  CDKBootstrapAction:
+    Compute:
+      Type: Lambda
+    Identifier: aws/cdk-bootstrap@v1
+    Configuration:
+      Region: us-west-2
+    Environment:
+      Name: development
+      Connections:
+        - Name: '104621577074'
+          Role: CodeCatalystPreviewDevelopmentAdministrator-sq118s
+    Inputs:
+      Sources:
+        - WorkflowSource
+  CDKDeploy:
+    Compute:
+      Type: Lambda
+    Identifier: aws/cdk-deploy@v1
+    DependsOn:
+      - CDKBootstrapAction
+    Inputs:
+      Artifacts:
+        - build
+    Configuration:
+      StackName: AmazonChimeSDKClickToCall
+      Region: us-west-2
+      Context: '{"stack_name": "AmazonChimeSDKClickToCall"}'
+    Environment:
+      Name: development
+      Connections:
+        - Name: '104621577074'
+          Role: CodeCatalystPreviewDevelopmentAdministrator-sq118s

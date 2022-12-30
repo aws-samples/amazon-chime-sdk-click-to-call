@@ -1,0 +1,13 @@
+{
+  "script": [
+    "for directory in /projects/* ; do",
+    "  if [ -d \"$directory/.cloud9/runners\" ]; then",
+    "    REPOSITORY_DIR=$directory",
+    "  fi",
+    "done",
+    "cd $REPOSITORY_DIR",
+    "npm install",
+    "npm run build"
+  ],
+  "info": "This runner will install dependencies via npm, and build the application for production."
+}
