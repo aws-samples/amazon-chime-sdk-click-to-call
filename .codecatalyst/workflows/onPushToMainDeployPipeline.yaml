@@ -32,7 +32,7 @@ Actions:
         - Run: yarn run build
     Environment:
       Connections:
-        - Role: CodeCatalystPreviewDevelopmentAdministrator-sq118s
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-qfc7vn
           Name: "104621577074"
       Name: development
   CDKBootstrapAction:
@@ -43,7 +43,7 @@ Actions:
       Type: Lambda
     Environment:
       Connections:
-        - Role: CodeCatalystPreviewDevelopmentAdministrator-sq118s
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-qfc7vn
           Name: "104621577074"
       Name: development
     Inputs:
