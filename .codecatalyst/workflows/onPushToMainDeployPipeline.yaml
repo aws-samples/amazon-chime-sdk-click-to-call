@@ -6,9 +6,10 @@ Triggers:
       - main
 Actions:
   BuildAndTest:
-    Compute:
-      Type: Lambda
     Identifier: aws/build@v1
+    Compute:
+      Type: EC2
+      Fleet: Linux.x86-64.Large
     Inputs:
       Sources:
         - WorkflowSource
@@ -16,9 +17,8 @@ Actions:
       Artifacts:
         - Name: build
           Files:
-            - '**/*'
+            - "**/*"
       AutoDiscoverReports:
-        ReportNamePrefix: Test
         IncludePaths:
           - coverage/**
           - reports/**
@@ -28,6 +28,11 @@ Actions:
         - Run: yarn
         - Run: yarn projen
         - Run: yarn run build
+    Environment:
+      Connections:
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-sq118s
+          Name: "104621577074"
+      Name: development
   CDKBootstrapAction:
     Identifier: aws/cdk-bootstrap@v1
     Configuration:
