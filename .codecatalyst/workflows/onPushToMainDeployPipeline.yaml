@@ -22,6 +22,8 @@ Actions:
         IncludePaths:
           - coverage/**
           - reports/**
+        Enabled: true
+        ReportNamePrefix: rpt
     Configuration:
       Steps:
         - Run: npm install -g yarn
