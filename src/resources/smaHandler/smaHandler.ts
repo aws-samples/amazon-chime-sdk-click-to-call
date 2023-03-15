@@ -107,6 +107,8 @@ export const lambdaHandler = async (
         actions = [callAndBridgeVC];
       } else {
         console.log('Bridging to PSTN');
+        callAndBridgeVC.Parameters.SipHeaders!['X-RequestorEmail'] =
+          transactionAttributes.RequestorEmail;
         callAndBridgePSTN.Parameters.Endpoints[0].Uri =
           transactionAttributes.RequestedDialNumber;
         actions = [callAndBridgePSTN];
@@ -172,5 +174,8 @@ var callAndBridgePSTN: CallAndBridgeAction = {
         Uri: '',
       },
     ],
+    SipHeaders: {
+      'X-RequestorEmail': '',
+    },
   },
 };

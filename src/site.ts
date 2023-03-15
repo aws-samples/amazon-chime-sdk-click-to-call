@@ -1,5 +1,5 @@
 import { execSync, ExecSyncOptions } from 'child_process';
-import { RemovalPolicy, DockerImage, Stack } from 'aws-cdk-lib';
+import { RemovalPolicy, DockerImage } from 'aws-cdk-lib';
 import {
   Distribution,
   SecurityPolicyProtocol,
@@ -17,6 +17,7 @@ interface SiteProps {
   apiUrl: string;
   userPool: IUserPool;
   userPoolClient: IUserPoolClient;
+  userPoolRegion: string;
 }
 export class Site extends Construct {
   public readonly siteBucket: Bucket;
@@ -75,7 +76,7 @@ export class Site extends Construct {
 
     const config = {
       apiUrl: props.apiUrl,
-      userPoolRegion: Stack.of(this).region,
+      userPoolRegion: props.userPoolRegion,
       userPoolId: props.userPool.userPoolId,
       userPoolClientId: props.userPoolClient.userPoolClientId,
     };
