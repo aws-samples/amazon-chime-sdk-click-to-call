@@ -1,12 +1,13 @@
 const { awscdk } = require('projen');
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: '2.59.0',
+  cdkVersion: '2.68.0',
   license: 'MIT-0',
   author: 'Court Schuett',
   copyrightOwner: 'Amazon.com, Inc.',
   authorAddress: 'https://aws.amazon.com',
   defaultReleaseBranch: 'main',
   name: 'amazon-chime-sdk-click-to-call',
+  workflowNodeVersion: '16.x',
   appEntrypoint: 'amazon-chime-sdk-click-to-call.ts',
   depsUpgradeOptions: {
     ignoreProjen: false,
