@@ -371,16 +371,25 @@ X-VoiceConnector-ID: dn0pcxvetmicgerjqmze5c
 
 ### Configure Deployment
 
+Options for configuration are available in the .env file.
+
+To deploy with the optional Asterisk server:
+
 ```bash
-./configure.sh
+BUILD_ASTERISK='true'
 ```
 
-This will configure the options for deployment.
+This will configure the Asterisk test server for deployment.
 
-- If the Asterisk component will be deployed
-- The allowed domain name for Amazon Cognito signup. If a domain is entered, only email addresses with the chosen domain will be allowed to register an account with Cognito. If no domain is entered, any email address can be used. Domain should be entered as `example.com`.
+To restrict allowed domains for Cognito signup:
 
-> **_NOTE:_** If the deployment is not configured, it will deploy with no Asterisk and no restriction on allowed domains for Amazon Cognito accounts.
+```bash
+ALLOWED_DOMAIN='example.com'
+```
+
+If a domain is entered, only email addresses with the chosen domain will be allowed to register an account with Cognito. If no domain is entered, any email address can be used. Domain should be entered as `example.com`.
+
+> **_NOTE:_** Defaults will be no Asterisk deployment and no domain restriction.
 
 ### Deploy CDK
 

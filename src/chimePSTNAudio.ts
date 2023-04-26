@@ -49,12 +49,12 @@ export class Chime extends Construct {
     });
 
     const smaHandlerLambda = new NodejsFunction(this, 'smaHandlerLambda', {
-      entry: 'src/resources/smaHandler/smaHandler.ts',
       bundling: {
         nodeModules: ['@aws-sdk/client-chime-sdk-meetings'],
       },
+      entry: 'src/resources/smaHandler/smaHandler.ts',
       handler: 'lambdaHandler',
-      runtime: Runtime.NODEJS_16_X,
+      runtime: Runtime.NODEJS_18_X,
       role: smaHandlerRole,
       architecture: Architecture.ARM_64,
       timeout: Duration.seconds(60),

@@ -11,7 +11,7 @@ export type SipMediaApplicationCallback = Callback<SipMediaApplicationResponse>;
 
 export interface SipMediaApplicationResponse {
   SchemaVersion: SchemaVersion;
-  Actions: Actions[] | undefined;
+  Actions: Actions[] | undefined | never;
   TransactionAttributes?: { [key: string]: string };
 }
 

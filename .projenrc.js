@@ -9,6 +9,11 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   name: 'amazon-chime-sdk-click-to-call',
   workflowNodeVersion: '16.x',
   appEntrypoint: 'amazon-chime-sdk-click-to-call.ts',
+  tsconfig: {
+    compilerOptions: {
+      lib: ['es2020', 'dom'],
+    },
+  },
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {
@@ -21,7 +26,16 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   },
   autoApproveUpgrades: true,
   devDeps: ['esbuild'],
-  deps: ['cdk-amazon-chime-resources@latest', 'fs-extra', '@types/fs-extra'],
+  deps: [
+    'dotenv',
+    'cdk-amazon-chime-resources@latest',
+    'fs-extra',
+    '@types/fs-extra',
+    '@aws-sdk/client-chime-sdk-meetings',
+    '@aws-sdk/client-chime-sdk-voice',
+    'aws-lambda',
+    '@types/aws-lambda',
+  ],
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
   defaultReleaseBranch: 'main',
 });
@@ -35,7 +49,7 @@ const common_exclude = [
 ];
 
 project.addTask('launch', {
-  exec: 'yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy --hotswap && yarn configLocal',
+  exec: 'yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy  --require-approval never && yarn configLocal',
 });
 project.addTask('getBucket', {
   exec: "aws cloudformation describe-stacks --stack-name AmazonChimeSDKClickToCall --region us-east-1 --query 'Stacks[0].Outputs[?OutputKey==`siteBucket`].OutputValue' --output text",

@@ -27,7 +27,7 @@ export interface CognitoStackProps {
 
 export class Cognito extends Construct {
   public readonly authenticatedRole: IRole;
-  public readonly identityPool: CfnIdentityPool;
+  public readonly identityPool: string;
   public readonly userPool: IUserPool;
   public readonly userPoolClient: IUserPoolClient;
   public readonly userPoolRegion: string;
@@ -113,7 +113,7 @@ export class Cognito extends Construct {
           'cognito-identity.amazonaws.com',
           {
             // eslint-disable-next-line quote-props
-            StringEquals: {
+            'StringEquals': {
               'cognito-identity.amazonaws.com:aud': identityPool.ref,
             },
             'ForAnyValue:StringLike': {
@@ -141,7 +141,7 @@ export class Cognito extends Construct {
           'cognito-identity.amazonaws.com',
           {
             // eslint-disable-next-line quote-props
-            StringEquals: {
+            'StringEquals': {
               'cognito-identity.amazonaws.com:aud': identityPool.ref,
             },
             'ForAnyValue:StringLike': {
@@ -174,7 +174,7 @@ export class Cognito extends Construct {
     });
 
     this.authenticatedRole = authenticatedRole;
-    this.identityPool = identityPool;
+    this.identityPool = identityPool.ref;
     this.userPool = userPool;
     this.userPoolClient = userPoolClient;
     this.userPoolRegion = Stack.of(this).region;

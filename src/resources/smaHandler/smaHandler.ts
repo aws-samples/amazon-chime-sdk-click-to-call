@@ -14,6 +14,7 @@ import {
   SendDigitsAction,
   CallAndBridgeAction,
   BridgeEndpointType,
+  Actions,
 } from './sip-media-application';
 
 const chimeSDKMeetingClient = new ChimeSDKMeetingsClient({
@@ -25,8 +26,8 @@ var fromNumber = process.env.FROM_NUMBER;
 export const lambdaHandler = async (
   event: SipMediaApplicationEvent,
 ): Promise<SipMediaApplicationResponse> => {
-  console.log('Lambda is invoked with calldetails:' + JSON.stringify(event));
-  let actions;
+  console.log('Lambda is invoked with call details:' + JSON.stringify(event));
+  let actions: Actions[];
   let transactionAttributes;
 
   if (event.CallDetails.TransactionAttributes) {
@@ -38,6 +39,8 @@ export const lambdaHandler = async (
       RequestorEmail: '',
       DialVC: '',
       MeetingId: '',
+      CallIdLegA: '',
+      CallIdLegB: '',
     };
   }
 
@@ -67,7 +70,21 @@ export const lambdaHandler = async (
       break;
     case InvocationEventType.ACTION_SUCCESSFUL:
       console.log('ACTION SUCCESSFUL');
+      const legAParticipant = event.CallDetails.Participants.find(
+        (participant) => participant.ParticipantTag === 'LEG-A',
+      );
+      const legBParticipant = event.CallDetails.Participants.find(
+        (participant) => participant.ParticipantTag === 'LEG-B',
+      );
+
+      transactionAttributes.CallIdLegA = legAParticipant
+        ? legAParticipant.CallId
+        : '';
+      transactionAttributes.CallIdLegB = legBParticipant
+        ? legBParticipant.CallId
+        : '';
       actions = [];
+
       break;
     case InvocationEventType.CALL_UPDATE_REQUESTED:
       console.log('CALL_UPDATE_REQUESTED');
@@ -79,17 +96,20 @@ export const lambdaHandler = async (
       break;
     case InvocationEventType.HANGUP:
       console.log('HANGUP ACTION');
+
+      if (event.ActionData?.Parameters.ParticipantTag === 'LEG-A') {
+        console.log('Hangup from Leg A - Hangup Leg B');
+        hangupAction.Parameters.CallId = transactionAttributes.CallIdLegB;
+        actions = [hangupAction];
+      } else {
+        actions = [];
+      }
       await chimeSDKMeetingClient.send(
         new DeleteMeetingCommand({
           MeetingId: transactionAttributes.MeetingId,
         }),
       );
 
-      if (event.CallDetails.Participants[1]) {
-        hangupAction.Parameters.CallId =
-          event.CallDetails.Participants[1].CallId;
-        actions = [hangupAction];
-      }
       break;
     case InvocationEventType.CALL_ANSWERED:
       console.log('CALL ANSWERED');

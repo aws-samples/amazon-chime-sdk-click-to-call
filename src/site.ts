@@ -18,6 +18,7 @@ interface SiteProps {
   userPool: IUserPool;
   userPoolClient: IUserPoolClient;
   userPoolRegion: string;
+  identityPool: string;
 }
 export class Site extends Construct {
   public readonly siteBucket: Bucket;
@@ -33,7 +34,6 @@ export class Site extends Construct {
     });
 
     this.distribution = new Distribution(this, 'CloudfrontDistribution', {
-      enableLogging: true,
       minimumProtocolVersion: SecurityPolicyProtocol.TLS_V1_2_2021,
       defaultBehavior: {
         origin: new S3Origin(this.siteBucket),
@@ -79,6 +79,7 @@ export class Site extends Construct {
       userPoolRegion: props.userPoolRegion,
       userPoolId: props.userPool.userPoolId,
       userPoolClientId: props.userPoolClient.userPoolClientId,
+      identityPoolId: props.identityPool,
     };
 
     new BucketDeployment(this, 'DeployBucket', {

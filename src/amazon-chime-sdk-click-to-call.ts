@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { App, CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
 import {
   IUserPool,
@@ -6,18 +7,26 @@ import {
   UserPoolClient,
 } from 'aws-cdk-lib/aws-cognito';
 import { Construct } from 'constructs';
+import { config } from 'dotenv';
 import { Asterisk, Chime, Infrastructure, Cognito, Site } from './';
+
+config();
 
 interface AmazonChimeSDKClickToCallProps extends StackProps {
   userPool?: string;
   userPoolClient?: string;
   userPoolRegion?: string;
+  identityPool: string;
+  buildAsterisk: string;
+  logLevel: string;
+  allowedDomain: string;
 }
 
 interface CognitoOutput {
   userPool: IUserPool;
   userPoolClient: IUserPoolClient;
   userPoolRegion: string;
+  identityPool: string;
 }
 
 export class AmazonChimeSDKClickToCall extends Stack {
@@ -28,7 +37,6 @@ export class AmazonChimeSDKClickToCall extends Stack {
   ) {
     super(scope, id, props);
 
-    const allowedDomain = this.node.tryGetContext('AllowedDomain');
     let cognito: CognitoOutput;
 
     const chime = new Chime(this, 'Chime');
@@ -36,6 +44,7 @@ export class AmazonChimeSDKClickToCall extends Stack {
       cognito = {
         userPoolRegion: props.userPoolRegion,
         userPool: UserPool.fromUserPoolArn(this, 'userPoolId', props.userPool),
+        identityPool: props.identityPool,
         userPoolClient: UserPoolClient.fromUserPoolClientId(
           this,
           'userPoolClientId',
@@ -44,13 +53,13 @@ export class AmazonChimeSDKClickToCall extends Stack {
       };
     } else {
       cognito = new Cognito(this, 'Cognito', {
-        allowedDomain: allowedDomain,
+        allowedDomain: props.allowedDomain,
       });
     }
 
     let infrastructure;
-    const asteriskDeploy = this.node.tryGetContext('AsteriskDeploy');
-    if (asteriskDeploy == 'y') {
+
+    if (props.buildAsterisk == 'true') {
       const asterisk = new Asterisk(this, 'Asterisk');
       infrastructure = new Infrastructure(this, 'Infrastructure', {
         fromPhoneNumber: chime.fromNumber,
@@ -79,6 +88,7 @@ export class AmazonChimeSDKClickToCall extends Stack {
       userPool: cognito.userPool,
       userPoolClient: cognito.userPoolClient,
       userPoolRegion: cognito.userPoolRegion,
+      identityPool: cognito.identityPool,
     });
 
     new CfnOutput(this, 'API_URL', { value: infrastructure.apiUrl });
@@ -103,6 +113,10 @@ const stackProps = {
   userPool: process.env.USER_POOL || '',
   userPoolClient: process.env.USER_POOL_CLIENT || '',
   userPoolRegion: process.env.USER_POOL_REGION || '',
+  identityPool: process.env.IDENTITY_POOL || '',
+  allowedDomain: process.env.ALLOWED_DOMAIN || '',
+  logLevel: process.env.LOG_LEVEL || 'INFO',
+  buildAsterisk: process.env.BUILD_ASTERISK || 'false',
 };
 
 const app = new App();

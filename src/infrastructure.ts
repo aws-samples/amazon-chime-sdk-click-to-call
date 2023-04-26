@@ -55,11 +55,11 @@ export class Infrastructure extends Construct {
       entry: 'src/resources/callControl/callControl.js',
       bundling: {
         nodeModules: [
-          '@aws-sdk/client-chime-sdk-voice',
           '@aws-sdk/client-chime-sdk-meetings',
+          '@aws-sdk/client-chime-sdk-voice',
         ],
       },
-      runtime: Runtime.NODEJS_16_X,
+      runtime: Runtime.NODEJS_18_X,
       architecture: Architecture.ARM_64,
       role: infrastructureRole,
       timeout: Duration.seconds(60),
@@ -75,11 +75,11 @@ export class Infrastructure extends Construct {
       entry: 'src/resources/updateCall/updateCall.js',
       bundling: {
         nodeModules: [
-          '@aws-sdk/client-chime-sdk-voice',
           '@aws-sdk/client-chime-sdk-meetings',
+          '@aws-sdk/client-chime-sdk-voice',
         ],
       },
-      runtime: Runtime.NODEJS_16_X,
+      runtime: Runtime.NODEJS_18_X,
       architecture: Architecture.ARM_64,
       role: infrastructureRole,
       timeout: Duration.seconds(60),
