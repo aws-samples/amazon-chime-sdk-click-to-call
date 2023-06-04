@@ -91,12 +91,13 @@ export class AmazonChimeSDKClickToCall extends Stack {
       identityPool: cognito.identityPool,
     });
 
-    new CfnOutput(this, 'API_URL', { value: infrastructure.apiUrl });
-    new CfnOutput(this, 'USER_POOL_REGION', { value: cognito.userPoolRegion });
-    new CfnOutput(this, 'USER_POOL_ID', { value: cognito.userPool.userPoolId });
-    new CfnOutput(this, 'USER_POOL_CLIENT', {
-      value: cognito.userPoolClient.userPoolClientId,
-    });
+    // new CfnOutput(this, 'API_URL', { value: infrastructure.apiUrl });
+    // new CfnOutput(this, 'USER_POOL_REGION', { value: cognito.userPoolRegion });
+    // new CfnOutput(this, 'USER_POOL_ID', { value: cognito.userPool.userPoolId });
+    // new CfnOutput(this, 'USER_POOL_CLIENT', {
+    //   value: cognito.userPoolClient.userPoolClientId,
+    // });
+    new CfnOutput(this, 'fromNumber', { value: chime.fromNumber });
     new CfnOutput(this, 'siteBucket', { value: site.siteBucket.bucketName });
     new CfnOutput(this, 'site', {
       value: site.distribution.distributionDomainName,

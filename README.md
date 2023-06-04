@@ -24,8 +24,6 @@ Basic understanding of:
 
 ## Components
 
-git
-
 ### Amazon Chime SDK Meetings
 
 This demo uses a simple React based web client to create an Amazon Chime SDK meeting. This client can be found in the [site](site/) directory and will use an Amazon API Gateway with AWS Amplify to make AWS SDK API calls to create the meeting, create attendees, and create the SIP media application call.

@@ -194,8 +194,5 @@ var callAndBridgePSTN: CallAndBridgeAction = {
         Uri: '',
       },
     ],
-    SipHeaders: {
-      'X-RequestorEmail': '',
-    },
   },
 };

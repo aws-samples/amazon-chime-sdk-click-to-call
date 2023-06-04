@@ -106,32 +106,6 @@ Object {
     },
   },
   "Outputs": Object {
-    "APIURL": Object {
-      "Value": Object {
-        "Fn::Join": Array [
-          "",
-          Array [
-            "https://",
-            Object {
-              "Ref": "InfrastructureclickToCallApiEFC07FEC",
-            },
-            ".execute-api.",
-            Object {
-              "Ref": "AWS::Region",
-            },
-            ".",
-            Object {
-              "Ref": "AWS::URLSuffix",
-            },
-            "/",
-            Object {
-              "Ref": "InfrastructureclickToCallApiDeploymentStageprodD09C17F5",
-            },
-            "/",
-          ],
-        ],
-      },
-    },
     "InfrastructureclickToCallApiEndpointFB01AAB3": Object {
       "Value": Object {
         "Fn::Join": Array [
@@ -158,19 +132,12 @@ Object {
         ],
       },
     },
-    "USERPOOLCLIENT": Object {
+    "fromNumber": Object {
       "Value": Object {
-        "Ref": "CognitoUserPoolClientEF2538C4",
-      },
-    },
-    "USERPOOLID": Object {
-      "Value": Object {
-        "Ref": "CognitoUserPool279BBD48",
-      },
-    },
-    "USERPOOLREGION": Object {
-      "Value": Object {
-        "Ref": "AWS::Region",
+        "Fn::GetAtt": Array [
+          "ChimephoneNumberChimePhoneNumberpstnCustomResourceDFB46FB1",
+          "phoneNumber",
+        ],
       },
     },
     "site": Object {
@@ -443,7 +410,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -717,7 +684,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -749,7 +716,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0201aae3e9f9f460eb5a82080933592568ad8b4cffd976098650a857cfe1e0da.zip",
+          "S3Key": "74903b3d1817610924799a7b8737dda43e07d1d6828d9bfce604d82c8a8d3e5e.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1442,7 +1409,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c7b030edf8a812ed1d930d21405106c2cd3ca79ade1fc6358b49251948c970bb.zip",
+          "S3Key": "561f397fafefc66e01f80c0c2ad08dc9439ac65858d91b4ade12fcbff8070826.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -2032,7 +1999,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a9a5bf8649b75359f5375ca8d7b1c0be06744c6be8536185565a50b86012168b.zip",
+          "S3Key": "a8b8cf0521065df9adb5bcc599996c4d538b0f909c36a8ebbebb8820aaf9fa22.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -2120,7 +2087,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "10972873dd8a3bc33ae1cb91d834617be249fd84bed5bdbb6ffbb581650aea83.zip",
+          "S3Key": "0e38c73676c042efb04d698981ab7a9706991a146e59250a537916db0e9bde39.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -2183,7 +2150,7 @@ Object {
           },
         ],
         "SourceObjectKeys": Array [
-          "ee83167620790e44e272ab94e9bbf381e72a03592a7605fe1dbcd77325bbddb0.zip",
+          "84c36a709ecfada35a73ec85d8457ee32b0803e74d25a52e240a33f994418654.zip",
           "7e2723da3d38f7cfb88b2c953d1b5da26dfd4aa7361cdb0bfcdf6041e0a71cad.zip",
         ],
       },
@@ -2440,32 +2407,6 @@ Object {
     },
   },
   "Outputs": Object {
-    "APIURL": Object {
-      "Value": Object {
-        "Fn::Join": Array [
-          "",
-          Array [
-            "https://",
-            Object {
-              "Ref": "InfrastructureclickToCallApiEFC07FEC",
-            },
-            ".execute-api.",
-            Object {
-              "Ref": "AWS::Region",
-            },
-            ".",
-            Object {
-              "Ref": "AWS::URLSuffix",
-            },
-            "/",
-            Object {
-              "Ref": "InfrastructureclickToCallApiDeploymentStageprodD09C17F5",
-            },
-            "/",
-          ],
-        ],
-      },
-    },
     "InfrastructureclickToCallApiEndpointFB01AAB3": Object {
       "Value": Object {
         "Fn::Join": Array [
@@ -2492,19 +2433,12 @@ Object {
         ],
       },
     },
-    "USERPOOLCLIENT": Object {
+    "fromNumber": Object {
       "Value": Object {
-        "Ref": "CognitoUserPoolClientEF2538C4",
-      },
-    },
-    "USERPOOLID": Object {
-      "Value": Object {
-        "Ref": "CognitoUserPool279BBD48",
-      },
-    },
-    "USERPOOLREGION": Object {
-      "Value": Object {
-        "Ref": "AWS::Region",
+        "Fn::GetAtt": Array [
+          "ChimephoneNumberChimePhoneNumberpstnCustomResourceDFB46FB1",
+          "phoneNumber",
+        ],
       },
     },
     "instanceId": Object {
@@ -3676,7 +3610,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -4061,7 +3995,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -4329,7 +4263,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -4603,7 +4537,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -4635,7 +4569,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0201aae3e9f9f460eb5a82080933592568ad8b4cffd976098650a857cfe1e0da.zip",
+          "S3Key": "74903b3d1817610924799a7b8737dda43e07d1d6828d9bfce604d82c8a8d3e5e.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5328,7 +5262,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c7b030edf8a812ed1d930d21405106c2cd3ca79ade1fc6358b49251948c970bb.zip",
+          "S3Key": "561f397fafefc66e01f80c0c2ad08dc9439ac65858d91b4ade12fcbff8070826.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5944,7 +5878,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a9a5bf8649b75359f5375ca8d7b1c0be06744c6be8536185565a50b86012168b.zip",
+          "S3Key": "a8b8cf0521065df9adb5bcc599996c4d538b0f909c36a8ebbebb8820aaf9fa22.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -6058,7 +5992,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "10972873dd8a3bc33ae1cb91d834617be249fd84bed5bdbb6ffbb581650aea83.zip",
+          "S3Key": "0e38c73676c042efb04d698981ab7a9706991a146e59250a537916db0e9bde39.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -6121,7 +6055,7 @@ ldconfig
           },
         ],
         "SourceObjectKeys": Array [
-          "ee83167620790e44e272ab94e9bbf381e72a03592a7605fe1dbcd77325bbddb0.zip",
+          "84c36a709ecfada35a73ec85d8457ee32b0803e74d25a52e240a33f994418654.zip",
           "7e2723da3d38f7cfb88b2c953d1b5da26dfd4aa7361cdb0bfcdf6041e0a71cad.zip",
         ],
       },
@@ -6378,32 +6312,6 @@ Object {
     },
   },
   "Outputs": Object {
-    "APIURL": Object {
-      "Value": Object {
-        "Fn::Join": Array [
-          "",
-          Array [
-            "https://",
-            Object {
-              "Ref": "InfrastructureclickToCallApiEFC07FEC",
-            },
-            ".execute-api.",
-            Object {
-              "Ref": "AWS::Region",
-            },
-            ".",
-            Object {
-              "Ref": "AWS::URLSuffix",
-            },
-            "/",
-            Object {
-              "Ref": "InfrastructureclickToCallApiDeploymentStageprodD09C17F5",
-            },
-            "/",
-          ],
-        ],
-      },
-    },
     "InfrastructureclickToCallApiEndpointFB01AAB3": Object {
       "Value": Object {
         "Fn::Join": Array [
@@ -6430,14 +6338,13 @@ Object {
         ],
       },
     },
-    "USERPOOLCLIENT": Object {
-      "Value": "string",
-    },
-    "USERPOOLID": Object {
-      "Value": "us-east-1_z8UDEjm17",
-    },
-    "USERPOOLREGION": Object {
-      "Value": "string",
+    "fromNumber": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "ChimephoneNumberChimePhoneNumberpstnCustomResourceDFB46FB1",
+          "phoneNumber",
+        ],
+      },
     },
     "instanceId": Object {
       "Value": Object {
@@ -7608,7 +7515,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -7993,7 +7900,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -8261,7 +8168,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -8535,7 +8442,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c54130c19171cbf8ad85b9a521c4c32ef96d4b452d5de1d5890880f7bbbb2df0.zip",
+          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -8567,7 +8474,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0201aae3e9f9f460eb5a82080933592568ad8b4cffd976098650a857cfe1e0da.zip",
+          "S3Key": "74903b3d1817610924799a7b8737dda43e07d1d6828d9bfce604d82c8a8d3e5e.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -8889,7 +8796,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c7b030edf8a812ed1d930d21405106c2cd3ca79ade1fc6358b49251948c970bb.zip",
+          "S3Key": "561f397fafefc66e01f80c0c2ad08dc9439ac65858d91b4ade12fcbff8070826.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -9505,7 +9412,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a9a5bf8649b75359f5375ca8d7b1c0be06744c6be8536185565a50b86012168b.zip",
+          "S3Key": "a8b8cf0521065df9adb5bcc599996c4d538b0f909c36a8ebbebb8820aaf9fa22.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -9619,7 +9526,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "10972873dd8a3bc33ae1cb91d834617be249fd84bed5bdbb6ffbb581650aea83.zip",
+          "S3Key": "0e38c73676c042efb04d698981ab7a9706991a146e59250a537916db0e9bde39.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -9670,7 +9577,7 @@ ldconfig
           },
         ],
         "SourceObjectKeys": Array [
-          "ee83167620790e44e272ab94e9bbf381e72a03592a7605fe1dbcd77325bbddb0.zip",
+          "84c36a709ecfada35a73ec85d8457ee32b0803e74d25a52e240a33f994418654.zip",
           "2272d47b7930592306f0886c9384fc00495b5aa97b106999a98a1240351a4771.zip",
         ],
       },
