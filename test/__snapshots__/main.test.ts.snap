@@ -716,7 +716,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "947cc6840559fbe59b5f30ae382241a87cd9d030ad8cae7bb286b0be9e1d7a00.zip",
+          "S3Key": "f9a8e75fa798b3c974604c18c5847e7d4cf8eb8b098874b025cf75725bf6a74a.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1409,7 +1409,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0b3123a8c75d2513c17b6e86a6fe8c2e830fbdfab66a33554f19acfdcc0399a7.zip",
+          "S3Key": "a176fe36fc09ff15cd917446308eee4965a879ad2f04b74eaaaa64500838fa22.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1491,7 +1491,7 @@ Object {
       "Type": "AWS::IAM::Role",
       "UpdateReplacePolicy": "Retain",
     },
-    "InfrastructureclickToCallApiDeployment2AA67CCC35e2ecb0b29a161517b44ddaceb89e81": Object {
+    "InfrastructureclickToCallApiDeployment2AA67CCCfe420dfd1b384fb369eff1c6fc62f240": Object {
       "DependsOn": Array [
         "InfrastructureclickToCallApidialOPTIONS975A7DE2",
         "InfrastructureclickToCallApidialPOST9BBA9F9F",
@@ -1515,7 +1515,7 @@ Object {
       ],
       "Properties": Object {
         "DeploymentId": Object {
-          "Ref": "InfrastructureclickToCallApiDeployment2AA67CCC35e2ecb0b29a161517b44ddaceb89e81",
+          "Ref": "InfrastructureclickToCallApiDeployment2AA67CCCfe420dfd1b384fb369eff1c6fc62f240",
         },
         "MethodSettings": Array [
           Object {
@@ -1545,6 +1545,7 @@ Object {
     },
     "InfrastructureclickToCallApiOPTIONS6DBD1FFC": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1604,6 +1605,7 @@ Object {
     },
     "InfrastructureclickToCallApidialOPTIONS975A7DE2": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1781,6 +1783,7 @@ Object {
     },
     "InfrastructureclickToCallApiupdateOPTIONS86D242F9": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -1999,7 +2002,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "bfda12bbe1069936d7c1578d074c6ca5333fcfd25bbb72c64a4cf05498f239af.zip",
+          "S3Key": "866c60db57cdf544af6648c68d5eda75a12521b99ebc81dc1f46a6d5a04fd274.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -2087,7 +2090,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0e38c73676c042efb04d698981ab7a9706991a146e59250a537916db0e9bde39.zip",
+          "S3Key": "88b83f5f61fe6f85ffcd0a37a09a8f3be90e7c090964b0b62b062eb8a5a1a3a7.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -2502,7 +2505,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "bb459fac5f6b4b052aac9803443226d161a5cfe96f4648b21f9e4912c698bf30.zip",
+          "S3Key": "f9346b940b724b094a16ca051c017799995fa93df6da38a0539bf7c000fee50a.zip",
         },
         "Handler": "index.handler",
         "Role": Object {
@@ -4569,7 +4572,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "947cc6840559fbe59b5f30ae382241a87cd9d030ad8cae7bb286b0be9e1d7a00.zip",
+          "S3Key": "f9a8e75fa798b3c974604c18c5847e7d4cf8eb8b098874b025cf75725bf6a74a.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5262,7 +5265,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0b3123a8c75d2513c17b6e86a6fe8c2e830fbdfab66a33554f19acfdcc0399a7.zip",
+          "S3Key": "a176fe36fc09ff15cd917446308eee4965a879ad2f04b74eaaaa64500838fa22.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5370,7 +5373,7 @@ ldconfig
       "Type": "AWS::IAM::Role",
       "UpdateReplacePolicy": "Retain",
     },
-    "InfrastructureclickToCallApiDeployment2AA67CCC35e2ecb0b29a161517b44ddaceb89e81": Object {
+    "InfrastructureclickToCallApiDeployment2AA67CCCfe420dfd1b384fb369eff1c6fc62f240": Object {
       "DependsOn": Array [
         "InfrastructureclickToCallApidialOPTIONS975A7DE2",
         "InfrastructureclickToCallApidialPOST9BBA9F9F",
@@ -5394,7 +5397,7 @@ ldconfig
       ],
       "Properties": Object {
         "DeploymentId": Object {
-          "Ref": "InfrastructureclickToCallApiDeployment2AA67CCC35e2ecb0b29a161517b44ddaceb89e81",
+          "Ref": "InfrastructureclickToCallApiDeployment2AA67CCCfe420dfd1b384fb369eff1c6fc62f240",
         },
         "MethodSettings": Array [
           Object {
@@ -5424,6 +5427,7 @@ ldconfig
     },
     "InfrastructureclickToCallApiOPTIONS6DBD1FFC": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -5483,6 +5487,7 @@ ldconfig
     },
     "InfrastructureclickToCallApidialOPTIONS975A7DE2": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -5660,6 +5665,7 @@ ldconfig
     },
     "InfrastructureclickToCallApiupdateOPTIONS86D242F9": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -5878,7 +5884,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "bfda12bbe1069936d7c1578d074c6ca5333fcfd25bbb72c64a4cf05498f239af.zip",
+          "S3Key": "866c60db57cdf544af6648c68d5eda75a12521b99ebc81dc1f46a6d5a04fd274.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5992,7 +5998,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0e38c73676c042efb04d698981ab7a9706991a146e59250a537916db0e9bde39.zip",
+          "S3Key": "88b83f5f61fe6f85ffcd0a37a09a8f3be90e7c090964b0b62b062eb8a5a1a3a7.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -6407,7 +6413,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "bb459fac5f6b4b052aac9803443226d161a5cfe96f4648b21f9e4912c698bf30.zip",
+          "S3Key": "f9346b940b724b094a16ca051c017799995fa93df6da38a0539bf7c000fee50a.zip",
         },
         "Handler": "index.handler",
         "Role": Object {
@@ -8474,7 +8480,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "947cc6840559fbe59b5f30ae382241a87cd9d030ad8cae7bb286b0be9e1d7a00.zip",
+          "S3Key": "f9a8e75fa798b3c974604c18c5847e7d4cf8eb8b098874b025cf75725bf6a74a.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -8796,7 +8802,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0b3123a8c75d2513c17b6e86a6fe8c2e830fbdfab66a33554f19acfdcc0399a7.zip",
+          "S3Key": "a176fe36fc09ff15cd917446308eee4965a879ad2f04b74eaaaa64500838fa22.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -8904,7 +8910,7 @@ ldconfig
       "Type": "AWS::IAM::Role",
       "UpdateReplacePolicy": "Retain",
     },
-    "InfrastructureclickToCallApiDeployment2AA67CCC35e2ecb0b29a161517b44ddaceb89e81": Object {
+    "InfrastructureclickToCallApiDeployment2AA67CCCfe420dfd1b384fb369eff1c6fc62f240": Object {
       "DependsOn": Array [
         "InfrastructureclickToCallApidialOPTIONS975A7DE2",
         "InfrastructureclickToCallApidialPOST9BBA9F9F",
@@ -8928,7 +8934,7 @@ ldconfig
       ],
       "Properties": Object {
         "DeploymentId": Object {
-          "Ref": "InfrastructureclickToCallApiDeployment2AA67CCC35e2ecb0b29a161517b44ddaceb89e81",
+          "Ref": "InfrastructureclickToCallApiDeployment2AA67CCCfe420dfd1b384fb369eff1c6fc62f240",
         },
         "MethodSettings": Array [
           Object {
@@ -8958,6 +8964,7 @@ ldconfig
     },
     "InfrastructureclickToCallApiOPTIONS6DBD1FFC": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9017,6 +9024,7 @@ ldconfig
     },
     "InfrastructureclickToCallApidialOPTIONS975A7DE2": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9194,6 +9202,7 @@ ldconfig
     },
     "InfrastructureclickToCallApiupdateOPTIONS86D242F9": Object {
       "Properties": Object {
+        "ApiKeyRequired": false,
         "AuthorizationType": "NONE",
         "HttpMethod": "OPTIONS",
         "Integration": Object {
@@ -9412,7 +9421,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "bfda12bbe1069936d7c1578d074c6ca5333fcfd25bbb72c64a4cf05498f239af.zip",
+          "S3Key": "866c60db57cdf544af6648c68d5eda75a12521b99ebc81dc1f46a6d5a04fd274.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -9526,7 +9535,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "0e38c73676c042efb04d698981ab7a9706991a146e59250a537916db0e9bde39.zip",
+          "S3Key": "88b83f5f61fe6f85ffcd0a37a09a8f3be90e7c090964b0b62b062eb8a5a1a3a7.zip",
         },
         "Description": "/opt/awscli/aws",
       },
