@@ -2,109 +2,6 @@
 
 exports[`Snapshot 1`] = `
 Object {
-  "Mappings": Object {
-    "DefaultCrNodeVersionMap": Object {
-      "af-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-3": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-south-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-3": Object {
-        "value": "nodejs16.x",
-      },
-      "ca-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "cn-north-1": Object {
-        "value": "nodejs16.x",
-      },
-      "cn-northwest-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-central-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-north-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-south-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-3": Object {
-        "value": "nodejs16.x",
-      },
-      "me-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "me-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "sa-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-east-2": Object {
-        "value": "nodejs16.x",
-      },
-      "us-gov-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-gov-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-iso-east-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-iso-west-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-isob-east-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-west-2": Object {
-        "value": "nodejs16.x",
-      },
-    },
-  },
   "Outputs": Object {
     "InfrastructureclickToCallApiEndpointFB01AAB3": Object {
       "Value": Object {
@@ -172,7 +69,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/phoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
@@ -192,7 +89,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -410,7 +307,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -440,7 +337,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/sipMediaApp/sipMediaAppRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -460,7 +357,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -684,7 +581,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -716,7 +613,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "f9a8e75fa798b3c974604c18c5847e7d4cf8eb8b098874b025cf75725bf6a74a.zip",
+          "S3Key": "a79bdd883f9148286a827a452015eb705c2e3c705c2a58c74ed6132fb2fa6ae4.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1329,7 +1226,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "350185a1069fa20a23a583e20c77f6844218bd73097902362dc94f1a108f5d89.zip",
+          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -1343,7 +1240,7 @@ Object {
             ],
           ],
         },
-        "Handler": "__entrypoint__.handler",
+        "Handler": "index.handler",
         "MemorySize": 128,
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -1351,7 +1248,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -1409,7 +1306,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a176fe36fc09ff15cd917446308eee4965a879ad2f04b74eaaaa64500838fa22.zip",
+          "S3Key": "021d950ded2bbef0f3714b806399d3f27bcc36cf636b6b0294a672046ae74fe2.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -2002,7 +1899,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "866c60db57cdf544af6648c68d5eda75a12521b99ebc81dc1f46a6d5a04fd274.zip",
+          "S3Key": "53780a3a1c952751613f03f25a665f3e41010e5dee15391b19181774403d78c9.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -2090,7 +1987,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "88b83f5f61fe6f85ffcd0a37a09a8f3be90e7c090964b0b62b062eb8a5a1a3a7.zip",
+          "S3Key": "e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -2306,109 +2203,6 @@ Object {
 
 exports[`SnapshotWithAsterisk 1`] = `
 Object {
-  "Mappings": Object {
-    "DefaultCrNodeVersionMap": Object {
-      "af-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-3": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-south-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-3": Object {
-        "value": "nodejs16.x",
-      },
-      "ca-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "cn-north-1": Object {
-        "value": "nodejs16.x",
-      },
-      "cn-northwest-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-central-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-north-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-south-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-3": Object {
-        "value": "nodejs16.x",
-      },
-      "me-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "me-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "sa-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-east-2": Object {
-        "value": "nodejs16.x",
-      },
-      "us-gov-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-gov-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-iso-east-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-iso-west-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-isob-east-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-west-2": Object {
-        "value": "nodejs16.x",
-      },
-    },
-  },
   "Outputs": Object {
     "InfrastructureclickToCallApiEndpointFB01AAB3": Object {
       "Value": Object {
@@ -2505,7 +2299,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "f9346b940b724b094a16ca051c017799995fa93df6da38a0539bf7c000fee50a.zip",
+          "S3Key": "099a3112386fa620b3069790dcf92c8e64bb5341760a8b0a76bfa843f8ad41df.zip",
         },
         "Handler": "index.handler",
         "Role": Object {
@@ -2514,15 +2308,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": Object {
-          "Fn::FindInMap": Array [
-            "DefaultCrNodeVersionMap",
-            Object {
-              "Ref": "AWS::Region",
-            },
-            "value",
-          ],
-        },
+        "Runtime": "nodejs18.x",
         "Timeout": 120,
       },
       "Type": "AWS::Lambda::Function",
@@ -3375,7 +3161,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Asterisk/voiceConnectorPhoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
@@ -3395,7 +3181,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -3613,7 +3399,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -3730,7 +3516,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Asterisk/voiceConnector/voiceConnectorRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -3750,7 +3536,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -3998,7 +3784,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -4028,7 +3814,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/phoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
@@ -4048,7 +3834,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -4266,7 +4052,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -4296,7 +4082,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/sipMediaApp/sipMediaAppRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -4316,7 +4102,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -4540,7 +4326,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -4572,7 +4358,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "f9a8e75fa798b3c974604c18c5847e7d4cf8eb8b098874b025cf75725bf6a74a.zip",
+          "S3Key": "a79bdd883f9148286a827a452015eb705c2e3c705c2a58c74ed6132fb2fa6ae4.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5185,7 +4971,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "350185a1069fa20a23a583e20c77f6844218bd73097902362dc94f1a108f5d89.zip",
+          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -5199,7 +4985,7 @@ ldconfig
             ],
           ],
         },
-        "Handler": "__entrypoint__.handler",
+        "Handler": "index.handler",
         "MemorySize": 128,
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -5207,7 +4993,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -5265,7 +5051,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a176fe36fc09ff15cd917446308eee4965a879ad2f04b74eaaaa64500838fa22.zip",
+          "S3Key": "021d950ded2bbef0f3714b806399d3f27bcc36cf636b6b0294a672046ae74fe2.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5884,7 +5670,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "866c60db57cdf544af6648c68d5eda75a12521b99ebc81dc1f46a6d5a04fd274.zip",
+          "S3Key": "53780a3a1c952751613f03f25a665f3e41010e5dee15391b19181774403d78c9.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -5998,7 +5784,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "88b83f5f61fe6f85ffcd0a37a09a8f3be90e7c090964b0b62b062eb8a5a1a3a7.zip",
+          "S3Key": "e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -6214,109 +6000,6 @@ ldconfig
 
 exports[`SnapshotWithAsteriskAndCognito 1`] = `
 Object {
-  "Mappings": Object {
-    "DefaultCrNodeVersionMap": Object {
-      "af-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-northeast-3": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-south-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-1": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-2": Object {
-        "value": "nodejs16.x",
-      },
-      "ap-southeast-3": Object {
-        "value": "nodejs16.x",
-      },
-      "ca-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "cn-north-1": Object {
-        "value": "nodejs16.x",
-      },
-      "cn-northwest-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-central-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-north-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-south-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-2": Object {
-        "value": "nodejs16.x",
-      },
-      "eu-west-3": Object {
-        "value": "nodejs16.x",
-      },
-      "me-central-1": Object {
-        "value": "nodejs16.x",
-      },
-      "me-south-1": Object {
-        "value": "nodejs16.x",
-      },
-      "sa-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-east-2": Object {
-        "value": "nodejs16.x",
-      },
-      "us-gov-east-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-gov-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-iso-east-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-iso-west-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-isob-east-1": Object {
-        "value": "nodejs14.x",
-      },
-      "us-west-1": Object {
-        "value": "nodejs16.x",
-      },
-      "us-west-2": Object {
-        "value": "nodejs16.x",
-      },
-    },
-  },
   "Outputs": Object {
     "InfrastructureclickToCallApiEndpointFB01AAB3": Object {
       "Value": Object {
@@ -6413,7 +6096,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "f9346b940b724b094a16ca051c017799995fa93df6da38a0539bf7c000fee50a.zip",
+          "S3Key": "099a3112386fa620b3069790dcf92c8e64bb5341760a8b0a76bfa843f8ad41df.zip",
         },
         "Handler": "index.handler",
         "Role": Object {
@@ -6422,15 +6105,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": Object {
-          "Fn::FindInMap": Array [
-            "DefaultCrNodeVersionMap",
-            Object {
-              "Ref": "AWS::Region",
-            },
-            "value",
-          ],
-        },
+        "Runtime": "nodejs18.x",
         "Timeout": 120,
       },
       "Type": "AWS::Lambda::Function",
@@ -7283,7 +6958,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Asterisk/voiceConnectorPhoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
@@ -7303,7 +6978,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -7521,7 +7196,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -7638,7 +7313,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Asterisk/voiceConnector/voiceConnectorRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -7658,7 +7333,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -7906,7 +7581,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -7936,7 +7611,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/phoneNumber/ChimePhoneNumber/PSTNResourceProvider)",
         "Environment": Object {
@@ -7956,7 +7631,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -8174,7 +7849,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -8204,7 +7879,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8e3d635893ea17fa3158623489cd42c680fad925b38de1ef51cb10d84f6e245e.zip",
+          "S3Key": "f2d30cfc360482320a52a4fcde8a70f3569df79ab30be24650fda58eb60052cf.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (test/Chime/sipMediaApp/sipMediaAppRequest/PSTNResourceProvider)",
         "Environment": Object {
@@ -8224,7 +7899,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -8448,7 +8123,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "18a21c219083043f3d7d56daa068e5c1be7706ffda18f115cae5a7d441a307fc.zip",
+          "S3Key": "e8b426f3df9163886867b5e8f1203363e3c18f9e0a43bf8a06e9ccbc07dc54f3.zip",
         },
         "Description": "src/resources/pstn/pstn.lambda.ts",
         "Environment": Object {
@@ -8480,7 +8155,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "f9a8e75fa798b3c974604c18c5847e7d4cf8eb8b098874b025cf75725bf6a74a.zip",
+          "S3Key": "a79bdd883f9148286a827a452015eb705c2e3c705c2a58c74ed6132fb2fa6ae4.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -8727,7 +8402,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "350185a1069fa20a23a583e20c77f6844218bd73097902362dc94f1a108f5d89.zip",
+          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -8741,7 +8416,7 @@ ldconfig
             ],
           ],
         },
-        "Handler": "__entrypoint__.handler",
+        "Handler": "index.handler",
         "MemorySize": 128,
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -8749,7 +8424,7 @@ ldconfig
             "Arn",
           ],
         },
-        "Runtime": "nodejs16.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -8802,7 +8477,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a176fe36fc09ff15cd917446308eee4965a879ad2f04b74eaaaa64500838fa22.zip",
+          "S3Key": "021d950ded2bbef0f3714b806399d3f27bcc36cf636b6b0294a672046ae74fe2.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -9421,7 +9096,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "866c60db57cdf544af6648c68d5eda75a12521b99ebc81dc1f46a6d5a04fd274.zip",
+          "S3Key": "53780a3a1c952751613f03f25a665f3e41010e5dee15391b19181774403d78c9.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -9535,7 +9210,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "88b83f5f61fe6f85ffcd0a37a09a8f3be90e7c090964b0b62b062eb8a5a1a3a7.zip",
+          "S3Key": "e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip",
         },
         "Description": "/opt/awscli/aws",
       },
