@@ -52,6 +52,7 @@ junit.xml
 /cdk.out/
 .cdk.staging/
 .parcel-cache/
+!/.github/workflows/upgrade-site.yml
 cdk.out
 cdk.context.json
 yarn-error.log
