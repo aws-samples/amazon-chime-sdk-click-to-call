@@ -399,14 +399,14 @@ ALLOWED_DOMAIN='example.com'
 
 If a domain is entered, only email addresses with the chosen domain will be allowed to register an account with Cognito. If no domain is entered, any email address can be used. Domain should be entered as `example.com`.
 
-To make API calls other than us-east-1 region:
+To make Amazon Chime SDK Meeting and PSTN Audio API calls other than us-east-1 region:
 
 ```bash
 MEETING_CONTROL='us-west-2'
 PSTN_CONTROL='ap-northeast-1'
 ```
 
-
+Check the most updated region support from [here](https://docs.aws.amazon.com/chime-sdk/latest/dg/sdk-available-regions.html).
 
 > **_NOTE:_** Defaults will be no Asterisk deployment and no domain restriction.
 
