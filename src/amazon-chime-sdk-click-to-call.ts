@@ -138,7 +138,7 @@ const stackProps = {
 
 const app = new App();
 
-new AmazonChimeSDKClickToCall(app, 'AmazonChimeSDKClickToCallJP3', {
+new AmazonChimeSDKClickToCall(app, 'AmazonChimeSDKClickToCallJP4', {
   ...stackProps,
   env: devEnv,
 });

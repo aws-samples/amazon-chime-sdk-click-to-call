@@ -92,6 +92,8 @@ export class Infrastructure extends Construct {
       environment: {
         SMA_ID: props.smaId,
         FROM_NUMBER: props.fromPhoneNumber,
+        MEETING_CONTROL: props.meetingControl,
+        PSTN_CONTROL: props.pstnControl,
         VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone || '',
         VOICE_CONNECTOR_ARN: props.voiceConnectorArn || '',
       },
