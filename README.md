@@ -10,7 +10,7 @@ This starter project combines three Amazon Chime SDK components to create a demo
 
 ## Updates
 
-The demo has been updated to support global regions that Amazon Chime Voice Connector and Amazon Chime PSTN Audio supports. Check the most updated region support from [here](https://docs.aws.amazon.com/chime-sdk/latest/dg/sdk-available-regions.html).
+The demo has been updated to support deployment to global regions that Amazon Chime Voice Connector and SIP media applications support. With this, Voice Connector is required since PSTN is currently supported in US East and US West. Check the most updated region support from [here](https://docs.aws.amazon.com/chime-sdk/latest/dg/sdk-available-regions.html).
 
 Several pieces of this have been updated to use a new technique of connecting the WebRTC client to the telephony client. These changes are primarily in the `callControl.js` and `smaHandler.ts` files.
 
