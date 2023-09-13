@@ -1,19 +1,29 @@
 var import_crypto = require('crypto');
 var import_client_chime_sdk_meetings = require('@aws-sdk/client-chime-sdk-meetings');
 var import_client_chime_sdk_voice = require('@aws-sdk/client-chime-sdk-voice');
-var config = {
-  region: 'us-east-1',
-};
-var chimeSdkVoiceClient = new import_client_chime_sdk_voice.ChimeSDKVoiceClient(
-  config,
-);
-var chimeSdkMeetingsClient =
-  new import_client_chime_sdk_meetings.ChimeSDKMeetingsClient(config);
+
 var fromNumber = process.env['FROM_NUMBER'];
+var meetingControlRegion = process.env['MEETING_CONTROL'];
+var pstnControlRegion = process.env['PSTN_CONTROL'];
 var voiceConnectorPhone = process.env['VOICE_CONNECTOR_PHONE'];
 var voiceConnectorArn = process.env['VOICE_CONNECTOR_ARN'];
 var smaId = process.env['SMA_ID'];
 var numberToCall = process.env['NUMBER_TO_CALL'];
+var meetingBypassNumber = process.env['MEETING_BYPASS_NUMBER'];
+var mediaRegion = process.env.AWS_REGION;
+
+var voiceConfig = {
+  region: pstnControlRegion,
+};
+var meetingConfig = {
+  region: meetingControlRegion,
+};
+var chimeSdkVoiceClient = new import_client_chime_sdk_voice.ChimeSDKVoiceClient(
+  voiceConfig,
+);
+var chimeSdkMeetingsClient =
+  new import_client_chime_sdk_meetings.ChimeSDKMeetingsClient(meetingConfig);
+
 var response = {
   statusCode: 200,
   body: '',
@@ -106,9 +116,9 @@ async function executeDial(event, meetingInfo, phoneAttendeeInfo, toNumber) {
     dialVC = 'false';
   }
   var params = {
-    FromPhoneNumber: fromNumber,
+    FromPhoneNumber: fromNumber, //needs to be phone number from inventory
     SipMediaApplicationId: smaId,
-    ToPhoneNumber: '+17035550122',
+    ToPhoneNumber: meetingBypassNumber,
     SipHeaders: {
       'X-chime-join-token': phoneAttendeeInfo.Attendee.JoinToken,
       'X-chime-meeting-id': meetingInfo.Meeting.MeetingId,
@@ -140,7 +150,7 @@ async function createMeeting(requestId) {
     const meetingInfo = await chimeSdkMeetingsClient.send(
       new import_client_chime_sdk_meetings.CreateMeetingCommand({
         ClientRequestToken: requestId,
-        MediaRegion: 'us-east-1',
+        MediaRegion: mediaRegion,
         ExternalMeetingId: (0, import_crypto.randomUUID)(),
       }),
     );

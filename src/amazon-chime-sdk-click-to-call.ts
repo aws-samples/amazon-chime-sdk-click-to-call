@@ -20,6 +20,10 @@ interface AmazonChimeSDKClickToCallProps extends StackProps {
   buildAsterisk: string;
   logLevel: string;
   allowedDomain: string;
+  meetingControl: string;
+  pstnControl: string;
+  meetingBypassNumber: string;
+  cidrForSoftphone: string;
 }
 
 interface CognitoOutput {
@@ -60,11 +64,16 @@ export class AmazonChimeSDKClickToCall extends Stack {
     let infrastructure;
 
     if (props.buildAsterisk == 'true') {
-      const asterisk = new Asterisk(this, 'Asterisk');
+      const asterisk = new Asterisk(this, 'Asterisk', {
+        cidrForSoftphone: props.cidrForSoftphone,
+      });
       infrastructure = new Infrastructure(this, 'Infrastructure', {
         fromPhoneNumber: chime.fromNumber,
         smaId: chime.smaId,
         userPool: cognito.userPool,
+        meetingControl: props.meetingControl,
+        pstnControl: props.pstnControl,
+        meetingBypassNumber: props.meetingBypassNumber,
         voiceConnectorPhone: asterisk.voiceConnectorPhone,
         voiceConnectorArn: asterisk.voiceConnectorArn,
       });
@@ -80,6 +89,9 @@ export class AmazonChimeSDKClickToCall extends Stack {
         fromPhoneNumber: chime.fromNumber,
         smaId: chime.smaId,
         userPool: cognito.userPool,
+        meetingControl: props.meetingControl,
+        pstnControl: props.pstnControl,
+        meetingBypassNumber: props.meetingBypassNumber,
       });
     }
 
@@ -107,7 +119,7 @@ export class AmazonChimeSDKClickToCall extends Stack {
 
 const devEnv = {
   account: process.env.CDK_DEFAULT_ACCOUNT,
-  region: 'us-east-1',
+  region: process.env.CDK_DEFAULT_REGION,
 };
 
 const stackProps = {
@@ -118,11 +130,15 @@ const stackProps = {
   allowedDomain: process.env.ALLOWED_DOMAIN || '',
   logLevel: process.env.LOG_LEVEL || 'INFO',
   buildAsterisk: process.env.BUILD_ASTERISK || 'false',
+  meetingControl: process.env.MEETING_CONTROL || 'us-east-1',
+  pstnControl: process.env.PSTN_CONTROL || 'us-east-1',
+  meetingBypassNumber: process.env.MEETING_BYPASS_NUMBER || '+17035550122',
+  cidrForSoftphone: process.env.CIDR_FOR_SOFTPHONE || '',
 };
 
 const app = new App();
 
-new AmazonChimeSDKClickToCall(app, 'AmazonChimeSDKClickToCall', {
+new AmazonChimeSDKClickToCall(app, 'AmazonChimeSDKClickToCallJP3', {
   ...stackProps,
   env: devEnv,
 });

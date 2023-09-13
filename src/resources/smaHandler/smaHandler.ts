@@ -18,7 +18,7 @@ import {
 } from './sip-media-application';
 
 const chimeSDKMeetingClient = new ChimeSDKMeetingsClient({
-  region: 'us-east-1',
+  region: process.env.AWS_REGION,
 });
 
 var fromNumber = process.env.FROM_NUMBER;

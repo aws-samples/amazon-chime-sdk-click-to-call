@@ -237,13 +237,25 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --upgrade --target=minor --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,aws-cdk,esbuild,eslint-import-resolver-node,eslint-import-resolver-typescript,eslint-plugin-import,eslint,jest,jest-junit,npm-check-updates,projen,ts-jest,ts-node,typescript,@aws-sdk/client-chime-sdk-meetings,@aws-sdk/client-chime-sdk-voice,@types/aws-lambda,@types/fs-extra,aws-cdk-lib,aws-lambda,constructs,dotenv,fs-extra"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='cdk-amazon-chime-resources'"
+        },
+        {
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='cdk-amazon-chime-resources'"
+        },
+        {
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='cdk-amazon-chime-resources'"
+        },
+        {
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='cdk-amazon-chime-resources'"
+        },
+        {
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='cdk-amazon-chime-resources'"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk esbuild eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit npm-check-updates projen ts-jest ts-node typescript @aws-sdk/client-chime-sdk-meetings @aws-sdk/client-chime-sdk-voice @types/aws-lambda @types/fs-extra aws-cdk-lib aws-lambda constructs dotenv fs-extra"
+          "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk esbuild eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit npm-check-updates projen ts-jest ts-node typescript @aws-sdk/client-chime-sdk-meetings @aws-sdk/client-chime-sdk-voice @types/aws-lambda @types/fs-extra aws-cdk-lib aws-lambda cdk-amazon-chime-resources constructs dotenv fs-extra"
         },
         {
           "exec": "npx projen"

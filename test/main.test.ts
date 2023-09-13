@@ -18,6 +18,10 @@ const stackProps = {
   userPoolClient: '',
   userPoolRegion: '',
   identityPool: '',
+  meetingControl: '',
+  pstnControl: '',
+  meetingBypassNumber: '',
+  cidrForSoftphone: '',
 };
 
 test('SnapshotWithAsterisk', () => {
