@@ -38,6 +38,8 @@ Once the meeting has been created, the AWS Lambda will create an outbound call f
 
 Optionally, you can include a configured Amazon Chime Voice Connector and Asterisk PBX along with an associated phone number. If this phone number is dialed from the React client, a call will be made to the Asterisk PBX where it will be answered and audio echoed back. Alternatively, a phone can be registered to this PBX and used to answer the call.
 
+![ConnectionFlow](images/FlowOfClickToCallVC.png)
+
 ## How It Works
 
 ### Request from Client
