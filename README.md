@@ -10,6 +10,8 @@ This starter project combines three Amazon Chime SDK components to create a demo
 
 ## Updates
 
+The demo has been updated to support global regions that Amazon Chime Voice Connector and Amazon Chime PSTN Audio supports. Check the most updated region support from [here](https://docs.aws.amazon.com/chime-sdk/latest/dg/sdk-available-regions.html).
+
 Several pieces of this have been updated to use a new technique of connecting the WebRTC client to the telephony client. These changes are primarily in the `callControl.js` and `smaHandler.ts` files.
 
 ## Prerequisites
@@ -381,6 +383,14 @@ BUILD_ASTERISK='true'
 
 This will configure the Asterisk test server for deployment.
 
+Allow softphone client to connect to Asterisk server:
+
+```bash
+CIDR_FOR_SOFTPHONE='<your local ip address>/32'
+```
+
+If you are using softphone application like Zoiper5 to connect to Asterisk, you can set your local IP address to allow access to Asterisk server running on EC2.
+
 To restrict allowed domains for Cognito signup:
 
 ```bash
@@ -388,6 +398,15 @@ ALLOWED_DOMAIN='example.com'
 ```
 
 If a domain is entered, only email addresses with the chosen domain will be allowed to register an account with Cognito. If no domain is entered, any email address can be used. Domain should be entered as `example.com`.
+
+To make API calls other than us-east-1 region:
+
+```bash
+MEETING_CONTROL='us-west-2'
+PSTN_CONTROL='ap-northeast-1'
+```
+
+
 
 > **_NOTE:_** Defaults will be no Asterisk deployment and no domain restriction.
 
