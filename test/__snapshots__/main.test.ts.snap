@@ -953,9 +953,11 @@ Object {
                 "phoneNumber",
               ],
             },
-            "MEETING_BYPASS_NUMBER": "",
-            "MEETING_CONTROL": "",
-            "PSTN_CONTROL": "",
+            "MEETING_BYPASS_NUMBER": "+17035550122",
+            "MEETING_CONTROL": "us-east-1",
+            "PSTN_CONTROL": Object {
+              "Ref": "AWS::Region",
+            },
             "SMA_ID": Object {
               "Fn::GetAtt": Array [
                 "ChimesipMediaAppsipMediaAppRequestpstnCustomResource505FA3C9",
@@ -1549,8 +1551,10 @@ Object {
                 "phoneNumber",
               ],
             },
-            "MEETING_CONTROL": "",
-            "PSTN_CONTROL": "",
+            "MEETING_CONTROL": "us-east-1",
+            "PSTN_CONTROL": Object {
+              "Ref": "AWS::Region",
+            },
             "SMA_ID": Object {
               "Fn::GetAtt": Array [
                 "ChimesipMediaAppsipMediaAppRequestpstnCustomResource505FA3C9",
@@ -3659,9 +3663,11 @@ ldconfig
                 "phoneNumber",
               ],
             },
-            "MEETING_BYPASS_NUMBER": "",
-            "MEETING_CONTROL": "",
-            "PSTN_CONTROL": "",
+            "MEETING_BYPASS_NUMBER": "+17035550122",
+            "MEETING_CONTROL": "us-east-1",
+            "PSTN_CONTROL": Object {
+              "Ref": "AWS::Region",
+            },
             "SMA_ID": Object {
               "Fn::GetAtt": Array [
                 "ChimesipMediaAppsipMediaAppRequestpstnCustomResource505FA3C9",
@@ -4281,8 +4287,10 @@ ldconfig
                 "phoneNumber",
               ],
             },
-            "MEETING_CONTROL": "",
-            "PSTN_CONTROL": "",
+            "MEETING_CONTROL": "us-east-1",
+            "PSTN_CONTROL": Object {
+              "Ref": "AWS::Region",
+            },
             "SMA_ID": Object {
               "Fn::GetAtt": Array [
                 "ChimesipMediaAppsipMediaAppRequestpstnCustomResource505FA3C9",
@@ -6046,9 +6054,11 @@ ldconfig
                 "phoneNumber",
               ],
             },
-            "MEETING_BYPASS_NUMBER": "",
-            "MEETING_CONTROL": "",
-            "PSTN_CONTROL": "",
+            "MEETING_BYPASS_NUMBER": "+17035550122",
+            "MEETING_CONTROL": "us-east-1",
+            "PSTN_CONTROL": Object {
+              "Ref": "AWS::Region",
+            },
             "SMA_ID": Object {
               "Fn::GetAtt": Array [
                 "ChimesipMediaAppsipMediaAppRequestpstnCustomResource505FA3C9",
@@ -6668,8 +6678,10 @@ ldconfig
                 "phoneNumber",
               ],
             },
-            "MEETING_CONTROL": "",
-            "PSTN_CONTROL": "",
+            "MEETING_CONTROL": "us-east-1",
+            "PSTN_CONTROL": Object {
+              "Ref": "AWS::Region",
+            },
             "SMA_ID": Object {
               "Fn::GetAtt": Array [
                 "ChimesipMediaAppsipMediaAppRequestpstnCustomResource505FA3C9",

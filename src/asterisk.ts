@@ -30,16 +30,12 @@ import {
 } from 'cdk-amazon-chime-resources';
 import { Construct } from 'constructs';
 
-interface AsteriskProps {
-  readonly cidrForSoftphone: string;
-}
-
 export class Asterisk extends Construct {
   public readonly voiceConnectorArn: string;
   public readonly voiceConnectorPhone: string;
   public readonly instanceId: string;
 
-  constructor(scope: Construct, id: string, props: AsteriskProps) {
+  constructor(scope: Construct, id: string) {
     super(scope, id);
 
     const vpc = new Vpc(this, 'VPC', {
@@ -177,14 +173,6 @@ export class Asterisk extends Construct {
 
     }
 
-    if (props.cidrForSoftphone != '') {
-      securityGroup.addIngressRule(
-        Peer.ipv4(props.cidrForSoftphone),
-        Port.udp(5060),
-        'Allow Softphone Access',
-      );
-    }
-
     const asteriskEc2Role = new Role(this, 'asteriskEc2Role', {
       assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
       managedPolicies: [
@@ -222,8 +210,8 @@ export class Asterisk extends Construct {
         phoneNumberType: PhoneNumberType.LOCAL,
       },
     );
-    let vcNumber = phoneNumber.phoneNumber;
 
+    let vcNumber = phoneNumber.phoneNumber;
     let vcHostName;
     if (Stack.of(this).region.includes('us-east-1') || Stack.of(this).region.includes('us-west-2')) {
       phoneNumber.associateWithVoiceConnector(voiceConnector);

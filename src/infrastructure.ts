@@ -1,4 +1,4 @@
-import { Duration } from 'aws-cdk-lib';
+import { Duration, Stack } from 'aws-cdk-lib';
 import {
   RestApi,
   LambdaIntegration,
@@ -23,9 +23,6 @@ interface InfrastructureProps {
   readonly fromPhoneNumber: string;
   readonly smaId: string;
   readonly userPool: IUserPool;
-  readonly meetingControl: string;
-  readonly pstnControl: string;
-  readonly meetingBypassNumber: string;
   readonly voiceConnectorPhone?: string;
   readonly voiceConnectorArn?: string;
 }
@@ -69,9 +66,9 @@ export class Infrastructure extends Construct {
       environment: {
         SMA_ID: props.smaId,
         FROM_NUMBER: props.fromPhoneNumber,
-        MEETING_CONTROL: props.meetingControl,
-        PSTN_CONTROL: props.pstnControl,
-        MEETING_BYPASS_NUMBER: props.meetingBypassNumber,
+        MEETING_CONTROL: 'us-east-1',
+        PSTN_CONTROL: Stack.of(this).region,
+        MEETING_BYPASS_NUMBER: '+17035550122',
         VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone || '',
         VOICE_CONNECTOR_ARN: props.voiceConnectorArn || '',
       },
@@ -92,8 +89,8 @@ export class Infrastructure extends Construct {
       environment: {
         SMA_ID: props.smaId,
         FROM_NUMBER: props.fromPhoneNumber,
-        MEETING_CONTROL: props.meetingControl,
-        PSTN_CONTROL: props.pstnControl,
+        MEETING_CONTROL: 'us-east-1',
+        PSTN_CONTROL: Stack.of(this).region,
         VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone || '',
         VOICE_CONNECTOR_ARN: props.voiceConnectorArn || '',
       },
