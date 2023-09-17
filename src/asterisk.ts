@@ -54,61 +54,124 @@ export class Asterisk extends Construct {
       description: 'Security Group for Asterisk Instance',
       allowAllOutbound: true,
     });
-    securityGroup.addIngressRule(
-      Peer.ipv4('3.80.16.0/23'),
-      Port.udp(5060),
-      'Allow Chime Voice Connector Signaling Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('3.80.16.0/23'),
-      Port.tcpRange(5060, 5061),
-      'Allow Chime Voice Connector Signaling Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('99.77.253.0/24'),
-      Port.udp(5060),
-      'Allow Chime Voice Connector Signaling Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('99.77.253.0/24'),
-      Port.tcpRange(5060, 5061),
-      'Allow Chime Voice Connector Signaling Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('99.77.253.0/24'),
-      Port.udpRange(5000, 65000),
-      'Allow Chime Voice Connector Signaling Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('3.80.16.0/23'),
-      Port.udpRange(5000, 65000),
-      'Allow Chime Voice Connector Media Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('99.77.253.0/24'),
-      Port.udpRange(5000, 65000),
-      'Allow Chime Voice Connector Media Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('52.55.62.128/25'),
-      Port.udpRange(1024, 65535),
-      'Allow Chime Voice Connector Media Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('52.55.63.0/25'),
-      Port.udpRange(1024, 65535),
-      'Allow Chime Voice Connector Media Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('34.212.95.128/25'),
-      Port.udpRange(1024, 65535),
-      'Allow Chime Voice Connector Media Access',
-    );
-    securityGroup.addIngressRule(
-      Peer.ipv4('34.223.21.0/25'),
-      Port.udpRange(1024, 65535),
-      'Allow Chime Voice Connector Media Access',
-    );
+
+    if (Stack.of(this).region.includes('us-east-1') || Stack.of(this).region.includes('us-west-2')) {
+
+      securityGroup.addIngressRule(
+        Peer.ipv4('3.80.16.0/23'),
+        Port.udp(5060),
+        'Allow Chime Voice Connector Signaling Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('3.80.16.0/23'),
+        Port.tcpRange(5060, 5061),
+        'Allow Chime Voice Connector Signaling Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('99.77.253.0/24'),
+        Port.udp(5060),
+        'Allow Chime Voice Connector Signaling Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('99.77.253.0/24'),
+        Port.tcpRange(5060, 5061),
+        'Allow Chime Voice Connector Signaling Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('99.77.253.0/24'),
+        Port.udpRange(5000, 65000),
+        'Allow Chime Voice Connector Signaling Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('3.80.16.0/23'),
+        Port.udpRange(5000, 65000),
+        'Allow Chime Voice Connector Media Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('99.77.253.0/24'),
+        Port.udpRange(5000, 65000),
+        'Allow Chime Voice Connector Media Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('52.55.62.128/25'),
+        Port.udpRange(1024, 65535),
+        'Allow Chime Voice Connector Media Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('52.55.63.0/25'),
+        Port.udpRange(1024, 65535),
+        'Allow Chime Voice Connector Media Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('34.212.95.128/25'),
+        Port.udpRange(1024, 65535),
+        'Allow Chime Voice Connector Media Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4('34.223.21.0/25'),
+        Port.udpRange(1024, 65535),
+        'Allow Chime Voice Connector Media Access',
+      );
+
+    } else {
+
+      let SignalingIPRange = '';
+      let MediaIPRange = '';
+      switch (Stack.of(this).region) {
+        case 'ap-northeast-1':
+          SignalingIPRange = '99.77.244.0/24';
+          MediaIPRange = '99.77.244.0/24';
+          break;
+        case 'ap-southeast-1':
+          SignalingIPRange = '99.77.240.0/24';
+          MediaIPRange = '99.77.240.0/24';
+          break;
+        case 'ap-northeast-2':
+          SignalingIPRange = '99.77.242.0/24';
+          MediaIPRange = '99.77.242.0/24';
+          break;
+        case 'ap-southeast-2':
+          SignalingIPRange = '99.77.239.0/24';
+          MediaIPRange = '99.77.239.0/24';
+          break;
+        case 'ca-central-1':
+          SignalingIPRange = '99.77.233.0/24';
+          MediaIPRange = '99.77.233.0/24';
+          break;
+        case 'eu-central-1':
+          SignalingIPRange = '99.77.247.0/24';
+          MediaIPRange = '99.77.247.0/24';
+          break;
+        case 'eu-west-1':
+          SignalingIPRange = '99.77.250.0/24';
+          MediaIPRange = '99.77.250.0/24';
+          break;
+        case 'eu-west-2':
+          SignalingIPRange = '99.77.249.0/24';
+          MediaIPRange = '99.77.249.0/24';
+          break;
+        default:
+          SignalingIPRange = '99.77.244.0/24';
+          MediaIPRange = '99.77.244.0/24';
+          break;
+      }
+      securityGroup.addIngressRule(
+        Peer.ipv4(SignalingIPRange),
+        Port.udp(5060),
+        'Allow Chime Voice Connector Signaling Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4(SignalingIPRange),
+        Port.tcpRange(5060, 5061),
+        'Allow Chime Voice Connector Signaling Access',
+      );
+      securityGroup.addIngressRule(
+        Peer.ipv4(MediaIPRange),
+        Port.udpRange(5000, 65000),
+        'Allow Chime Voice Connector Media Access',
+      );
+
+    }
 
     const asteriskEc2Role = new Role(this, 'asteriskEc2Role', {
       assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
@@ -118,17 +181,6 @@ export class Asterisk extends Construct {
     });
 
     const asteriskEip = new CfnEIP(this, 'asteriskEip');
-
-    const phoneNumber = new ChimePhoneNumber(
-      this,
-      'voiceConnectorPhoneNumber',
-      {
-        phoneState: 'CA',
-        phoneCountry: PhoneCountry.US,
-        phoneProductType: PhoneProductType.VC,
-        phoneNumberType: PhoneNumberType.LOCAL,
-      },
-    );
 
     const voiceConnector = new ChimeVoiceConnector(this, 'voiceConnector', {
       termination: {
@@ -147,7 +199,27 @@ export class Asterisk extends Construct {
       encryption: false,
     });
 
-    phoneNumber.associateWithVoiceConnector(voiceConnector);
+    // phone number
+    const phoneNumber = new ChimePhoneNumber(
+      this,
+      'voiceConnectorPhoneNumber',
+      {
+        phoneState: 'CA',
+        phoneCountry: PhoneCountry.US,
+        phoneProductType: PhoneProductType.VC,
+        phoneNumberType: PhoneNumberType.LOCAL,
+      },
+    );
+
+    let vcNumber = phoneNumber.phoneNumber;
+    let vcHostName;
+    if (Stack.of(this).region.includes('us-east-1') || Stack.of(this).region.includes('us-west-2')) {
+      phoneNumber.associateWithVoiceConnector(voiceConnector);
+      vcHostName = `${voiceConnector.voiceConnectorId}.voiceconnector.chime.aws`;
+    } else {
+      vcHostName = `${voiceConnector.voiceConnectorId}.${Stack.of(this).region}.vc.chime.aws`;
+    }
+
 
     const ami = new AmazonLinuxImage({
       generation: AmazonLinuxGeneration.AMAZON_LINUX_2,
@@ -165,8 +237,8 @@ export class Asterisk extends Construct {
         configs: {
           install: new InitConfig([
             InitFile.fromObject('/etc/config.json', {
-              PhoneNumber: phoneNumber.phoneNumber,
-              OutboundHostName: `${voiceConnector.voiceConnectorId}.voiceconnector.chime.aws`,
+              PhoneNumber: vcNumber,
+              OutboundHostName: vcHostName,
               IP: asteriskEip.ref,
               REGION: Stack.of(this).region,
             }),
@@ -228,7 +300,7 @@ export class Asterisk extends Construct {
     this.voiceConnectorArn = `arn:aws:chime:${Stack.of(this).region}:${
       Stack.of(this).account
     }:vc/${voiceConnector.voiceConnectorId}`;
-    this.voiceConnectorPhone = phoneNumber.phoneNumber;
+    this.voiceConnectorPhone = vcNumber;
     this.instanceId = ec2Instance.instanceId;
   }
 }

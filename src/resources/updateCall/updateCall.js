@@ -8,14 +8,21 @@ import {
   UpdateSipMediaApplicationCallCommand,
 } from '@aws-sdk/client-chime-sdk-voice';
 
-const config = {
-  region: 'us-east-1',
+var smaId = process.env['SMA_ID'];
+var meetingControlRegion = process.env['MEETING_CONTROL'];
+var pstnControlRegion = process.env['PSTN_CONTROL'];
+
+const meetingConfig = {
+  region: meetingControlRegion,
+};
+const pstnConfig = {
+  region: pstnControlRegion,
 };
 
-const chimeSdkMeetingsClient = new ChimeSDKMeetingsClient(config);
-const chimeSdkVoiceClient = new ChimeSDKVoiceClient(config);
+const chimeSdkMeetingsClient = new ChimeSDKMeetingsClient(meetingConfig);
+const chimeSdkVoiceClient = new ChimeSDKVoiceClient(pstnConfig);
 
-var smaId = process.env['SMA_ID'];
+
 
 const response = {
   statusCode: 200,
