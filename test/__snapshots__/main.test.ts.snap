@@ -119,7 +119,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "566789e4b2d3708ff5973636c2c6bf9b81ce485be53595b2f515af52fa0e8939.zip",
+          "S3Key": "9e3d355edfcdae0d9371af3dd84c381e6ba4e9c68a14dec0a86d3078182ba74f.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -862,7 +862,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
+          "S3Key": "b7f33614a69548d6bafe224d751a7ef238cde19097415e553fe8b63a4c8fd8a6.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -942,7 +942,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "1ce31850bc80833ab1c3bdb4c6f24fd8206a8c7f7ee29a5e6669b4a6e5e9d1b3.zip",
+          "S3Key": "ce884da8cdb4499fcfa24763c7de2e5ce54f215f474077f4ea5cafc96396a889.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1535,7 +1535,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "daa158cb3d8146076efb2786613bc033b868e6d1d3d790f84f99563e23cd969a.zip",
+          "S3Key": "a60eab1c7b0485d59adb68c3d226639ccdc30091b1c3120bba83714c6fe67de2.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1686,7 +1686,7 @@ Object {
           },
         ],
         "SourceObjectKeys": Array [
-          "2d12467c3335cbad68b5bd7d317253b8a616da8344b4cdaf485ce8e24ce603fb.zip",
+          "6e17a0d5a3af7873d15277e2837900b805b87761193a686fa7eba372f96b32cb.zip",
           "7e2723da3d38f7cfb88b2c953d1b5da26dfd4aa7361cdb0bfcdf6041e0a71cad.zip",
         ],
       },
@@ -1738,6 +1738,7 @@ Object {
           "Statement": Array [
             Object {
               "Action": Array [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
@@ -3006,7 +3007,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "566789e4b2d3708ff5973636c2c6bf9b81ce485be53595b2f515af52fa0e8939.zip",
+          "S3Key": "9e3d355edfcdae0d9371af3dd84c381e6ba4e9c68a14dec0a86d3078182ba74f.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -3749,7 +3750,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
+          "S3Key": "b7f33614a69548d6bafe224d751a7ef238cde19097415e553fe8b63a4c8fd8a6.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -3829,7 +3830,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "1ce31850bc80833ab1c3bdb4c6f24fd8206a8c7f7ee29a5e6669b4a6e5e9d1b3.zip",
+          "S3Key": "ce884da8cdb4499fcfa24763c7de2e5ce54f215f474077f4ea5cafc96396a889.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -4448,7 +4449,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "daa158cb3d8146076efb2786613bc033b868e6d1d3d790f84f99563e23cd969a.zip",
+          "S3Key": "a60eab1c7b0485d59adb68c3d226639ccdc30091b1c3120bba83714c6fe67de2.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -4625,7 +4626,7 @@ ldconfig
           },
         ],
         "SourceObjectKeys": Array [
-          "2d12467c3335cbad68b5bd7d317253b8a616da8344b4cdaf485ce8e24ce603fb.zip",
+          "6e17a0d5a3af7873d15277e2837900b805b87761193a686fa7eba372f96b32cb.zip",
           "7e2723da3d38f7cfb88b2c953d1b5da26dfd4aa7361cdb0bfcdf6041e0a71cad.zip",
         ],
       },
@@ -4677,6 +4678,7 @@ ldconfig
           "Statement": Array [
             Object {
               "Action": Array [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
@@ -5945,7 +5947,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "566789e4b2d3708ff5973636c2c6bf9b81ce485be53595b2f515af52fa0e8939.zip",
+          "S3Key": "9e3d355edfcdae0d9371af3dd84c381e6ba4e9c68a14dec0a86d3078182ba74f.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -6322,7 +6324,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
+          "S3Key": "b7f33614a69548d6bafe224d751a7ef238cde19097415e553fe8b63a4c8fd8a6.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -6397,7 +6399,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "1ce31850bc80833ab1c3bdb4c6f24fd8206a8c7f7ee29a5e6669b4a6e5e9d1b3.zip",
+          "S3Key": "ce884da8cdb4499fcfa24763c7de2e5ce54f215f474077f4ea5cafc96396a889.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -7016,7 +7018,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "daa158cb3d8146076efb2786613bc033b868e6d1d3d790f84f99563e23cd969a.zip",
+          "S3Key": "a60eab1c7b0485d59adb68c3d226639ccdc30091b1c3120bba83714c6fe67de2.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -7181,7 +7183,7 @@ ldconfig
           },
         ],
         "SourceObjectKeys": Array [
-          "2d12467c3335cbad68b5bd7d317253b8a616da8344b4cdaf485ce8e24ce603fb.zip",
+          "6e17a0d5a3af7873d15277e2837900b805b87761193a686fa7eba372f96b32cb.zip",
           "2272d47b7930592306f0886c9384fc00495b5aa97b106999a98a1240351a4771.zip",
         ],
       },
@@ -7233,6 +7235,7 @@ ldconfig
           "Statement": Array [
             Object {
               "Action": Array [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
