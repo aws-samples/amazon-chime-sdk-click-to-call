@@ -33,7 +33,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   devDeps: ['esbuild'],
   deps: [
     'dotenv',
-    'cdk-amazon-chime-resources@latest',
+    'cdk-amazon-chime-resources',
     'fs-extra',
     '@types/fs-extra',
     '@aws-sdk/client-chime-sdk-meetings',

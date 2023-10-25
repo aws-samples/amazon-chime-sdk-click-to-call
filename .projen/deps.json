@@ -102,7 +102,6 @@
     },
     {
       "name": "cdk-amazon-chime-resources",
-      "version": "latest",
       "type": "runtime"
     },
     {
