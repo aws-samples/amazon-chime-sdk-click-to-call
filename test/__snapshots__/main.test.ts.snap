@@ -119,7 +119,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c01721c4f701923d53feab34f21435c21e9047297ba1bae5840edab89105c4a9.zip",
+          "S3Key": "ca4db01ff5e6c19f86f52b9c4834973b55d04ad4b01f16b26287b27f777a2c80.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -732,7 +732,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "b248adbb8cd1090a70ba3fd920dfa5f43f79e72e345d7ef230387e2a2243bd4c.zip",
+          "S3Key": "90ddef53572b2c545c75ee348848445e28a2b8d726299048f18f550b990976a5.zip",
         },
         "Handler": "__entrypoint__.handler",
         "MemorySize": 128,
@@ -794,6 +794,8 @@ Object {
                     "chime:*MediaInsightsPipelineConfiguration",
                     "chime:SearchAvailablePhoneNumbers",
                     "chime:UpdateSipRule",
+                    "chime:AssociatePhoneNumbersWithVoiceConnector",
+                    "chime:DisassociatePhoneNumbersFromVoiceConnector",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
@@ -862,7 +864,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
+          "S3Key": "b7f33614a69548d6bafe224d751a7ef238cde19097415e553fe8b63a4c8fd8a6.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -942,7 +944,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8612cf67af648a167bf27e0429d68ce254fb6cf92f94cf7d19825f42855eb6cf.zip",
+          "S3Key": "5cbc95cd4ddf8b3954c55a58d16de078fdbe57543f7b589165f896753903354f.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1535,7 +1537,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6d4c31ab4b09643a21c57eab4717ff9cdadb97e5f5482c323acc1f0a18c7349b.zip",
+          "S3Key": "48461e9c42a50454ac6475a4210175e46b7b9291f14a42b886ccf0e2203ccb22.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -1623,7 +1625,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip",
+          "S3Key": "3fb6287214999ddeafa7cd0e3e58bc5144c8678bb720f3b5e45e8fd32f333eb3.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -1686,11 +1688,7 @@ Object {
           },
         ],
         "SourceObjectKeys": Array [
-<<<<<<< HEAD
-          "a9ad5afe902fe2bd41d55240453b5c6526fdbaa341ab45b3fbc0a34174f99bf8.zip",
-=======
-          "2d12467c3335cbad68b5bd7d317253b8a616da8344b4cdaf485ce8e24ce603fb.zip",
->>>>>>> ae6eaa1e0f4a26e379c579fa11bcf90d35961815
+          "074ee6b4a43ca973a82b80804da6bd4c82bc4fe746439324f39f45cd27d49bc5.zip",
           "7e2723da3d38f7cfb88b2c953d1b5da26dfd4aa7361cdb0bfcdf6041e0a71cad.zip",
         ],
       },
@@ -1742,6 +1740,7 @@ Object {
           "Statement": Array [
             Object {
               "Action": Array [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
@@ -1930,60 +1929,6 @@ Object {
     },
   },
   "Resources": Object {
-    "AWS679f53fac002430cb0da5b7982bd22872D164C4C": Object {
-      "DependsOn": Array [
-        "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "94cf2475103298caec361d72edf71b2809ce0253337967d447117817c89b71cc.zip",
-        },
-        "Handler": "index.handler",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs18.x",
-        "Timeout": 120,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
     "AsteriskAsteriskSecurityGroup2A659F86": Object {
       "Properties": Object {
         "GroupDescription": "Security Group for Asterisk Instance",
@@ -2812,92 +2757,34 @@ ldconfig
       "Type": "Custom::PSTNResources",
       "UpdateReplacePolicy": "Delete",
     },
-    "AsteriskvoiceConnectorPhoneNumberphoneAssociation8DB0F44D": Object {
+    "AsteriskvoiceConnectorPhoneNumberphoneAssociationpstnCustomResource1B639BBA": Object {
       "DeletionPolicy": "Delete",
-      "DependsOn": Array [
-        "AsteriskvoiceConnectorPhoneNumberphoneAssociationCustomResourcePolicyD05A1771",
-      ],
       "Properties": Object {
-        "Create": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "{\\"service\\":\\"Chime\\",\\"action\\":\\"associatePhoneNumbersWithVoiceConnector\\",\\"region\\":\\"us-east-1\\",\\"parameters\\":{\\"E164PhoneNumbers\\":[\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AsteriskvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource9B765602",
-                  "phoneNumber",
-                ],
-              },
-              "\\"],\\"VoiceConnectorId\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AsteriskvoiceConnectorvoiceConnectorRequestpstnCustomResource89C81395",
-                  "voiceConnectorId",
-                ],
-              },
-              "\\",\\"ForceAssociate\\":true},\\"physicalResourceId\\":{\\"id\\":\\"testAsteriskvoiceConnectorPhoneNumberphoneAssociation434A7C48\\"}}",
-            ],
-          ],
-        },
-        "Delete": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "{\\"service\\":\\"Chime\\",\\"action\\":\\"disassociatePhoneNumbersFromVoiceConnector\\",\\"region\\":\\"us-east-1\\",\\"parameters\\":{\\"E164PhoneNumbers\\":[\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AsteriskvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource9B765602",
-                  "phoneNumber",
-                ],
-              },
-              "\\"],\\"VoiceConnectorId\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AsteriskvoiceConnectorvoiceConnectorRequestpstnCustomResource89C81395",
-                  "voiceConnectorId",
-                ],
-              },
-              "\\"},\\"physicalResourceId\\":{\\"id\\":\\"testAsteriskvoiceConnectorPhoneNumberphoneAssociation434A7C48\\"}}",
-            ],
-          ],
-        },
-        "InstallLatestAwsSdk": false,
         "ServiceToken": Object {
           "Fn::GetAtt": Array [
-            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "CustomPSTNResourcesCustomResourceProviderHandlerD046A72D",
             "Arn",
           ],
         },
-      },
-      "Type": "Custom::AWS",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "AsteriskvoiceConnectorPhoneNumberphoneAssociationCustomResourcePolicyD05A1771": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "chime:AssociatePhoneNumbersWithVoiceConnector",
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": "chime:DisassociatePhoneNumbersFromVoiceConnector",
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "AsteriskvoiceConnectorPhoneNumberphoneAssociationCustomResourcePolicyD05A1771",
-        "Roles": Array [
-          Object {
-            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+        "properties": Object {
+          "e164PhoneNumber": Object {
+            "Fn::GetAtt": Array [
+              "AsteriskvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource9B765602",
+              "phoneNumber",
+            ],
           },
-        ],
+          "voiceConnectorId": Object {
+            "Fn::GetAtt": Array [
+              "AsteriskvoiceConnectorvoiceConnectorRequestpstnCustomResource89C81395",
+              "voiceConnectorId",
+            ],
+          },
+        },
+        "resourceType": "PhoneAssociation",
+        "uid": "testAsteriskvoiceConnectorPhoneNumber181D3555",
       },
-      "Type": "AWS::IAM::Policy",
+      "Type": "Custom::PSTNResources",
+      "UpdateReplacePolicy": "Delete",
     },
     "AsteriskvoiceConnectorvoiceConnectorRequestpstnCustomResource89C81395": Object {
       "DeletionPolicy": "Delete",
@@ -3010,7 +2897,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c01721c4f701923d53feab34f21435c21e9047297ba1bae5840edab89105c4a9.zip",
+          "S3Key": "ca4db01ff5e6c19f86f52b9c4834973b55d04ad4b01f16b26287b27f777a2c80.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -3623,7 +3510,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "b248adbb8cd1090a70ba3fd920dfa5f43f79e72e345d7ef230387e2a2243bd4c.zip",
+          "S3Key": "90ddef53572b2c545c75ee348848445e28a2b8d726299048f18f550b990976a5.zip",
         },
         "Handler": "__entrypoint__.handler",
         "MemorySize": 128,
@@ -3685,6 +3572,8 @@ ldconfig
                     "chime:*MediaInsightsPipelineConfiguration",
                     "chime:SearchAvailablePhoneNumbers",
                     "chime:UpdateSipRule",
+                    "chime:AssociatePhoneNumbersWithVoiceConnector",
+                    "chime:DisassociatePhoneNumbersFromVoiceConnector",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
@@ -3753,7 +3642,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
+          "S3Key": "b7f33614a69548d6bafe224d751a7ef238cde19097415e553fe8b63a4c8fd8a6.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -3833,7 +3722,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8612cf67af648a167bf27e0429d68ce254fb6cf92f94cf7d19825f42855eb6cf.zip",
+          "S3Key": "5cbc95cd4ddf8b3954c55a58d16de078fdbe57543f7b589165f896753903354f.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -4452,7 +4341,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6d4c31ab4b09643a21c57eab4717ff9cdadb97e5f5482c323acc1f0a18c7349b.zip",
+          "S3Key": "48461e9c42a50454ac6475a4210175e46b7b9291f14a42b886ccf0e2203ccb22.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -4566,7 +4455,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip",
+          "S3Key": "3fb6287214999ddeafa7cd0e3e58bc5144c8678bb720f3b5e45e8fd32f333eb3.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -4629,11 +4518,7 @@ ldconfig
           },
         ],
         "SourceObjectKeys": Array [
-<<<<<<< HEAD
-          "a9ad5afe902fe2bd41d55240453b5c6526fdbaa341ab45b3fbc0a34174f99bf8.zip",
-=======
-          "2d12467c3335cbad68b5bd7d317253b8a616da8344b4cdaf485ce8e24ce603fb.zip",
->>>>>>> ae6eaa1e0f4a26e379c579fa11bcf90d35961815
+          "074ee6b4a43ca973a82b80804da6bd4c82bc4fe746439324f39f45cd27d49bc5.zip",
           "7e2723da3d38f7cfb88b2c953d1b5da26dfd4aa7361cdb0bfcdf6041e0a71cad.zip",
         ],
       },
@@ -4685,6 +4570,7 @@ ldconfig
           "Statement": Array [
             Object {
               "Action": Array [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
@@ -4873,60 +4759,6 @@ Object {
     },
   },
   "Resources": Object {
-    "AWS679f53fac002430cb0da5b7982bd22872D164C4C": Object {
-      "DependsOn": Array [
-        "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
-          },
-          "S3Key": "94cf2475103298caec361d72edf71b2809ce0253337967d447117817c89b71cc.zip",
-        },
-        "Handler": "index.handler",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs18.x",
-        "Timeout": 120,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
     "AsteriskAsteriskSecurityGroup2A659F86": Object {
       "Properties": Object {
         "GroupDescription": "Security Group for Asterisk Instance",
@@ -5755,92 +5587,34 @@ ldconfig
       "Type": "Custom::PSTNResources",
       "UpdateReplacePolicy": "Delete",
     },
-    "AsteriskvoiceConnectorPhoneNumberphoneAssociation8DB0F44D": Object {
+    "AsteriskvoiceConnectorPhoneNumberphoneAssociationpstnCustomResource1B639BBA": Object {
       "DeletionPolicy": "Delete",
-      "DependsOn": Array [
-        "AsteriskvoiceConnectorPhoneNumberphoneAssociationCustomResourcePolicyD05A1771",
-      ],
       "Properties": Object {
-        "Create": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "{\\"service\\":\\"Chime\\",\\"action\\":\\"associatePhoneNumbersWithVoiceConnector\\",\\"region\\":\\"us-east-1\\",\\"parameters\\":{\\"E164PhoneNumbers\\":[\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AsteriskvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource9B765602",
-                  "phoneNumber",
-                ],
-              },
-              "\\"],\\"VoiceConnectorId\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AsteriskvoiceConnectorvoiceConnectorRequestpstnCustomResource89C81395",
-                  "voiceConnectorId",
-                ],
-              },
-              "\\",\\"ForceAssociate\\":true},\\"physicalResourceId\\":{\\"id\\":\\"testAsteriskvoiceConnectorPhoneNumberphoneAssociation434A7C48\\"}}",
-            ],
-          ],
-        },
-        "Delete": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "{\\"service\\":\\"Chime\\",\\"action\\":\\"disassociatePhoneNumbersFromVoiceConnector\\",\\"region\\":\\"us-east-1\\",\\"parameters\\":{\\"E164PhoneNumbers\\":[\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AsteriskvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource9B765602",
-                  "phoneNumber",
-                ],
-              },
-              "\\"],\\"VoiceConnectorId\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "AsteriskvoiceConnectorvoiceConnectorRequestpstnCustomResource89C81395",
-                  "voiceConnectorId",
-                ],
-              },
-              "\\"},\\"physicalResourceId\\":{\\"id\\":\\"testAsteriskvoiceConnectorPhoneNumberphoneAssociation434A7C48\\"}}",
-            ],
-          ],
-        },
-        "InstallLatestAwsSdk": false,
         "ServiceToken": Object {
           "Fn::GetAtt": Array [
-            "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+            "CustomPSTNResourcesCustomResourceProviderHandlerD046A72D",
             "Arn",
           ],
         },
-      },
-      "Type": "Custom::AWS",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "AsteriskvoiceConnectorPhoneNumberphoneAssociationCustomResourcePolicyD05A1771": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "chime:AssociatePhoneNumbersWithVoiceConnector",
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": "chime:DisassociatePhoneNumbersFromVoiceConnector",
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "AsteriskvoiceConnectorPhoneNumberphoneAssociationCustomResourcePolicyD05A1771",
-        "Roles": Array [
-          Object {
-            "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+        "properties": Object {
+          "e164PhoneNumber": Object {
+            "Fn::GetAtt": Array [
+              "AsteriskvoiceConnectorPhoneNumberChimePhoneNumberpstnCustomResource9B765602",
+              "phoneNumber",
+            ],
           },
-        ],
+          "voiceConnectorId": Object {
+            "Fn::GetAtt": Array [
+              "AsteriskvoiceConnectorvoiceConnectorRequestpstnCustomResource89C81395",
+              "voiceConnectorId",
+            ],
+          },
+        },
+        "resourceType": "PhoneAssociation",
+        "uid": "testAsteriskvoiceConnectorPhoneNumber181D3555",
       },
-      "Type": "AWS::IAM::Policy",
+      "Type": "Custom::PSTNResources",
+      "UpdateReplacePolicy": "Delete",
     },
     "AsteriskvoiceConnectorvoiceConnectorRequestpstnCustomResource89C81395": Object {
       "DeletionPolicy": "Delete",
@@ -5953,7 +5727,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "c01721c4f701923d53feab34f21435c21e9047297ba1bae5840edab89105c4a9.zip",
+          "S3Key": "ca4db01ff5e6c19f86f52b9c4834973b55d04ad4b01f16b26287b27f777a2c80.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -6200,7 +5974,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "b248adbb8cd1090a70ba3fd920dfa5f43f79e72e345d7ef230387e2a2243bd4c.zip",
+          "S3Key": "90ddef53572b2c545c75ee348848445e28a2b8d726299048f18f550b990976a5.zip",
         },
         "Handler": "__entrypoint__.handler",
         "MemorySize": 128,
@@ -6262,6 +6036,8 @@ ldconfig
                     "chime:*MediaInsightsPipelineConfiguration",
                     "chime:SearchAvailablePhoneNumbers",
                     "chime:UpdateSipRule",
+                    "chime:AssociatePhoneNumbersWithVoiceConnector",
+                    "chime:DisassociatePhoneNumbersFromVoiceConnector",
                   ],
                   "Effect": "Allow",
                   "Resource": "*",
@@ -6330,7 +6106,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a657308e723bb9460b800cb3b47dadb74e28243edfe246bf7755c45ec312eb97.zip",
+          "S3Key": "b7f33614a69548d6bafe224d751a7ef238cde19097415e553fe8b63a4c8fd8a6.zip",
         },
         "Description": Object {
           "Fn::Join": Array [
@@ -6405,7 +6181,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "8612cf67af648a167bf27e0429d68ce254fb6cf92f94cf7d19825f42855eb6cf.zip",
+          "S3Key": "5cbc95cd4ddf8b3954c55a58d16de078fdbe57543f7b589165f896753903354f.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -7024,7 +6800,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "6d4c31ab4b09643a21c57eab4717ff9cdadb97e5f5482c323acc1f0a18c7349b.zip",
+          "S3Key": "48461e9c42a50454ac6475a4210175e46b7b9291f14a42b886ccf0e2203ccb22.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -7138,7 +6914,7 @@ ldconfig
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip",
+          "S3Key": "3fb6287214999ddeafa7cd0e3e58bc5144c8678bb720f3b5e45e8fd32f333eb3.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -7189,11 +6965,7 @@ ldconfig
           },
         ],
         "SourceObjectKeys": Array [
-<<<<<<< HEAD
-          "a9ad5afe902fe2bd41d55240453b5c6526fdbaa341ab45b3fbc0a34174f99bf8.zip",
-=======
-          "2d12467c3335cbad68b5bd7d317253b8a616da8344b4cdaf485ce8e24ce603fb.zip",
->>>>>>> ae6eaa1e0f4a26e379c579fa11bcf90d35961815
+          "074ee6b4a43ca973a82b80804da6bd4c82bc4fe746439324f39f45cd27d49bc5.zip",
           "2272d47b7930592306f0886c9384fc00495b5aa97b106999a98a1240351a4771.zip",
         ],
       },
@@ -7245,6 +7017,7 @@ ldconfig
           "Statement": Array [
             Object {
               "Action": Array [
+                "s3:PutBucketPolicy",
                 "s3:GetBucket*",
                 "s3:List*",
                 "s3:DeleteObject*",
