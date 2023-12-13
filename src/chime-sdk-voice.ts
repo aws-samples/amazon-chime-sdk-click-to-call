@@ -12,11 +12,11 @@ import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import {
   ChimeVoiceConnector,
   Protocol,
-  PhoneCountry,
   ChimeSipMediaApp,
   ChimePhoneNumber,
   PhoneProductType,
   PhoneNumberType,
+  PhoneCountry,
 } from 'cdk-amazon-chime-resources';
 
 import { Construct } from 'constructs';
@@ -41,8 +41,8 @@ export class VoiceConnectorResources extends Construct {
       {
         phoneProductType: PhoneProductType.VC,
         phoneCountry: PhoneCountry.US,
-        phoneNumberType: PhoneNumberType.TOLLFREE,
-        phoneNumberTollFreePrefix: 855,
+        phoneState: 'IL',
+        phoneNumberType: PhoneNumberType.LOCAL,
       },
     );
 
