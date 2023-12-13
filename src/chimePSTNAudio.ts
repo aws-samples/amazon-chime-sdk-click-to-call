@@ -16,7 +16,7 @@ import {
 } from 'cdk-amazon-chime-resources';
 import { Construct } from 'constructs';
 
-export class Chime extends Construct {
+export class SMAResources extends Construct {
   public readonly fromNumber: string;
   public readonly smaId: string;
 
@@ -49,12 +49,9 @@ export class Chime extends Construct {
     });
 
     const smaHandlerLambda = new NodejsFunction(this, 'smaHandlerLambda', {
-      bundling: {
-        nodeModules: ['@aws-sdk/client-chime-sdk-meetings'],
-      },
       entry: 'src/resources/smaHandler/smaHandler.ts',
       handler: 'lambdaHandler',
-      runtime: Runtime.NODEJS_18_X,
+      runtime: Runtime.NODEJS_20_X,
       role: smaHandlerRole,
       architecture: Architecture.ARM_64,
       timeout: Duration.seconds(60),

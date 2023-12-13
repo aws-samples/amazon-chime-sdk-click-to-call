@@ -1,32 +1,25 @@
 /* eslint-disable import/no-unresolved */
 import { App, CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
-import {
-  IUserPool,
-  IUserPoolClient,
-  UserPool,
-  UserPoolClient,
-} from 'aws-cdk-lib/aws-cognito';
 import { Construct } from 'constructs';
 import { config } from 'dotenv';
-import { Asterisk, Chime, Infrastructure, Cognito, Site } from './';
+import {
+  SMAResources,
+  Infrastructure,
+  Cognito,
+  Site,
+  VPCResources,
+  ServerResources,
+  VoiceConnectorResources,
+  DistributionResources,
+} from './';
 
 config();
 
 interface AmazonChimeSDKClickToCallProps extends StackProps {
-  userPool?: string;
-  userPoolClient?: string;
-  userPoolRegion?: string;
-  identityPool: string;
   buildAsterisk: string;
   logLevel: string;
   allowedDomain: string;
-}
-
-interface CognitoOutput {
-  userPool: IUserPool;
-  userPoolClient: IUserPoolClient;
-  userPoolRegion: string;
-  identityPool: string;
+  sshPubKey: string;
 }
 
 export class AmazonChimeSDKClickToCall extends Stack {
@@ -37,69 +30,87 @@ export class AmazonChimeSDKClickToCall extends Stack {
   ) {
     super(scope, id, props);
 
-    let cognito: CognitoOutput;
+    const smaResources = new SMAResources(this, 'SMAResources');
+    const cognitoResources = new Cognito(this, 'Cognito', {
+      allowedDomain: props.allowedDomain,
+    });
 
-    const chime = new Chime(this, 'Chime');
-    if (props.userPoolRegion && props.userPool && props.userPoolClient) {
-      cognito = {
-        userPoolRegion: props.userPoolRegion,
-        userPool: UserPool.fromUserPoolArn(this, 'userPoolId', props.userPool),
-        identityPool: props.identityPool,
-        userPoolClient: UserPoolClient.fromUserPoolClientId(
-          this,
-          'userPoolClientId',
-          props.userPoolClient,
-        ),
-      };
-    } else {
-      cognito = new Cognito(this, 'Cognito', {
-        allowedDomain: props.allowedDomain,
-      });
-    }
-
-    let infrastructure;
+    let voiceConnectorResources;
 
     if (props.buildAsterisk == 'true') {
-      const asterisk = new Asterisk(this, 'Asterisk');
-      infrastructure = new Infrastructure(this, 'Infrastructure', {
-        fromPhoneNumber: chime.fromNumber,
-        smaId: chime.smaId,
-        userPool: cognito.userPool,
-        voiceConnectorPhone: asterisk.voiceConnectorPhone,
-        voiceConnectorArn: asterisk.voiceConnectorArn,
+      const vpcResources = new VPCResources(this, 'VPC');
+
+      const distributionResources = new DistributionResources(
+        this,
+        'DistributionResources',
+        {
+          applicationLoadBalancer: vpcResources.applicationLoadBalancer,
+        },
+      );
+
+      voiceConnectorResources = new VoiceConnectorResources(
+        this,
+        'VoiceConnector',
+        {
+          asteriskEip: vpcResources.serverEip,
+        },
+      );
+
+      const serverResources = new ServerResources(this, 'Asterisk', {
+        serverEip: vpcResources.serverEip,
+        voiceConnector: voiceConnectorResources.voiceConnector,
+        phoneNumber: voiceConnectorResources.phoneNumber,
+        vpc: vpcResources.vpc,
+        voiceSecurityGroup: vpcResources.voiceSecurityGroup,
+        albSecurityGroup: vpcResources.albSecurityGroup,
+        sshSecurityGroup: vpcResources.sshSecurityGroup,
+        logLevel: props.logLevel,
+        sshPubKey: props.sshPubKey,
+        applicationLoadBalancer: vpcResources.applicationLoadBalancer,
+        distribution: distributionResources.distribution,
+        userPool: cognitoResources.userPool,
+        userPoolClient: cognitoResources.userPoolClient,
+        userPoolRegion: cognitoResources.userPoolRegion,
+        identityPool: cognitoResources.identityPool,
       });
-      new CfnOutput(this, 'instanceId', { value: asterisk.instanceId });
+      new CfnOutput(this, 'instanceId', { value: serverResources.instanceId });
       new CfnOutput(this, 'ssmCommand', {
-        value: `aws ssm start-session --target ${asterisk.instanceId}`,
+        value: `aws ssm start-session --target ${serverResources.instanceId}`,
+      });
+      new CfnOutput(this, 'sshCommand', {
+        value: `ssh ubuntu@${vpcResources.serverEip.ref}`,
       });
       new CfnOutput(this, 'voiceConnectorPhone', {
-        value: asterisk.voiceConnectorPhone,
+        value: voiceConnectorResources.phoneNumber.phoneNumber,
       });
-    } else {
-      infrastructure = new Infrastructure(this, 'Infrastructure', {
-        fromPhoneNumber: chime.fromNumber,
-        smaId: chime.smaId,
-        userPool: cognito.userPool,
+      new CfnOutput(this, 'asteriskSite', {
+        value: distributionResources.distribution.distributionDomainName,
       });
     }
+
+    const infrastructure = new Infrastructure(this, 'Infrastructure', {
+      fromPhoneNumber: smaResources.fromNumber,
+      smaId: smaResources.smaId,
+      userPool: cognitoResources.userPool,
+      ...(voiceConnectorResources?.phoneNumber && {
+        voiceConnectorPhone: voiceConnectorResources.phoneNumber,
+      }),
+      ...(voiceConnectorResources?.voiceConnector && {
+        voiceConnector: voiceConnectorResources.voiceConnector,
+      }),
+    });
 
     const site = new Site(this, 'Site', {
       apiUrl: infrastructure.apiUrl,
-      userPool: cognito.userPool,
-      userPoolClient: cognito.userPoolClient,
-      userPoolRegion: cognito.userPoolRegion,
-      identityPool: cognito.identityPool,
+      userPool: cognitoResources.userPool,
+      userPoolClient: cognitoResources.userPoolClient,
+      userPoolRegion: cognitoResources.userPoolRegion,
+      identityPool: cognitoResources.identityPool,
     });
 
-    // new CfnOutput(this, 'API_URL', { value: infrastructure.apiUrl });
-    // new CfnOutput(this, 'USER_POOL_REGION', { value: cognito.userPoolRegion });
-    // new CfnOutput(this, 'USER_POOL_ID', { value: cognito.userPool.userPoolId });
-    // new CfnOutput(this, 'USER_POOL_CLIENT', {
-    //   value: cognito.userPoolClient.userPoolClientId,
-    // });
-    new CfnOutput(this, 'fromNumber', { value: chime.fromNumber });
+    new CfnOutput(this, 'smaNumber', { value: smaResources.fromNumber });
     new CfnOutput(this, 'siteBucket', { value: site.siteBucket.bucketName });
-    new CfnOutput(this, 'site', {
+    new CfnOutput(this, 'clickToCallSite', {
       value: site.distribution.distributionDomainName,
     });
   }
@@ -111,10 +122,7 @@ const devEnv = {
 };
 
 const stackProps = {
-  userPool: process.env.USER_POOL || '',
-  userPoolClient: process.env.USER_POOL_CLIENT || '',
-  userPoolRegion: process.env.USER_POOL_REGION || '',
-  identityPool: process.env.IDENTITY_POOL || '',
+  sshPubKey: process.env.SSH_PUB_KEY || '',
   allowedDomain: process.env.ALLOWED_DOMAIN || '',
   logLevel: process.env.LOG_LEVEL || 'INFO',
   buildAsterisk: process.env.BUILD_ASTERISK || 'false',

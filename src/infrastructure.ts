@@ -1,4 +1,4 @@
-import { Duration } from 'aws-cdk-lib';
+import { Stack, Duration } from 'aws-cdk-lib';
 import {
   RestApi,
   LambdaIntegration,
@@ -17,14 +17,18 @@ import {
 } from 'aws-cdk-lib/aws-iam';
 import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import {
+  ChimePhoneNumber,
+  ChimeVoiceConnector,
+} from 'cdk-amazon-chime-resources';
 import { Construct } from 'constructs';
 
 interface InfrastructureProps {
   readonly fromPhoneNumber: string;
   readonly smaId: string;
   readonly userPool: IUserPool;
-  readonly voiceConnectorPhone?: string;
-  readonly voiceConnectorArn?: string;
+  readonly voiceConnectorPhone?: ChimePhoneNumber;
+  readonly voiceConnector?: ChimeVoiceConnector;
 }
 
 export class Infrastructure extends Construct {
@@ -52,42 +56,36 @@ export class Infrastructure extends Construct {
       ],
     });
     const callControlLambda = new NodejsFunction(this, 'callControlLambda', {
-      entry: 'src/resources/callControl/callControl.js',
-      bundling: {
-        nodeModules: [
-          '@aws-sdk/client-chime-sdk-meetings',
-          '@aws-sdk/client-chime-sdk-voice',
-        ],
-      },
-      runtime: Runtime.NODEJS_18_X,
+      entry: 'src/resources/callControl/callControl.ts',
+      runtime: Runtime.NODEJS_20_X,
       architecture: Architecture.ARM_64,
       role: infrastructureRole,
       timeout: Duration.seconds(60),
       environment: {
         SMA_ID: props.smaId,
         FROM_NUMBER: props.fromPhoneNumber,
-        VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone || '',
-        VOICE_CONNECTOR_ARN: props.voiceConnectorArn || '',
+        VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone?.phoneNumber || '',
+        VOICE_CONNECTOR_ARN:
+          `arn:aws:chime:${Stack.of(this).region}:${
+            Stack.of(this).account
+          }:vc/${props.voiceConnector!.voiceConnectorId}` || '',
       },
     });
 
     const updateCallLambda = new NodejsFunction(this, 'updateCallLambda', {
-      entry: 'src/resources/updateCall/updateCall.js',
-      bundling: {
-        nodeModules: [
-          '@aws-sdk/client-chime-sdk-meetings',
-          '@aws-sdk/client-chime-sdk-voice',
-        ],
-      },
-      runtime: Runtime.NODEJS_18_X,
+      entry: 'src/resources/updateCall/updateCall.ts',
+      runtime: Runtime.NODEJS_20_X,
       architecture: Architecture.ARM_64,
       role: infrastructureRole,
       timeout: Duration.seconds(60),
       environment: {
         SMA_ID: props.smaId,
         FROM_NUMBER: props.fromPhoneNumber,
-        VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone || '',
-        VOICE_CONNECTOR_ARN: props.voiceConnectorArn || '',
+        VOICE_CONNECTOR_PHONE: props.voiceConnectorPhone?.phoneNumber || '',
+        VOICE_CONNECTOR_ARN:
+          `arn:aws:chime:${Stack.of(this).region}:${
+            Stack.of(this).account
+          }:vc/${props.voiceConnector!.voiceConnectorId}` || '',
       },
     });
 

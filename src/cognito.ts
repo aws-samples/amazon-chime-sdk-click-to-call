@@ -27,7 +27,7 @@ export interface CognitoStackProps {
 
 export class Cognito extends Construct {
   public readonly authenticatedRole: IRole;
-  public readonly identityPool: string;
+  public readonly identityPool: CfnIdentityPool;
   public readonly userPool: IUserPool;
   public readonly userPoolClient: IUserPoolClient;
   public readonly userPoolRegion: string;
@@ -36,11 +36,11 @@ export class Cognito extends Construct {
     super(scope, id);
 
     const domainValidator = new NodejsFunction(this, 'domainValidator', {
-      entry: 'src/resources/cognitoDomain/domainValidator.js',
+      entry: 'src/resources/cognitoDomain/domainValidator.ts',
       bundling: {
         externalModules: ['aws-sdk'],
       },
-      runtime: Runtime.NODEJS_14_X,
+      runtime: Runtime.NODEJS_20_X,
       architecture: Architecture.ARM_64,
       timeout: Duration.seconds(60),
       environment: {
@@ -174,7 +174,7 @@ export class Cognito extends Construct {
     });
 
     this.authenticatedRole = authenticatedRole;
-    this.identityPool = identityPool.ref;
+    this.identityPool = identityPool;
     this.userPool = userPool;
     this.userPoolClient = userPoolClient;
     this.userPoolRegion = Stack.of(this).region;
