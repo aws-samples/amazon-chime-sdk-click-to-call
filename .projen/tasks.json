@@ -162,7 +162,7 @@
       "name": "launch",
       "steps": [
         {
-          "exec": "yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy  --require-approval never --no-rollback && yarn configLocal"
+          "exec": "yarn && yarn projen && yarn build && yarn cdk bootstrap && yarn cdk deploy  --require-approval never && yarn configLocal"
         }
       ]
     },
