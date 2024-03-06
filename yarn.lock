@@ -77,7 +77,7 @@
     "@aws-sdk/util-utf8-browser" "^3.0.0"
     tslib "^1.11.1"
 
-"@aws-sdk/client-chime-sdk-identity@^3.521.0":
+"@aws-sdk/client-chime-sdk-identity@^3.525.0":
   version "3.525.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-chime-sdk-identity/-/client-chime-sdk-identity-3.525.0.tgz#35c125b1fc344680c9667c685504c0f25a3a1fa3"
   integrity sha512-29PCy0TjNmcETqudNR+bsDUUkgrphIxuFOs33rtH/bjpmLlVlkuOJWBhQvJbDfwtmra+kMJe8PWVntqR1/jjUw==
@@ -124,7 +124,7 @@
     tslib "^2.5.0"
     uuid "^9.0.1"
 
-"@aws-sdk/client-chime-sdk-media-pipelines@^3.521.0":
+"@aws-sdk/client-chime-sdk-media-pipelines@^3.525.0":
   version "3.525.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-chime-sdk-media-pipelines/-/client-chime-sdk-media-pipelines-3.525.0.tgz#dbc0421af48a2cc2d7fbc9edd11516bb62effbf4"
   integrity sha512-xdfVJWDHnWxh+02ouVzwQtzn+p+vqOX4j3XWcsa5j1kASQXTrB/8UgDbzWn9WUP6URsjWh+RDxnSqqdSu8uoWA==
@@ -218,7 +218,7 @@
     tslib "^2.5.0"
     uuid "^9.0.1"
 
-"@aws-sdk/client-chime-sdk-messaging@^3.521.0":
+"@aws-sdk/client-chime-sdk-messaging@^3.525.0":
   version "3.525.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-chime-sdk-messaging/-/client-chime-sdk-messaging-3.525.0.tgz#ed6a864b6b247e54479b59ca46499abb5e286de1"
   integrity sha512-ROlEV1jnjHfsB/2S2GxBaOnhxLovMf/EAviJydrprRuIccPz7+u1bTjNGxCEZVCGgDafn+SuboAnXmZAR3TrPA==
@@ -265,7 +265,7 @@
     tslib "^2.5.0"
     uuid "^9.0.1"
 
-"@aws-sdk/client-chime-sdk-voice@^3.521.0", "@aws-sdk/client-chime-sdk-voice@^3.525.0":
+"@aws-sdk/client-chime-sdk-voice@^3.525.0":
   version "3.525.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-chime-sdk-voice/-/client-chime-sdk-voice-3.525.0.tgz#b2eb1dd2a391e76d5550dc279dc8973de7347a27"
   integrity sha512-1XRwe+EUnDcozjfad+w7nu4EOFfj2G4KdwpgQk6kksFHWsorABdvRMoN3xZUXF1LKiPWx6GmgspXAjVBgmklbw==
@@ -311,7 +311,7 @@
     "@smithy/util-utf8" "^2.1.1"
     tslib "^2.5.0"
 
-"@aws-sdk/client-kinesis-video@^3.521.0":
+"@aws-sdk/client-kinesis-video@^3.525.0":
   version "3.525.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-kinesis-video/-/client-kinesis-video-3.525.0.tgz#a7cfd99a003611e2c6603683e1fd3a2194e492c0"
   integrity sha512-2MmOS0q0Hidp3PhPXu+oCnSyAAXxGSmyosWk5jMX64WcrQ9mzYdrn8tik9JzCN2Z5Y40oJC+7mw4Q/krtdRntQ==
@@ -357,7 +357,7 @@
     "@smithy/util-utf8" "^2.1.1"
     tslib "^2.5.0"
 
-"@aws-sdk/client-ssm@^3.521.0":
+"@aws-sdk/client-ssm@^3.525.0":
   version "3.525.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-ssm/-/client-ssm-3.525.0.tgz#184c2658905cd4d4e368b890f2d39ccb43fec28a"
   integrity sha512-q/z2CltlIePY/FGAFzuZpVRZuAzEopd2/YmQSCFtGZr04weKKXb+6qxdE3P3rdJf+a4MILcLszR3M+xmjK9Rlg==
@@ -1713,9 +1713,9 @@ available-typed-arrays@^1.0.6, available-typed-arrays@^1.0.7:
     possible-typed-array-names "^1.0.0"
 
 aws-cdk-lib@^2.114.1, aws-cdk-lib@^2.93.0:
-  version "2.130.0"
-  resolved "https://registry.yarnpkg.com/aws-cdk-lib/-/aws-cdk-lib-2.130.0.tgz#ce1b8cd1bcf9ca040d600c2570dfbac9b2df3cfb"
-  integrity sha512-yK7ibePipdjlI4AFM94fwwtsCkmpWJ0JFZTMPahahC/3Pxe/BA/nnI/4Namvl5QPxW5QlU0xQYU7cywioq3RQg==
+  version "2.131.0"
+  resolved "https://registry.yarnpkg.com/aws-cdk-lib/-/aws-cdk-lib-2.131.0.tgz#6e336e9a3e77b07052d28c017ea020f5c9948341"
+  integrity sha512-9XLgiTgY+q0S3K93VPeJO0chIN8BZwZ3aSrILvF868Dz+0NTNrD2m5M0xGK5Rw0uoJS+N+DvGaz/2hLAiVqcBw==
   dependencies:
     "@aws-cdk/asset-awscli-v1" "^2.2.202"
     "@aws-cdk/asset-kubectl-v20" "^2.1.2"
@@ -1733,9 +1733,9 @@ aws-cdk-lib@^2.114.1, aws-cdk-lib@^2.93.0:
     yaml "1.10.2"
 
 aws-cdk@^2.114.1:
-  version "2.130.0"
-  resolved "https://registry.yarnpkg.com/aws-cdk/-/aws-cdk-2.130.0.tgz#086b859d81ff6b12e072f81692dc3fada3d17650"
-  integrity sha512-MsjGzQ2kZv0FEfXvpW7FTJRnefew0GrYt9M2SMN2Yn45+yjugGl2X8to416kABeFz1OFqW56hq8Y5BiLuFDVLQ==
+  version "2.131.0"
+  resolved "https://registry.yarnpkg.com/aws-cdk/-/aws-cdk-2.131.0.tgz#db8d99170e9aa2c389a1cf5954042d87d1c96ba0"
+  integrity sha512-ji+MwGFGC88HE/EqV6/VARBp5mu3nXIDa/GYwtGycJqu6WqXhNZXWeDH0JsWaY6+BSUdpY6pr6KWpV+MDyVkDg==
   optionalDependencies:
     fsevents "2.3.2"
 
@@ -1832,17 +1832,17 @@ case@1.6.3, case@^1.6.3:
   resolved "https://registry.yarnpkg.com/case/-/case-1.6.3.tgz#0a4386e3e9825351ca2e6216c60467ff5f1ea1c9"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk-amazon-chime-resources@^3.1.15:
-  version "3.1.15"
-  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-3.1.15.tgz#5b28251ca0ab4ccb4e0dfdfb1c6a195b9045f80b"
-  integrity sha512-4zA30WSmGCLiFBBgfWJC6ekLWSUHx1PmH0qXZOKA85OX5W9HYvsA3Xwv6ykfQr0B8UdUEJtX4Q3ZFKof75gbVA==
+cdk-amazon-chime-resources@^3.1.16:
+  version "3.1.16"
+  resolved "https://registry.yarnpkg.com/cdk-amazon-chime-resources/-/cdk-amazon-chime-resources-3.1.16.tgz#2478b325c519868b0c68f6d7d021c73e45ea71b4"
+  integrity sha512-HHhAfrx8+UCsJSdWZQ29oP5hvltv1NKW7pSpMhlkBjoy439KuIdzvKINFRH4hzTkK3qHUoiKf9nYjqcYgoKnFw==
   dependencies:
-    "@aws-sdk/client-chime-sdk-identity" "^3.521.0"
-    "@aws-sdk/client-chime-sdk-media-pipelines" "^3.521.0"
-    "@aws-sdk/client-chime-sdk-messaging" "^3.521.0"
-    "@aws-sdk/client-chime-sdk-voice" "^3.521.0"
-    "@aws-sdk/client-kinesis-video" "^3.521.0"
-    "@aws-sdk/client-ssm" "^3.521.0"
+    "@aws-sdk/client-chime-sdk-identity" "^3.525.0"
+    "@aws-sdk/client-chime-sdk-media-pipelines" "^3.525.0"
+    "@aws-sdk/client-chime-sdk-messaging" "^3.525.0"
+    "@aws-sdk/client-chime-sdk-voice" "^3.525.0"
+    "@aws-sdk/client-kinesis-video" "^3.525.0"
+    "@aws-sdk/client-ssm" "^3.525.0"
     "@types/aws-lambda" "^8.10.134"
     aws-cdk-lib "^2.93.0"
     aws-lambda "^1.0.7"
